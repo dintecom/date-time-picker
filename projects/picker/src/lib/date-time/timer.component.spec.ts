@@ -4,7 +4,7 @@
 
 import { EventEmitter } from '@angular/core';
 import {
-    async,
+    waitForAsync,
     ComponentFixture,
     fakeAsync,
     flush,
@@ -49,7 +49,7 @@ class MockNgZone extends NgZone {
 describe('OwlTimerComponent', () => {
     let zone: MockNgZone;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [OwlNativeDateTimeModule, OwlDateTimeModule],
             declarations: [StandardTimer],

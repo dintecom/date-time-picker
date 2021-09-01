@@ -1,16 +1,16 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { Moment } from 'moment';
 import * as moment from 'moment-timezone';
 
-import { OwlDateTimeComponent } from '../../projects/picker/src/public_api';
+import { OwlDateTimeComponent } from '../../projects/picker/src/public-api';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent {
   @ViewChild('date_range_component', { static: true })
   date_range_component: OwlDateTimeComponent<AppComponent>;
   public selectedMoments: Moment[] = [
@@ -19,13 +19,4 @@ export class AppComponent implements AfterViewInit {
   ];
 
   open_once = false;
-
-  ngAfterViewInit() {
-    /*
-    if (!this.open_once) {
-        this.date_range_component.open();
-        this.open_once = true;
-    }
-    */
-  }
 }

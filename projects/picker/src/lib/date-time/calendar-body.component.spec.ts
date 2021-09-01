@@ -1,7 +1,7 @@
 /**
  * calendar-body.component.spec
  */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
     CalendarCell,
     OwlCalendarBodyComponent
@@ -10,7 +10,7 @@ import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 describe('OwlCalendarBodyComponent', () => {
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [
                 OwlCalendarBodyComponent,

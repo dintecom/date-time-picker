@@ -197,6 +197,8 @@ export class OwlMultiYearViewComponent<T> implements OnInit, AfterContentInit {
                 (YEARS_PER_ROW * YEAR_ROWS)
             );
         }
+
+        return null;
     }
 
     get tableHeader(): string {
@@ -205,6 +207,8 @@ export class OwlMultiYearViewComponent<T> implements OnInit, AfterContentInit {
                 this._years[YEAR_ROWS - 1][YEARS_PER_ROW - 1].displayValue
             }`;
         }
+
+        return null;
     }
 
     get prevButtonLabel(): string {

@@ -120,7 +120,7 @@ export class OwlDateTimeInputDirective<T>
     }
 
     /** The minimum valid date. */
-    private _min: T | null = this.dateTimeAdapter.createDate(1, 0, 1, 0, 0, 0);
+    private _min: T | null = this.dateTimeAdapter?.createDate(1, 0, 1, 0, 0, 0);
     @Input()
     get min(): T | null {
         return this._min;
@@ -132,7 +132,7 @@ export class OwlDateTimeInputDirective<T>
     }
 
     /** The maximum valid date. */
-    private _max: T | null = this.dateTimeAdapter.createDate(3000, 11, 31, 23, 59, 59);
+    private _max: T | null = this.dateTimeAdapter?.createDate(3000, 11, 31, 23, 59, 59);
     @Input()
     get max(): T | null {
         return this._max;
@@ -303,6 +303,8 @@ export class OwlDateTimeInputDirective<T>
                       }
                   };
         }
+
+        return null;
     };
 
     /** The form control validator for the max date. */
@@ -337,6 +339,8 @@ export class OwlDateTimeInputDirective<T>
                       }
                   };
         }
+
+        return null;
     };
 
     /** The form control validator for the date filter. */

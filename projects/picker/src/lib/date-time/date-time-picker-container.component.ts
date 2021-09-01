@@ -51,9 +51,9 @@ import {
 })
 export class OwlDateTimeContainerComponent<T>
     implements OnInit, AfterContentInit, AfterViewInit {
-    @ViewChild(OwlCalendarComponent, { static: false })
+    @ViewChild(OwlCalendarComponent)
     calendar: OwlCalendarComponent<T>;
-    @ViewChild(OwlTimerComponent, { static: false })
+    @ViewChild(OwlTimerComponent)
     timer: OwlTimerComponent<T>;
 
     public picker: OwlDateTime<T>;
@@ -77,7 +77,7 @@ export class OwlDateTimeContainerComponent<T>
         return this.confirmSelected$.asObservable();
     }
 
-    private pickerOpened$ = new Subject<any>();
+    private pickerOpened$ = new Subject<void>();
 
     get pickerOpenedStream(): Observable<any> {
         return this.pickerOpened$.asObservable();

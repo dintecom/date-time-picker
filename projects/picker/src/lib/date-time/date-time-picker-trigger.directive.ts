@@ -12,7 +12,7 @@ import {
     OnInit,
     SimpleChanges
 } from '@angular/core';
-import { merge, of as observableOf, Subscription } from 'rxjs';
+import { merge, Subject, Subscription } from 'rxjs';
 import { OwlDateTimeComponent } from './date-time-picker.component';
 
 @Directive({
@@ -75,11 +75,11 @@ export class OwlDateTimeTriggerDirective<T>
         const inputDisabled =
             this.dtPicker && this.dtPicker.dtInput
                 ? this.dtPicker.dtInput.disabledChange
-                : observableOf();
+                : new Subject<boolean>();
 
         const pickerDisabled = this.dtPicker
             ? this.dtPicker.disabledChange
-            : observableOf();
+            : new Subject<boolean>();
 
         this.stateChanges = merge(pickerDisabled, inputDisabled).subscribe(
             () => {

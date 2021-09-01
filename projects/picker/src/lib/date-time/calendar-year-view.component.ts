@@ -176,6 +176,8 @@ export class OwlYearViewComponent<T>
         if (this._pickerMoment) {
             return this.dateTimeAdapter.getMonth(this._pickerMoment);
         }
+
+        return null;
     }
 
     get isInSingleMode(): boolean {

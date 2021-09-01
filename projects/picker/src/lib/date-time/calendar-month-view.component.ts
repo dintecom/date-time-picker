@@ -227,6 +227,8 @@ export class OwlMonthViewComponent<T>
                 1
             );
         }
+
+        return null;
     }
 
     get isInSingleMode(): boolean {

@@ -20,7 +20,7 @@ export class OwlDialogRef<T> {
 
     private _beforeClose$ = new Subject<any>();
 
-    private _afterOpen$ = new Subject<any>();
+    private _afterOpen$ = new Subject<void>();
 
     private _afterClosed$ = new Subject<any>();
 

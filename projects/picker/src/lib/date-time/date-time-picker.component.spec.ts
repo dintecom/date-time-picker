@@ -1312,8 +1312,8 @@ describe('OwlDateTimeComponent', () => {
                     flush();
                     fixture.detectChanges();
 
-                    expect(testComponent.moment[0]).toEqual(from);
-                    expect(testComponent.moment[1]).toEqual(to);
+                    expect((testComponent.moment as any)[0]).toEqual(from);
+                    expect((testComponent.moment as any)[1]).toEqual(to);
                     expect(
                         testComponent.dateTimePickerInput.values.length
                     ).toBe(2);
@@ -1723,8 +1723,8 @@ describe('OwlDateTimeComponent', () => {
                 DateTimePickerWithMinAndMaxValidation
             >;
             let testComponent: DateTimePickerWithMinAndMaxValidation;
-            let minMoment;
-            let maxMoment;
+            let minMoment: Date;
+            let maxMoment: Date;
 
             beforeEach(fakeAsync(() => {
                 fixture = createComponent(

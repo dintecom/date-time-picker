@@ -131,6 +131,8 @@ export class OwlCalendarBodyComponent implements OnInit {
 
             return value === fromValue || value === toValue;
         }
+
+        return false;
     }
 
     /**
@@ -147,6 +149,8 @@ export class OwlCalendarBodyComponent implements OnInit {
                 return value === fromValue || value === toValue;
             }
         }
+
+        return false;
     }
 
     /**
@@ -157,6 +161,8 @@ export class OwlCalendarBodyComponent implements OnInit {
             const fromValue = this.selectedValues[0];
             return fromValue !== null && value === fromValue;
         }
+
+        return false;
     }
 
     /**
@@ -167,6 +173,8 @@ export class OwlCalendarBodyComponent implements OnInit {
             const toValue = this.selectedValues[1];
             return toValue !== null && value === toValue;
         }
+
+        return false;
     }
 
     /**

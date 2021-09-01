@@ -104,9 +104,9 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
             } else if (this._dtInput.selectMode === 'rangeTo') {
                 return this._dtInput.values[1] || null;
             }
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     set startAt(date: T | null) {
