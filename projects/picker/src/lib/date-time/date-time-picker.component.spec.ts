@@ -2,7 +2,7 @@ import { OwlDateTimeComponent } from './date-time-picker.component';
 import { ComponentFixture, fakeAsync, flush, inject, TestBed } from '@angular/core/testing';
 import { Component, FactoryProvider, Type, ValueProvider, ViewChild } from '@angular/core';
 import { OwlDateTimeInputDirective } from './date-time-picker-input.directive';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OwlDateTimeModule } from './date-time.module';
 import { OverlayContainer } from '@angular/cdk/overlay';
@@ -1996,7 +1996,7 @@ class DateTimePickerWithNgModelComponent {
   `
 })
 class DateTimePickerWithFormControlComponent {
-  formControl = new FormControl();
+  formControl = new UntypedFormControl();
   @ViewChild('dt', { static: true })
   dateTimePicker: OwlDateTimeComponent<Date>;
   @ViewChild(OwlDateTimeInputDirective, { static: true })
