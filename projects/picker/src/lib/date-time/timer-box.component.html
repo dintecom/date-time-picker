@@ -34,12 +34,13 @@
   <input
     class="owl-dt-timer-input"
     maxlength="2"
-    [value]="displayValue | numberFixedLen: 2"
+    [value]="displayValue"
     (wheel)="handleWheelChange($event)"
     (keydown.arrowUp)="!upBtnDisabled && upBtnClicked()"
     (keydown.arrowDown)="!downBtnAriaLabel && downBtnClicked()"
     (input)="handleInputChange(valueInput.value)"
     (focusout)="focusOut(valueInput.value)"
+    (focus)="onFocus()"
     #valueInput
   />
   <span class="owl-hidden-accessible">{{ inputLabel }}</span>

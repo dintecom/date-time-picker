@@ -1,15 +1,17 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
   OnInit,
-  Output
+  Output,
+  ViewChild
 } from '@angular/core';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { Subject, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { NumberFixedLenPipe } from './numberedFixLen.pipe';
 
 @Component({
   exportAs: 'owlDateTimeTimerBox',
@@ -19,9 +21,13 @@ import { debounceTime } from 'rxjs/operators';
   // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
     '[class.owl-dt-timer-box]': 'owlDTTimerBoxClass'
-  }
+  },
+  providers:[NumberFixedLenPipe]
 })
 export class OwlTimerBoxComponent implements OnInit, OnDestroy {
+  @ViewChild('valueInput', { static: true })
+  private _inputValueElement: ElementRef<HTMLInputElement>;
+
   @Input() showDivider = false;
 
   @Input() upBtnAriaLabel: string;
@@ -56,10 +62,15 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
 
   private inputStreamSub = Subscription.EMPTY;
 
-  constructor() {}
+  private stringValue: string = '';
 
-  get displayValue(): number {
-    return this.boxValue || this.value;
+  private printMode: boolean = false;
+
+  constructor(private readonly numberFixedLen: NumberFixedLenPipe) {}
+
+  get displayValue(): string {
+    if (this.printMode) return this.stringValue;
+    return '' + this.numberFixedLen.transform(this.boxValue || this.value, 2);
   }
 
   get owlDTTimerBoxClass(): boolean {
@@ -67,7 +78,7 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit() {
-    this.inputStreamSub = this.inputStream.pipe(debounceTime(500)).subscribe((val: string) => {
+    this.inputStreamSub = this.inputStream.subscribe((val: string) => {
       if (val) {
         const inputValue = coerceNumberProperty(val, 0);
         this.updateValueViaInput(inputValue);
@@ -99,7 +110,13 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
     this.inputStream.next(value);
   }
 
+  onFocus(){
+    this.printMode = true;
+    this.stringValue = '' + this.numberFixedLen.transform(this.boxValue || this.value, 2);
+  }
+
   public focusOut(value: string): void {
+    this.printMode = false;
     if (value) {
       const inputValue = coerceNumberProperty(value, 0);
       this.updateValueViaInput(inputValue);
@@ -116,6 +133,8 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
   }
 
   private updateValue(value: number): void {
+    this._inputValueElement.nativeElement.focus();
+    this.stringValue = '' + this.numberFixedLen.transform(value, 2);
     this.valueChange.emit(value);
   }
 
