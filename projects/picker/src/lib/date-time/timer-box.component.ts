@@ -22,7 +22,7 @@ import { NumberFixedLenPipe } from './numberedFixLen.pipe';
   host: {
     '[class.owl-dt-timer-box]': 'owlDTTimerBoxClass'
   },
-  providers:[NumberFixedLenPipe]
+  providers: [NumberFixedLenPipe]
 })
 export class OwlTimerBoxComponent implements OnInit, OnDestroy {
   @ViewChild('valueInput', { static: true })
@@ -62,14 +62,14 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
 
   private inputStreamSub = Subscription.EMPTY;
 
-  private stringValue: string = '';
+  private stringValue = '';
 
-  private printMode: boolean = false;
+  private editMode = false;
 
   constructor(private readonly numberFixedLen: NumberFixedLenPipe) {}
 
   get displayValue(): string {
-    if (this.printMode) return this.stringValue;
+    if (this.editMode) return this.stringValue;
     return '' + this.numberFixedLen.transform(this.boxValue || this.value, 2);
   }
 
@@ -110,13 +110,13 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
     this.inputStream.next(value);
   }
 
-  onFocus(){
-    this.printMode = true;
+  onFocus() {
+    this.editMode = true;
     this.stringValue = '' + this.numberFixedLen.transform(this.boxValue || this.value, 2);
   }
 
   public focusOut(value: string): void {
-    this.printMode = false;
+    this.editMode = false;
     if (value) {
       const inputValue = coerceNumberProperty(value, 0);
       this.updateValueViaInput(inputValue);
