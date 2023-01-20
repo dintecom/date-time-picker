@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { OwlDateTimeComponent } from 'picker';
+import { OwlDateTimeComponent } from '../../projects/picker/src/public-api';
 
 @Component({
   selector: 'app-root',
