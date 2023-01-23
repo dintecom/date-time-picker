@@ -37,10 +37,10 @@
     [value]="displayValue"
     (wheel)="handleWheelChange($event)"
     (keydown.arrowUp)="!upBtnDisabled && upBtnClicked()"
-    (keydown.arrowDown)="!downBtnAriaLabel && downBtnClicked()"
+    (keydown.arrowDown)="!downBtnDisabled && downBtnClicked()"
     (input)="handleInputChange(valueInput.value)"
+    (focusin)="focusIn()"
     (focusout)="focusOut(valueInput.value)"
-    (focus)="onFocus()"
     #valueInput
   />
   <span class="owl-hidden-accessible">{{ inputLabel }}</span>

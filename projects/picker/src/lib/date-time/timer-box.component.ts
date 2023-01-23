@@ -107,10 +107,11 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
   }
 
   public handleInputChange(value: string): void {
+    this.stringValue = value;
     this.inputStream.next(value);
   }
 
-  onFocus() {
+  public focusIn() {
     this.editMode = true;
     this.stringValue = '' + this.numberFixedLen.transform(this.boxValue || this.value, 2);
   }
