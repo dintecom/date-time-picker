@@ -110,7 +110,7 @@ export class OwlDateTimeInputDirective<T>
   }
 
   /** The minimum valid date. */
-  private _min: T | null;
+  private _min: T | null = this.dateTimeAdapter?.createDate(1, 0, 1, 0, 0, 0);;
   @Input()
   get min(): T | null {
     return this._min;
@@ -122,7 +122,7 @@ export class OwlDateTimeInputDirective<T>
   }
 
   /** The maximum valid date. */
-  private _max: T | null;
+  private _max: T | null = this.dateTimeAdapter?.createDate(3000, 11, 31, 23, 59, 59);
   @Input()
   get max(): T | null {
     return this._max;
@@ -246,9 +246,12 @@ export class OwlDateTimeInputDirective<T>
 
   /** The form control validator for whether the input parses. */
   private parseValidator: ValidatorFn = (): ValidationErrors | null => {
+    const value = this.elmRef.nativeElement.value;
+    if (!value) return null;
+
     return this.lastValueValid
       ? null
-      : { owlDateTimeParse: { text: this.elmRef.nativeElement.value } };
+      : { owlDateTimeParse: { text: value } };
   };
 
   /** The form control validator for the min date. */
@@ -489,6 +492,7 @@ export class OwlDateTimeInputDirective<T>
     } else {
       this.changeInputInRangeFromToMode(value);
     }
+    this.validatorOnChange();
   }
 
   public handleChangeOnHost(event: any): void {
@@ -588,13 +592,15 @@ export class OwlDateTimeInputDirective<T>
    * Handle input change in single mode
    */
   private changeInputInSingleMode(inputValue: string): void {
+    inputValue = (inputValue || '').trim();
+    this.lastValueValid = this.dateTimeAdapter.isValidFormat(inputValue, this.dtPicker.formatString);
+
     let value = inputValue;
     if (this.dtPicker.pickerType === 'timer') {
       value = this.convertTimeStringToDateTimeString(value, this.value);
     }
 
     let result = this.dateTimeAdapter.parse(value, this.dateTimeFormats.parse.dateTimeInput);
-    this.lastValueValid = !result || this.dateTimeAdapter.isValid(result);
     result = this.getValidDate(result);
 
     // if the newValue is the same as the oldValue, we intend to not fire the valueChange event
@@ -615,6 +621,9 @@ export class OwlDateTimeInputDirective<T>
    * Handle input change in rangeFrom or rangeTo mode
    */
   private changeInputInRangeFromToMode(inputValue: string): void {
+    inputValue = (inputValue || '').trim();
+    this.lastValueValid = this.dateTimeAdapter.isValidFormat(inputValue, this.dtPicker.formatString);
+
     const originalValue = this._selectMode === 'rangeFrom' ? this._values[0] : this._values[1];
 
     if (this.dtPicker.pickerType === 'timer') {
@@ -622,7 +631,6 @@ export class OwlDateTimeInputDirective<T>
     }
 
     let result = this.dateTimeAdapter.parse(inputValue, this.dateTimeFormats.parse.dateTimeInput);
-    this.lastValueValid = !result || this.dateTimeAdapter.isValid(result);
     result = this.getValidDate(result);
 
     // if the newValue is the same as the oldValue, we intend to not fire the valueChange event
@@ -652,9 +660,14 @@ export class OwlDateTimeInputDirective<T>
    * Handle input change in range mode
    */
   private changeInputInRangeMode(inputValue: string): void {
+    inputValue = (inputValue || '').trim();
     const selecteds = inputValue.split(this.rangeSeparator);
-    let fromString = selecteds[0];
-    let toString = selecteds[1];
+    let fromString = (selecteds[0] || '').trim();
+    let toString = (selecteds[1] || '').trim();
+
+    this.lastValueValid =
+      this.dateTimeAdapter.isValidFormat(fromString, this.dtPicker.formatString) &&
+      this.dateTimeAdapter.isValidFormat(toString, this.dtPicker.formatString);
 
     if (this.dtPicker.pickerType === 'timer') {
       fromString = this.convertTimeStringToDateTimeString(fromString, this.values[0]);
@@ -663,8 +676,6 @@ export class OwlDateTimeInputDirective<T>
 
     let from = this.dateTimeAdapter.parse(fromString, this.dateTimeFormats.parse.dateTimeInput);
     let to = this.dateTimeAdapter.parse(toString, this.dateTimeFormats.parse.dateTimeInput);
-    this.lastValueValid =
-      (!from || this.dateTimeAdapter.isValid(from)) && (!to || this.dateTimeAdapter.isValid(to));
     from = this.getValidDate(from);
     to = this.getValidDate(to);
 
