@@ -19,7 +19,7 @@ export abstract class DateTimeAdapter<T> {
   /** total milliseconds in a day. */
   protected readonly millisecondsInDay = 86400000;
   /** total milliseconds in a minute. */
-  protected readonly milliseondsInMinute = 60000;
+  protected readonly millisecondsInMinute = 60000;
 
   protected _localeChanges = new Subject<void>();
 

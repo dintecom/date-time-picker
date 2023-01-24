@@ -448,10 +448,10 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
 
       const timeStampLeft =
         this.getTime(dateLeftStartOfDay) -
-        dateLeftStartOfDay.getTimezoneOffset() * this.milliseondsInMinute;
+        dateLeftStartOfDay.getTimezoneOffset() * this.millisecondsInMinute;
       const timeStampRight =
         this.getTime(dateRightStartOfDay) -
-        dateRightStartOfDay.getTimezoneOffset() * this.milliseondsInMinute;
+        dateRightStartOfDay.getTimezoneOffset() * this.millisecondsInMinute;
       return Math.round((timeStampLeft - timeStampRight) / this.millisecondsInDay);
     } else {
       return null;
