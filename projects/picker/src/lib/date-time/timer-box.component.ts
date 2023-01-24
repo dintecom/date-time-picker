@@ -25,9 +25,6 @@ import { NumberFixedLenPipe } from './numberedFixLen.pipe';
   providers: [NumberFixedLenPipe]
 })
 export class OwlTimerBoxComponent implements OnInit, OnDestroy {
-  @ViewChild('valueInput', { static: true })
-  private _inputValueElement: ElementRef<HTMLInputElement>;
-
   @Input() showDivider = false;
 
   @Input() upBtnAriaLabel: string;
@@ -134,7 +131,6 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
   }
 
   private updateValue(value: number): void {
-    this._inputValueElement.nativeElement.focus();
     this.stringValue = '' + this.numberFixedLen.transform(value, 2);
     this.valueChange.emit(value);
   }

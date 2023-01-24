@@ -224,22 +224,11 @@ export class OwlTimerComponent<T> implements OnInit {
   }
 
   public setMinuteValue(minutes: number): void {
-    let hours = this.dateTimeAdapter.getHours(this.pickerMoment);
-    const previousMinutes = this.dateTimeAdapter.getMinutes(this.pickerMoment);
-    if (minutes === 59 && previousMinutes === 0) {
-      hours--;
-      if (hours === -1) hours = 23;
-    }
-    if (minutes === 0 && previousMinutes === 59) {
-      hours++;
-      if (hours === 24) hours = 0;
-    }
-
     const result = this.dateTimeAdapter.createDate(
       this.dateTimeAdapter.getYear(this.pickerMoment),
       this.dateTimeAdapter.getMonth(this.pickerMoment),
       this.dateTimeAdapter.getDate(this.pickerMoment),
-      hours,
+      this.dateTimeAdapter.getHours(this.pickerMoment),
       minutes,
       this.dateTimeAdapter.getSeconds(this.pickerMoment)
     );
