@@ -41,6 +41,7 @@
     (input)="handleInputChange(valueInput.value)"
     (focusin)="focusIn()"
     (focusout)="focusOut(valueInput.value)"
+    onFocus="this.select()"
     #valueInput
   />
   <span class="owl-hidden-accessible">{{ inputLabel }}</span>
