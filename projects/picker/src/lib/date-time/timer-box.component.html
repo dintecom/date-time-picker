@@ -39,9 +39,8 @@
     (keydown.arrowUp)="!upBtnDisabled && upBtnClicked()"
     (keydown.arrowDown)="!downBtnDisabled && downBtnClicked()"
     (input)="handleInputChange(valueInput.value)"
-    (focusin)="focusIn()"
+    (focusin)="valueInput.select(); focusIn()"
     (focusout)="focusOut(valueInput.value)"
-    onFocus="this.select()"
     #valueInput
   />
   <span class="owl-hidden-accessible">{{ inputLabel }}</span>
