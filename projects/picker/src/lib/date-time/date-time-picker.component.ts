@@ -170,6 +170,20 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnInit, O
   public scrollStrategy: ScrollStrategy;
 
   /**
+   * For Range mode. Check if the 'from' is after 'to' or 'to' is before 'from'.
+   * If true check when click 'Set' or select 'to'/'from'. If false - check every time change.
+   */
+  private _lazyValidation = false;
+  @Input()
+  get lazyValidation(): boolean {
+    return this._lazyValidation;
+  }
+
+  set lazyValidation(value: boolean) {
+    this._lazyValidation = value;
+  }
+
+  /**
    * Callback when the picker is closed
    */
   @Output()
@@ -353,6 +367,7 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnInit, O
     this.pickerMode === 'dialog' ? this.openAsDialog() : this.openAsPopup();
 
     this.pickerContainer.picker = this;
+    this.pickerContainer.lazyValidation = this.lazyValidation;
 
     // Listen to picker container's hidePickerStream
     this.hidePickerStreamSub = this.pickerContainer.hidePickerStream.subscribe(() => {

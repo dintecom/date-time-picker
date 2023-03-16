@@ -47,6 +47,7 @@ export class OwlDateTimeContainerComponent<T> implements OnInit, AfterContentIni
 
   public picker: OwlDateTime<T>;
   public activeSelectedIndex = 0; // The current active SelectedIndex in range select mode (0: 'from', 1: 'to')
+  public lazyValidation = false;
 
   /**
    * Stream emits when try to hide picker
@@ -247,12 +248,13 @@ export class OwlDateTimeContainerComponent<T> implements OnInit, AfterContentIni
       // check if the 'from' is after 'to' or 'to'is before 'from'
       // In this case, we set both the 'from' and 'to' the same value
       if (
-        (this.activeSelectedIndex === 0 &&
+        !this.lazyValidation &&
+        ((this.activeSelectedIndex === 0 &&
           selecteds[1] &&
           this.dateTimeAdapter.compareDate(this.pickerMoment, selecteds[1]) > 0) ||
-        (this.activeSelectedIndex === 1 &&
-          selecteds[0] &&
-          this.dateTimeAdapter.compareDate(this.pickerMoment, selecteds[0]) < 0)
+          (this.activeSelectedIndex === 1 &&
+            selecteds[0] &&
+            this.dateTimeAdapter.compareDate(this.pickerMoment, selecteds[0]) < 0))
       ) {
         selecteds[0] = this.pickerMoment;
         selecteds[1] = this.pickerMoment;
@@ -277,6 +279,8 @@ export class OwlDateTimeContainerComponent<T> implements OnInit, AfterContentIni
    * Handle click on set button
    */
   public onSetClicked(event: any): void {
+    this._checkBeforeAfterTimeValidity();
+
     if (!this.picker.dateTimeChecker(this.pickerMoment)) {
       this.hidePicker$.next(null);
       event.preventDefault();
@@ -334,6 +338,8 @@ export class OwlDateTimeContainerComponent<T> implements OnInit, AfterContentIni
       if (this.picker.selecteds && selected) {
         this.pickerMoment = this.dateTimeAdapter.clone(selected);
       }
+
+      this._checkBeforeAfterTimeValidity();
     }
     return;
   }
@@ -450,6 +456,26 @@ export class OwlDateTimeContainerComponent<T> implements OnInit, AfterContentIni
       this.calendar.focusActiveCell();
     } else if (this.timer) {
       this.timer.focus();
+    }
+  }
+
+  private _checkBeforeAfterTimeValidity(): void {
+    if (this.picker.isInRangeMode && this.lazyValidation) {
+      const selecteds = [...this.picker.selecteds];
+
+      if (
+        (this.activeSelectedIndex === 0 &&
+          selecteds[1] &&
+          this.dateTimeAdapter.compareDate(this.pickerMoment, selecteds[1]) > 0) ||
+        (this.activeSelectedIndex === 1 &&
+          selecteds[0] &&
+          this.dateTimeAdapter.compareDate(this.pickerMoment, selecteds[0]) < 0)
+      ) {
+        selecteds[0] = this.pickerMoment;
+        selecteds[1] = this.pickerMoment;
+      }
+
+      this.picker.select(selecteds);
     }
   }
 }
