@@ -473,9 +473,9 @@ export class OwlDateTimeContainerComponent<T> implements OnInit, AfterContentIni
       ) {
         selecteds[0] = this.pickerMoment;
         selecteds[1] = this.pickerMoment;
-      }
 
-      this.picker.select(selecteds);
+        this.picker.select(selecteds);
+      }
     }
   }
 }
