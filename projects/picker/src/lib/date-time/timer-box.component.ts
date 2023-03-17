@@ -121,9 +121,9 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
 
   public handleWheelChange(event: WheelEvent) {
     const deltaY = event.deltaY;
-    if (deltaY > 0 && !this.upBtnDisabled) {
+    if (deltaY > 0 && !this.downBtnDisabled) {
       this.downBtnClicked();
-    } else if (deltaY < 0 && !this.downBtnDisabled) {
+    } else if (deltaY < 0 && !this.upBtnDisabled) {
       this.upBtnClicked();
     }
   }
