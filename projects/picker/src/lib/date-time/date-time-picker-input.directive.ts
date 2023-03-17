@@ -110,7 +110,7 @@ export class OwlDateTimeInputDirective<T>
   }
 
   /** The minimum valid date. */
-  private _min: T | null = this.dateTimeAdapter?.createDate(1, 0, 1, 0, 0, 0);;
+  private _min: T | null = this.dateTimeAdapter?.createDate(1, 0, 1, 0, 0, 0);
   @Input()
   get min(): T | null {
     return this._min;
