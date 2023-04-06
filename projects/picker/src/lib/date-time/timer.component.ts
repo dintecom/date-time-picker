@@ -8,11 +8,11 @@ import {
   NgZone,
   OnInit,
   Optional,
-  Output
+  Output,
 } from '@angular/core';
-import { OwlDateTimeIntl } from './date-time-picker-intl.service';
-import { DateTimeAdapter } from '../adapter/date-time-adapter.class';
 import { take } from 'rxjs/operators';
+import { DateTimeAdapter } from '../adapter/date-time-adapter.class';
+import { OwlDateTimeIntl } from './date-time-picker-intl.service';
 
 @Component({
   exportAs: 'owlDateTimeTimer',
@@ -22,8 +22,8 @@ import { take } from 'rxjs/operators';
   // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
     '[class.owl-dt-timer]': 'owlDTTimerClass',
-    '[attr.tabindex]': 'owlDTTimeTabIndex'
-  }
+    '[attr.tabindex]': 'owlDTTimeTabIndex',
+  },
 })
 export class OwlTimerComponent<T> implements OnInit {
   /** The current picker moment */
@@ -177,7 +177,7 @@ export class OwlTimerComponent<T> implements OnInit {
     private elmRef: ElementRef,
     private pickerIntl: OwlDateTimeIntl,
     private cdRef: ChangeDetectorRef,
-    @Optional() private dateTimeAdapter: DateTimeAdapter<T>
+    @Optional() private dateTimeAdapter: DateTimeAdapter<T>,
   ) {}
 
   public ngOnInit() {}
@@ -217,7 +217,7 @@ export class OwlTimerComponent<T> implements OnInit {
       this.dateTimeAdapter.getDate(this.pickerMoment),
       hours,
       this.dateTimeAdapter.getMinutes(this.pickerMoment),
-      this.dateTimeAdapter.getSeconds(this.pickerMoment)
+      this.dateTimeAdapter.getSeconds(this.pickerMoment),
     );
     this.selectedChange.emit(result);
     this.cdRef.markForCheck();
@@ -230,7 +230,7 @@ export class OwlTimerComponent<T> implements OnInit {
       this.dateTimeAdapter.getDate(this.pickerMoment),
       this.dateTimeAdapter.getHours(this.pickerMoment),
       minutes,
-      this.dateTimeAdapter.getSeconds(this.pickerMoment)
+      this.dateTimeAdapter.getSeconds(this.pickerMoment),
     );
     this.selectedChange.emit(result);
     this.cdRef.markForCheck();
@@ -243,7 +243,7 @@ export class OwlTimerComponent<T> implements OnInit {
       this.dateTimeAdapter.getDate(this.pickerMoment),
       this.dateTimeAdapter.getHours(this.pickerMoment),
       this.dateTimeAdapter.getMinutes(this.pickerMoment),
-      seconds
+      seconds,
     );
     this.selectedChange.emit(result);
     this.cdRef.markForCheck();

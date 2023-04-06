@@ -1,4 +1,15 @@
 import {
+  DOWN_ARROW,
+  END,
+  ENTER,
+  HOME,
+  LEFT_ARROW,
+  PAGE_DOWN,
+  PAGE_UP,
+  RIGHT_ARROW,
+  UP_ARROW,
+} from '@angular/cdk/keycodes';
+import {
   AfterContentInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -10,24 +21,13 @@ import {
   OnInit,
   Optional,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
-import { CalendarCell, OwlCalendarBodyComponent } from './calendar-body.component';
-import { DateTimeAdapter } from '../adapter/date-time-adapter.class';
-import { OWL_DATE_TIME_FORMATS, OwlDateTimeFormats } from '../adapter/date-time-format.class';
 import { Subscription } from 'rxjs';
+import { DateTimeAdapter } from '../adapter/date-time-adapter.class';
+import { OwlDateTimeFormats, OWL_DATE_TIME_FORMATS } from '../adapter/date-time-format.class';
+import { CalendarCell, OwlCalendarBodyComponent } from './calendar-body.component';
 import { SelectMode } from './date-time.class';
-import {
-  DOWN_ARROW,
-  END,
-  ENTER,
-  HOME,
-  LEFT_ARROW,
-  PAGE_DOWN,
-  PAGE_UP,
-  RIGHT_ARROW,
-  UP_ARROW
-} from '@angular/cdk/keycodes';
 
 const MONTHS_PER_YEAR = 12;
 const MONTHS_PER_ROW = 3;
@@ -38,9 +38,9 @@ const MONTHS_PER_ROW = 3;
   templateUrl: './calendar-year-view.component.html',
   // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
-    '[class.owl-dt-calendar-view]': 'owlDTCalendarView'
+    '[class.owl-dt-calendar-view]': 'owlDTCalendarView',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OwlYearViewComponent<T> implements OnInit, AfterContentInit, OnDestroy {
   /**
@@ -222,7 +222,7 @@ export class OwlYearViewComponent<T> implements OnInit, AfterContentInit, OnDest
     @Optional() private dateTimeAdapter: DateTimeAdapter<T>,
     @Optional()
     @Inject(OWL_DATE_TIME_FORMATS)
-    private dateTimeFormats: OwlDateTimeFormats
+    private dateTimeFormats: OwlDateTimeFormats,
   ) {
     this.monthNames = this.dateTimeAdapter.getMonthNames('short');
   }
@@ -257,7 +257,7 @@ export class OwlYearViewComponent<T> implements OnInit, AfterContentInit, OnDest
     const firstDateOfMonth = this.dateTimeAdapter.createDate(
       this.dateTimeAdapter.getYear(this.pickerMoment),
       month,
-      1
+      1,
     );
 
     this.monthSelected.emit(firstDateOfMonth);
@@ -269,7 +269,7 @@ export class OwlYearViewComponent<T> implements OnInit, AfterContentInit, OnDest
       Math.min(daysInMonth, this.dateTimeAdapter.getDate(this.pickerMoment)),
       this.dateTimeAdapter.getHours(this.pickerMoment),
       this.dateTimeAdapter.getMinutes(this.pickerMoment),
-      this.dateTimeAdapter.getSeconds(this.pickerMoment)
+      this.dateTimeAdapter.getSeconds(this.pickerMoment),
     );
 
     this.change.emit(result);
@@ -309,7 +309,7 @@ export class OwlYearViewComponent<T> implements OnInit, AfterContentInit, OnDest
       case HOME:
         moment = this.dateTimeAdapter.addCalendarMonths(
           this.pickerMoment,
-          -this.dateTimeAdapter.getMonth(this.pickerMoment)
+          -this.dateTimeAdapter.getMonth(this.pickerMoment),
         );
         this.pickerMomentChange.emit(moment);
         break;
@@ -318,7 +318,7 @@ export class OwlYearViewComponent<T> implements OnInit, AfterContentInit, OnDest
       case END:
         moment = this.dateTimeAdapter.addCalendarMonths(
           this.pickerMoment,
-          11 - this.dateTimeAdapter.getMonth(this.pickerMoment)
+          11 - this.dateTimeAdapter.getMonth(this.pickerMoment),
         );
         this.pickerMomentChange.emit(moment);
         break;
@@ -382,11 +382,11 @@ export class OwlYearViewComponent<T> implements OnInit, AfterContentInit, OnDest
     const startDateOfMonth = this.dateTimeAdapter.createDate(
       this.dateTimeAdapter.getYear(this.pickerMoment),
       month,
-      1
+      1,
     );
     const ariaLabel = this.dateTimeAdapter.format(
       startDateOfMonth,
-      this.dateTimeFormats.display.monthYearA11yLabel
+      this.dateTimeFormats.display.monthYearA11yLabel,
     );
     const cellClass = 'owl-dt-month-' + month;
     return new CalendarCell(
@@ -395,7 +395,7 @@ export class OwlYearViewComponent<T> implements OnInit, AfterContentInit, OnDest
       ariaLabel,
       this.isMonthEnabled(month),
       false,
-      cellClass
+      cellClass,
     );
   }
 
@@ -406,7 +406,7 @@ export class OwlYearViewComponent<T> implements OnInit, AfterContentInit, OnDest
     const firstDateOfMonth = this.dateTimeAdapter.createDate(
       this.dateTimeAdapter.getYear(this.pickerMoment),
       month,
-      1
+      1,
     );
 
     // If any date in the month is selectable,

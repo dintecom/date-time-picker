@@ -1,15 +1,3 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { OwlDateTimeIntl } from './date-time-picker-intl.service';
-import { OwlNativeDateTimeModule } from '../adapter/native';
-import { OwlDateTimeModule } from './date-time.module';
-import { Component, DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
-import {
-  OwlMultiYearViewComponent,
-  YEAR_ROWS,
-  YEARS_PER_ROW
-} from './calendar-multi-year-view.component';
-import { dispatchMouseEvent, dispatchKeyboardEvent } from '../../test-helpers';
 import {
   DOWN_ARROW,
   END,
@@ -18,20 +6,30 @@ import {
   PAGE_DOWN,
   PAGE_UP,
   RIGHT_ARROW,
-  UP_ARROW
+  UP_ARROW,
 } from '@angular/cdk/keycodes';
+import { Component, DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { dispatchKeyboardEvent, dispatchMouseEvent } from '../../test-helpers';
+import { OwlNativeDateTimeModule } from '../adapter/native';
 import { JAN } from '../utils/month-constants';
+import {
+  OwlMultiYearViewComponent,
+  YEARS_PER_ROW,
+  YEAR_ROWS,
+} from './calendar-multi-year-view.component';
+import { OwlDateTimeIntl } from './date-time-picker-intl.service';
+import { OwlDateTimeModule } from './date-time.module';
 
 describe('OwlMultiYearViewComponent', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [OwlNativeDateTimeModule, OwlDateTimeModule],
-        declarations: [StandardMultiYearViewComponent, MultiYearViewWithDateFilterComponent],
-        providers: [OwlDateTimeIntl]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [OwlNativeDateTimeModule, OwlDateTimeModule],
+      declarations: [StandardMultiYearViewComponent, MultiYearViewWithDateFilterComponent],
+      providers: [OwlDateTimeIntl],
+    }).compileComponents();
+  }));
 
   describe('standard multi-years view', () => {
     let fixture: ComponentFixture<StandardMultiYearViewComponent>;
@@ -45,7 +43,7 @@ describe('OwlMultiYearViewComponent', () => {
       fixture.detectChanges();
 
       multiYearViewDebugElement = fixture.debugElement.query(
-        By.directive(OwlMultiYearViewComponent)
+        By.directive(OwlMultiYearViewComponent),
       );
       multiYearViewElement = multiYearViewDebugElement.nativeElement;
       testComponent = fixture.componentInstance;
@@ -59,7 +57,7 @@ describe('OwlMultiYearViewComponent', () => {
 
     it('should shows selected year if in same range', () => {
       const selectedElContent = multiYearViewElement.querySelector(
-        '.owl-dt-calendar-cell-selected.owl-dt-calendar-cell-content'
+        '.owl-dt-calendar-cell-selected.owl-dt-calendar-cell-content',
       )!;
       expect(selectedElContent.innerHTML.trim()).toBe('2020');
     });
@@ -69,7 +67,7 @@ describe('OwlMultiYearViewComponent', () => {
       fixture.detectChanges();
 
       const selectedElContent = multiYearViewElement.querySelector(
-        '.owl-calendar-body-selected.owl-dt-calendar-cell-content'
+        '.owl-calendar-body-selected.owl-dt-calendar-cell-content',
       );
       expect(selectedElContent).toBeNull();
     });
@@ -80,7 +78,7 @@ describe('OwlMultiYearViewComponent', () => {
       fixture.detectChanges();
 
       const selectedElContent = multiYearViewElement.querySelector(
-        '.owl-dt-calendar-cell-active .owl-dt-calendar-cell-content'
+        '.owl-dt-calendar-cell-active .owl-dt-calendar-cell-content',
       )!;
       expect(selectedElContent.innerHTML.trim()).toBe('2030');
     });
@@ -128,7 +126,7 @@ describe('OwlMultiYearViewComponent', () => {
       fixture.detectChanges();
 
       expect(multiYearViewInstance.pickerMoment).toEqual(
-        new Date(2018 - YEARS_PER_ROW * 2, JAN, 5)
+        new Date(2018 - YEARS_PER_ROW * 2, JAN, 5),
       );
     });
 
@@ -143,7 +141,7 @@ describe('OwlMultiYearViewComponent', () => {
       fixture.detectChanges();
 
       expect(multiYearViewInstance.pickerMoment).toEqual(
-        new Date(2018 + YEARS_PER_ROW * 2, JAN, 5)
+        new Date(2018 + YEARS_PER_ROW * 2, JAN, 5),
       );
     });
 
@@ -179,14 +177,14 @@ describe('OwlMultiYearViewComponent', () => {
       fixture.detectChanges();
 
       expect(multiYearViewInstance.pickerMoment).toEqual(
-        new Date(2018 - YEARS_PER_ROW * YEAR_ROWS, JAN, 5)
+        new Date(2018 - YEARS_PER_ROW * YEAR_ROWS, JAN, 5),
       );
 
       dispatchKeyboardEvent(calendarBodyEl, 'keydown', PAGE_UP);
       fixture.detectChanges();
 
       expect(multiYearViewInstance.pickerMoment).toEqual(
-        new Date(2018 - YEARS_PER_ROW * YEAR_ROWS * 2, JAN, 5)
+        new Date(2018 - YEARS_PER_ROW * YEAR_ROWS * 2, JAN, 5),
       );
     });
 
@@ -196,14 +194,14 @@ describe('OwlMultiYearViewComponent', () => {
       fixture.detectChanges();
 
       expect(multiYearViewInstance.pickerMoment).toEqual(
-        new Date(2018 + YEARS_PER_ROW * YEAR_ROWS, JAN, 5)
+        new Date(2018 + YEARS_PER_ROW * YEAR_ROWS, JAN, 5),
       );
 
       dispatchKeyboardEvent(calendarBodyEl, 'keydown', PAGE_DOWN);
       fixture.detectChanges();
 
       expect(multiYearViewInstance.pickerMoment).toEqual(
-        new Date(2018 + YEARS_PER_ROW * YEAR_ROWS * 2, JAN, 5)
+        new Date(2018 + YEARS_PER_ROW * YEAR_ROWS * 2, JAN, 5),
       );
     });
   });
@@ -217,7 +215,7 @@ describe('OwlMultiYearViewComponent', () => {
       fixture.detectChanges();
 
       const multiYearViewDebugElement = fixture.debugElement.query(
-        By.directive(OwlMultiYearViewComponent)
+        By.directive(OwlMultiYearViewComponent),
       );
       multiYearViewElement = multiYearViewDebugElement.nativeElement;
     });
@@ -238,7 +236,7 @@ describe('OwlMultiYearViewComponent', () => {
       [(pickerMoment)]="pickerMoment"
       (change)="handleChange($event)"
     ></owl-date-time-multi-year-view>
-  `
+  `,
 })
 class StandardMultiYearViewComponent {
   selected = new Date(2020, JAN, 10);
@@ -255,7 +253,7 @@ class StandardMultiYearViewComponent {
       [(pickerMoment)]="pickerMoment"
       [dateFilter]="dateFilter"
     ></owl-date-time-multi-year-view>
-  `
+  `,
 })
 class MultiYearViewWithDateFilterComponent {
   pickerMoment = new Date(2018, JAN, 1);

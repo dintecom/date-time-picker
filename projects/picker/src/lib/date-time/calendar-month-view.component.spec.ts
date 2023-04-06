@@ -1,11 +1,3 @@
-import { OwlMonthViewComponent } from './calendar-month-view.component';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { OwlDateTimeIntl } from './date-time-picker-intl.service';
-import { OwlNativeDateTimeModule } from '../adapter/native';
-import { OwlDateTimeModule } from './date-time.module';
-import { Component, DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
-import { dispatchKeyboardEvent } from '../../test-helpers';
 import {
   DOWN_ARROW,
   END,
@@ -15,20 +7,26 @@ import {
   PAGE_DOWN,
   PAGE_UP,
   RIGHT_ARROW,
-  UP_ARROW
+  UP_ARROW,
 } from '@angular/cdk/keycodes';
+import { Component, DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { dispatchKeyboardEvent } from '../../test-helpers';
+import { OwlNativeDateTimeModule } from '../adapter/native';
 import { DEC, FEB, JAN, MAR, NOV } from '../utils/month-constants';
+import { OwlMonthViewComponent } from './calendar-month-view.component';
+import { OwlDateTimeIntl } from './date-time-picker-intl.service';
+import { OwlDateTimeModule } from './date-time.module';
 
 describe('OwlMonthViewComponent', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [OwlNativeDateTimeModule, OwlDateTimeModule],
-        declarations: [StandardMonthViewComponent, MonthViewWithDateFilterComponent],
-        providers: [OwlDateTimeIntl]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [OwlNativeDateTimeModule, OwlDateTimeModule],
+      declarations: [StandardMonthViewComponent, MonthViewWithDateFilterComponent],
+      providers: [OwlDateTimeIntl],
+    }).compileComponents();
+  }));
 
   describe('standard month view', () => {
     let fixture: ComponentFixture<StandardMonthViewComponent>;
@@ -66,7 +64,7 @@ describe('OwlMonthViewComponent', () => {
 
     it('should mark active date', () => {
       const selectedElContent = monthViewElement.querySelector(
-        '.owl-dt-calendar-cell-active .owl-dt-calendar-cell-content'
+        '.owl-dt-calendar-cell-active .owl-dt-calendar-cell-content',
       )!;
       expect(selectedElContent.innerHTML.trim()).toBe('5');
     });
@@ -247,7 +245,7 @@ describe('OwlMonthViewComponent', () => {
       [(selected)]="selected"
       [(pickerMoment)]="pickerMoment"
     ></owl-date-time-month-view>
-  `
+  `,
 })
 class StandardMonthViewComponent {
   selected = new Date(2018, JAN, 10);
@@ -260,7 +258,7 @@ class StandardMonthViewComponent {
       [(pickerMoment)]="pickerMoment"
       [dateFilter]="dateFilter"
     ></owl-date-time-month-view>
-  `
+  `,
 })
 class MonthViewWithDateFilterComponent {
   pickerMoment = new Date(2018, JAN, 1);

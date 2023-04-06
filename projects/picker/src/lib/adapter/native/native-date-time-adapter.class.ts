@@ -1,7 +1,7 @@
-import { Inject, Injectable, Optional } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
-import { DateTimeAdapter, OWL_DATE_TIME_LOCALE } from '../date-time-adapter.class';
 import { getLocaleFirstDayOfWeek } from '@angular/common';
+import { Inject, Injectable, Optional } from '@angular/core';
+import { DateTimeAdapter, OWL_DATE_TIME_LOCALE } from '../date-time-adapter.class';
 
 // TODO(mmalerba): Remove when we no longer support safari 9.
 /** Whether the browser supports the Intl API. */
@@ -32,10 +32,10 @@ const DEFAULT_MONTH_NAMES = {
     'September',
     'October',
     'November',
-    'December'
+    'December',
   ],
   short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-  narrow: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']
+  narrow: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
 };
 
 /** The default date names to use if Intl API is not available. */
@@ -45,7 +45,7 @@ const DEFAULT_DATE_NAMES = range(31, i => String(i + 1));
 const DEFAULT_DAY_OF_WEEK_NAMES = {
   long: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
   short: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-  narrow: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+  narrow: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
 };
 
 /**
@@ -85,7 +85,7 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
 
   constructor(
     @Optional() @Inject(OWL_DATE_TIME_LOCALE) owlDateTimeLocale: string,
-    platform: Platform
+    platform: Platform,
   ) {
     super();
     super.setLocale(owlDateTimeLocale);
@@ -115,10 +115,10 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
     if (SUPPORTS_INTL_API) {
       const dtf = new Intl.DateTimeFormat(this.locale, {
         month: style,
-        timeZone: 'utc'
+        timeZone: 'utc',
       });
       return range(12, i =>
-        this._stripDirectionalityCharacters(this._format(dtf, new Date(2017, i, 1)))
+        this._stripDirectionalityCharacters(this._format(dtf, new Date(2017, i, 1))),
       );
     }
     return DEFAULT_MONTH_NAMES[style];
@@ -128,10 +128,10 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
     if (SUPPORTS_INTL_API) {
       const dtf = new Intl.DateTimeFormat(this.locale, {
         day: 'numeric',
-        timeZone: 'utc'
+        timeZone: 'utc',
       });
       return range(31, i =>
-        this._stripDirectionalityCharacters(this._format(dtf, new Date(2017, 0, i + 1)))
+        this._stripDirectionalityCharacters(this._format(dtf, new Date(2017, 0, i + 1))),
       );
     }
     return DEFAULT_DATE_NAMES;
@@ -141,10 +141,10 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
     if (SUPPORTS_INTL_API) {
       const dtf = new Intl.DateTimeFormat(this.locale, {
         weekday: style,
-        timeZone: 'utc'
+        timeZone: 'utc',
       });
       return range(7, i =>
-        this._stripDirectionalityCharacters(this._format(dtf, new Date(2017, 0, i + 1)))
+        this._stripDirectionalityCharacters(this._format(dtf, new Date(2017, 0, i + 1))),
       );
     }
     return DEFAULT_DAY_OF_WEEK_NAMES[style];
@@ -154,7 +154,7 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
     if (SUPPORTS_INTL_API) {
       const dtf = new Intl.DateTimeFormat(this.locale, {
         year: 'numeric',
-        timeZone: 'utc'
+        timeZone: 'utc',
       });
       return this._stripDirectionalityCharacters(this._format(dtf, date));
     }
@@ -167,7 +167,7 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
 
   getNumDaysInMonth(date: Date): number {
     return this.getDate(
-      this._createDateWithOverflow(this.getYear(date), this.getMonth(date) + 1, 0)
+      this._createDateWithOverflow(this.getYear(date), this.getMonth(date) + 1, 0),
     );
   }
 
@@ -202,7 +202,7 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
     hours = 0,
     minutes = 0,
     seconds = 0,
-    ms = 0
+    ms = 0,
   ): Date {
     // Check for invalid month and date (except upper bound on date which we have to check after
     // creating the Date).
@@ -286,7 +286,7 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
       this.getHours(date),
       this.getMinutes(date),
       this.getSeconds(date),
-      this.getMilliseconds(date)
+      this.getMilliseconds(date),
     );
 
     // It's possible to wind up in the wrong month if the original month has more days than the new
@@ -301,7 +301,7 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
         this.getHours(newDate),
         this.getMinutes(newDate),
         this.getSeconds(newDate),
-        this.getMilliseconds(newDate)
+        this.getMilliseconds(newDate),
       );
     }
 
@@ -316,7 +316,7 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
       this.getHours(date),
       this.getMinutes(date),
       this.getSeconds(date),
-      this.getMilliseconds(date)
+      this.getMilliseconds(date),
     );
   }
 
@@ -328,7 +328,7 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
       this.getHours(date) + hours,
       this.getMinutes(date),
       this.getSeconds(date),
-      this.getMilliseconds(date)
+      this.getMilliseconds(date),
     );
   }
 
@@ -340,7 +340,7 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
       this.getHours(date),
       this.getMinutes(date) + minutes,
       this.getSeconds(date),
-      this.getMilliseconds(date)
+      this.getMilliseconds(date),
     );
   }
 
@@ -352,7 +352,7 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
       this.getHours(date),
       this.getMinutes(date),
       this.getSeconds(date) + seconds,
-      this.getMilliseconds(date)
+      this.getMilliseconds(date),
     );
   }
 
@@ -364,7 +364,7 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
       this.getHours(date),
       this.getMinutes(date),
       this.getSeconds(date),
-      this.getMilliseconds(date) + milliseconds
+      this.getMilliseconds(date) + milliseconds,
     );
   }
 
@@ -372,7 +372,7 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
     return [
       date.getUTCFullYear(),
       this._2digit(date.getUTCMonth() + 1),
-      this._2digit(date.getUTCDate())
+      this._2digit(date.getUTCDate()),
     ].join('-');
   }
 
@@ -422,7 +422,7 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
       }
       regex += '$';
 
-      return (new RegExp(regex)).test(value);
+      return new RegExp(regex).test(value);
     } else {
       const date = new Date(value);
       return date.getTime() === date.getTime();
@@ -438,12 +438,12 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
       const dateLeftStartOfDay = this.createDate(
         this.getYear(dateLeft),
         this.getMonth(dateLeft),
-        this.getDate(dateLeft)
+        this.getDate(dateLeft),
       );
       const dateRightStartOfDay = this.createDate(
         this.getYear(dateRight),
         this.getMonth(dateRight),
-        this.getDate(dateRight)
+        this.getDate(dateRight),
       );
 
       const timeStampLeft =
@@ -488,7 +488,7 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
     hours = 0,
     minutes = 0,
     seconds = 0,
-    ms = 0
+    ms = 0,
   ) {
     const result = new Date(year, month, date, hours, minutes, seconds, ms);
 
@@ -540,8 +540,8 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
         date.getHours(),
         date.getMinutes(),
         date.getSeconds(),
-        date.getMilliseconds()
-      )
+        date.getMilliseconds(),
+      ),
     );
     return dtf.format(d);
   }

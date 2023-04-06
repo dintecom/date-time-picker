@@ -1,4 +1,15 @@
 import {
+  DOWN_ARROW,
+  END,
+  ENTER,
+  HOME,
+  LEFT_ARROW,
+  PAGE_DOWN,
+  PAGE_UP,
+  RIGHT_ARROW,
+  UP_ARROW,
+} from '@angular/cdk/keycodes';
+import {
   AfterContentInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -10,24 +21,13 @@ import {
   OnInit,
   Optional,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
-import { CalendarCell, OwlCalendarBodyComponent } from './calendar-body.component';
-import { DateTimeAdapter } from '../adapter/date-time-adapter.class';
-import { OWL_DATE_TIME_FORMATS, OwlDateTimeFormats } from '../adapter/date-time-format.class';
 import { Subscription } from 'rxjs';
+import { DateTimeAdapter } from '../adapter/date-time-adapter.class';
+import { OwlDateTimeFormats, OWL_DATE_TIME_FORMATS } from '../adapter/date-time-format.class';
+import { CalendarCell, OwlCalendarBodyComponent } from './calendar-body.component';
 import { SelectMode } from './date-time.class';
-import {
-  DOWN_ARROW,
-  END,
-  ENTER,
-  HOME,
-  LEFT_ARROW,
-  PAGE_DOWN,
-  PAGE_UP,
-  RIGHT_ARROW,
-  UP_ARROW
-} from '@angular/cdk/keycodes';
 
 const DAYS_PER_WEEK = 7;
 const WEEKS_PER_VIEW = 6;
@@ -37,9 +37,9 @@ const WEEKS_PER_VIEW = 6;
   exportAs: 'owlYearView',
   templateUrl: './calendar-month-view.component.html',
   host: {
-    '[class.owl-dt-calendar-view]': 'owlDTCalendarView'
+    '[class.owl-dt-calendar-view]': 'owlDTCalendarView',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OwlMonthViewComponent<T> implements OnInit, AfterContentInit, OnDestroy {
   /**
@@ -133,7 +133,7 @@ export class OwlMonthViewComponent<T> implements OnInit, AfterContentInit, OnDes
     this.firstDateOfMonth = this.dateTimeAdapter.createDate(
       this.dateTimeAdapter.getYear(this._pickerMoment),
       this.dateTimeAdapter.getMonth(this._pickerMoment),
-      1
+      1,
     );
 
     if (!this.isSameMonth(oldMoment, this._pickerMoment) && this.initiated) {
@@ -273,7 +273,7 @@ export class OwlMonthViewComponent<T> implements OnInit, AfterContentInit, OnDes
     @Optional() private dateTimeAdapter: DateTimeAdapter<T>,
     @Optional()
     @Inject(OWL_DATE_TIME_FORMATS)
-    private dateTimeFormats: OwlDateTimeFormats
+    private dateTimeFormats: OwlDateTimeFormats,
   ) {}
 
   public ngOnInit() {
@@ -357,7 +357,7 @@ export class OwlMonthViewComponent<T> implements OnInit, AfterContentInit, OnDes
       case HOME:
         moment = this.dateTimeAdapter.addCalendarDays(
           this.pickerMoment,
-          1 - this.dateTimeAdapter.getDate(this.pickerMoment)
+          1 - this.dateTimeAdapter.getDate(this.pickerMoment),
         );
         this.pickerMomentChange.emit(moment);
         break;
@@ -367,7 +367,7 @@ export class OwlMonthViewComponent<T> implements OnInit, AfterContentInit, OnDes
         moment = this.dateTimeAdapter.addCalendarDays(
           this.pickerMoment,
           this.dateTimeAdapter.getNumDaysInMonth(this.pickerMoment) -
-            this.dateTimeAdapter.getDate(this.pickerMoment)
+            this.dateTimeAdapter.getDate(this.pickerMoment),
         );
         this.pickerMomentChange.emit(moment);
         break;
@@ -536,7 +536,7 @@ export class OwlMonthViewComponent<T> implements OnInit, AfterContentInit, OnDes
     if (this.isInSingleMode && this.selected) {
       const dayDiff = this.dateTimeAdapter.differenceInCalendarDays(
         this.selected,
-        this.firstDateOfMonth
+        this.firstDateOfMonth,
       );
       this.selectedDates[0] = dayDiff + 1;
       return;
@@ -547,7 +547,7 @@ export class OwlMonthViewComponent<T> implements OnInit, AfterContentInit, OnDes
         if (this.dateTimeAdapter.isValid(selected)) {
           const dayDiff = this.dateTimeAdapter.differenceInCalendarDays(
             selected,
-            this.firstDateOfMonth
+            this.firstDateOfMonth,
           );
           return dayDiff + 1;
         } else {

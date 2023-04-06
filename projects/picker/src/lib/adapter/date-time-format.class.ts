@@ -16,5 +16,5 @@ export interface OwlDateTimeFormats {
 
 /** InjectionToken for date time picker that can be used to override default format. */
 export const OWL_DATE_TIME_FORMATS = new InjectionToken<OwlDateTimeFormats>(
-  'owl-date-time-formats'
+  'owl-date-time-formats',
 );

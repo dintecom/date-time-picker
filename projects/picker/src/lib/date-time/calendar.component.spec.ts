@@ -1,41 +1,39 @@
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import { ENTER, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { Component, NgZone } from '@angular/core';
+import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import {
-  MockNgZone,
   dispatchFakeEvent,
+  dispatchKeyboardEvent,
   dispatchMouseEvent,
-  dispatchKeyboardEvent
+  MockNgZone,
 } from '../../test-helpers';
 import { OwlNativeDateTimeModule } from '../adapter/native';
-import { OwlDateTimeModule } from './date-time.module';
+import { FEB, JAN, NOV } from '../utils/month-constants';
+import { OwlMonthViewComponent } from './calendar-month-view.component';
+import { OwlMultiYearViewComponent } from './calendar-multi-year-view.component';
+import { OwlYearViewComponent } from './calendar-year-view.component';
 import { OwlCalendarComponent } from './calendar.component';
 import { OwlDateTimeIntl } from './date-time-picker-intl.service';
-import { By } from '@angular/platform-browser';
-import { ENTER, RIGHT_ARROW } from '@angular/cdk/keycodes';
-import { OwlMonthViewComponent } from './calendar-month-view.component';
-import { OwlYearViewComponent } from './calendar-year-view.component';
-import { OwlMultiYearViewComponent } from './calendar-multi-year-view.component';
-import { FEB, JAN, NOV } from '../utils/month-constants';
+import { OwlDateTimeModule } from './date-time.module';
 
 describe('OwlCalendarComponent', () => {
   let zone: MockNgZone;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [OwlNativeDateTimeModule, OwlDateTimeModule],
-        declarations: [
-          StandardCalendarComponent,
-          CalendarWithMinMaxComponent,
-          CalendarWithDateFilterComponent
-        ],
-        providers: [
-          OwlDateTimeIntl,
-          { provide: NgZone, useFactory: () => (zone = new MockNgZone()) }
-        ]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [OwlNativeDateTimeModule, OwlDateTimeModule],
+      declarations: [
+        StandardCalendarComponent,
+        CalendarWithMinMaxComponent,
+        CalendarWithDateFilterComponent,
+      ],
+      providers: [
+        OwlDateTimeIntl,
+        { provide: NgZone, useFactory: () => (zone = new MockNgZone()) },
+      ],
+    }).compileComponents();
+  }));
 
   describe('standard calendar', () => {
     let fixture: ComponentFixture<StandardCalendarComponent>;
@@ -56,13 +54,10 @@ describe('OwlCalendarComponent', () => {
       testComponent = fixture.componentInstance;
     });
 
-    it(
-      'should be in month view with specified month active',
-      waitForAsync(() => {
-        expect(calendarInstance.currentView).toBe('month');
-        expect(calendarInstance.pickerMoment).toEqual(new Date(2018, JAN, 31));
-      })
-    );
+    it('should be in month view with specified month active', waitForAsync(() => {
+      expect(calendarInstance.currentView).toBe('month');
+      expect(calendarInstance.pickerMoment).toEqual(new Date(2018, JAN, 31));
+    }));
 
     it('should select date in month view', () => {
       const monthCell = calendarElement.querySelector('[aria-label="January 31, 2018"]');
@@ -109,7 +104,7 @@ describe('OwlCalendarComponent', () => {
     it('should re-render when the i18n labels have changed', () => {
       inject([OwlDateTimeIntl], (intl: OwlDateTimeIntl) => {
         const button = fixture.debugElement.nativeElement.querySelector(
-          '.owl-dt-control-period-button'
+          '.owl-dt-control-period-button',
         );
 
         intl.switchToMultiYearViewLabel = 'Go to multi-year view?';
@@ -147,7 +142,7 @@ describe('OwlCalendarComponent', () => {
 
         it('should not move focus to the active cell on init', () => {
           const activeCell = calendarMainEl.querySelector(
-            '.owl-dt-calendar-cell-active'
+            '.owl-dt-calendar-cell-active',
           )! as HTMLElement;
 
           spyOn(activeCell, 'focus').and.callThrough();
@@ -159,7 +154,7 @@ describe('OwlCalendarComponent', () => {
 
         it('should move focus to the active cell when the view changes', () => {
           const activeCell = calendarMainEl.querySelector(
-            '.owl-dt-calendar-cell-active'
+            '.owl-dt-calendar-cell-active',
           )! as HTMLElement;
 
           spyOn(activeCell, 'focus').and.callThrough();
@@ -190,7 +185,7 @@ describe('OwlCalendarComponent', () => {
 
           it('should return to month view on enter', () => {
             const tableBodyEl = calendarMainEl.querySelector(
-              '.owl-dt-calendar-body'
+              '.owl-dt-calendar-body',
             ) as HTMLElement;
 
             dispatchKeyboardEvent(tableBodyEl, 'keydown', RIGHT_ARROW);
@@ -215,7 +210,7 @@ describe('OwlCalendarComponent', () => {
 
           it('should return to year view on enter', () => {
             const tableBodyEl = calendarMainEl.querySelector(
-              '.owl-dt-calendar-body'
+              '.owl-dt-calendar-body',
             ) as HTMLElement;
 
             dispatchKeyboardEvent(tableBodyEl, 'keydown', RIGHT_ARROW);
@@ -277,7 +272,7 @@ describe('OwlCalendarComponent', () => {
     it('should re-render the year view when the minDate changes', () => {
       fixture.detectChanges();
       const periodButton = calendarElement.querySelector(
-        '.owl-dt-control-period-button'
+        '.owl-dt-control-period-button',
       ) as HTMLElement;
       periodButton.click();
       fixture.detectChanges();
@@ -299,7 +294,7 @@ describe('OwlCalendarComponent', () => {
     it('should re-render the year view when the maxDate changes', () => {
       fixture.detectChanges();
       const periodButton = calendarElement.querySelector(
-        '.owl-dt-control-period-button'
+        '.owl-dt-control-period-button',
       ) as HTMLElement;
       periodButton.click();
       fixture.detectChanges();
@@ -321,13 +316,13 @@ describe('OwlCalendarComponent', () => {
     it('should re-render the multi-years view when the minDate changes', () => {
       fixture.detectChanges();
       const periodButton = calendarElement.querySelector(
-        '.owl-dt-control-period-button'
+        '.owl-dt-control-period-button',
       ) as HTMLElement;
       periodButton.click();
       fixture.detectChanges();
 
       const multiYearsViewDebugElm = fixture.debugElement.query(
-        By.directive(OwlMultiYearViewComponent)
+        By.directive(OwlMultiYearViewComponent),
       );
       const multiYearsViewComp = multiYearsViewDebugElm.componentInstance;
       expect(multiYearsViewComp).toBeTruthy();
@@ -342,13 +337,13 @@ describe('OwlCalendarComponent', () => {
     it('should re-render the multi-years view when the maxDate changes', () => {
       fixture.detectChanges();
       const periodButton = calendarElement.querySelector(
-        '.owl-dt-control-period-button'
+        '.owl-dt-control-period-button',
       ) as HTMLElement;
       periodButton.click();
       fixture.detectChanges();
 
       const multiYearsViewDebugElm = fixture.debugElement.query(
-        By.directive(OwlMultiYearViewComponent)
+        By.directive(OwlMultiYearViewComponent),
       );
       const multiYearsViewComp = multiYearsViewDebugElm.componentInstance;
       expect(multiYearsViewComp).toBeTruthy();
@@ -398,7 +393,7 @@ describe('OwlCalendarComponent', () => {
       (monthSelected)="selectedMonth = $event"
       (yearSelected)="selectedYear = $event"
     ></owl-date-time-calendar>
-  `
+  `,
 })
 class StandardCalendarComponent {
   selectMode = 'single';
@@ -416,7 +411,7 @@ class StandardCalendarComponent {
       [minDate]="minDate"
       [maxDate]="maxDate"
     ></owl-date-time-calendar>
-  `
+  `,
 })
 class CalendarWithMinMaxComponent {
   selectMode = 'single';
@@ -434,7 +429,7 @@ class CalendarWithMinMaxComponent {
       [pickerMoment]="pickerMoment"
       [dateFilter]="dateFilter"
     ></owl-date-time-calendar>
-  `
+  `,
 })
 class CalendarWithDateFilterComponent {
   selectMode = 'single';

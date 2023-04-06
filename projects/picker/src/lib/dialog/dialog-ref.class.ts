@@ -1,11 +1,11 @@
 import { AnimationEvent } from '@angular/animations';
-import { Location } from '@angular/common';
-import { GlobalPositionStrategy, OverlayRef } from '@angular/cdk/overlay';
 import { ESCAPE } from '@angular/cdk/keycodes';
-import { OwlDialogContainerComponent } from './dialog-container.component';
-import { DialogPosition } from './dialog-config.class';
+import { GlobalPositionStrategy, OverlayRef } from '@angular/cdk/overlay';
+import { Location } from '@angular/common';
 import { Observable, Subject, Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
+import { DialogPosition } from './dialog-config.class';
+import { OwlDialogContainerComponent } from './dialog-container.component';
 
 export class OwlDialogRef<T> {
   private result: any;
@@ -31,12 +31,12 @@ export class OwlDialogRef<T> {
     private overlayRef: OverlayRef,
     private container: OwlDialogContainerComponent,
     public readonly id: string,
-    location?: Location
+    location?: Location,
   ) {
     this.container.animationStateChanged
       .pipe(
         filter((event: AnimationEvent) => event.phaseName === 'done' && event.toState === 'enter'),
-        take(1)
+        take(1),
       )
       .subscribe(() => {
         this._afterOpen$.next(null);
@@ -46,7 +46,7 @@ export class OwlDialogRef<T> {
     this.container.animationStateChanged
       .pipe(
         filter((event: AnimationEvent) => event.phaseName === 'done' && event.toState === 'exit'),
-        take(1)
+        take(1),
       )
       .subscribe(() => {
         this.overlayRef.dispose();
@@ -76,7 +76,7 @@ export class OwlDialogRef<T> {
     this.container.animationStateChanged
       .pipe(
         filter((event: AnimationEvent) => event.phaseName === 'start'),
-        take(1)
+        take(1),
       )
       .subscribe(() => {
         this._beforeClose$.next(dialogResult);

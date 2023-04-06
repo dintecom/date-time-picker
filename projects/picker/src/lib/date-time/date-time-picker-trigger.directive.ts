@@ -5,8 +5,7 @@ import {
   Input,
   OnChanges,
   OnDestroy,
-  OnInit,
-  SimpleChanges
+  SimpleChanges,
 } from '@angular/core';
 import { merge, of as observableOf, Subscription } from 'rxjs';
 import { OwlDateTimeComponent } from './date-time-picker.component';
@@ -16,12 +15,10 @@ import { OwlDateTimeComponent } from './date-time-picker.component';
   // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
     '(click)': 'handleClickOnHost($event)',
-    '[class.owl-dt-trigger-disabled]': 'owlDTTriggerDisabledClass'
-  }
+    '[class.owl-dt-trigger-disabled]': 'owlDTTriggerDisabledClass',
+  },
 })
-export class OwlDateTimeTriggerDirective<T>
-  implements OnInit, OnChanges, AfterContentInit, OnDestroy
-{
+export class OwlDateTimeTriggerDirective<T> implements OnChanges, AfterContentInit, OnDestroy {
   @Input('owlDateTimeTrigger') dtPicker: OwlDateTimeComponent<T>;
 
   private _disabled: boolean;
@@ -41,8 +38,6 @@ export class OwlDateTimeTriggerDirective<T>
   private stateChanges = Subscription.EMPTY;
 
   constructor(protected changeDetector: ChangeDetectorRef) {}
-
-  public ngOnInit(): void {}
 
   public ngOnChanges(changes: SimpleChanges) {
     if (changes['datepicker']) {

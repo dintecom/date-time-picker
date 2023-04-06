@@ -1,3 +1,4 @@
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,9 +6,8 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Output
+  Output,
 } from '@angular/core';
-import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { Subject, Subscription } from 'rxjs';
 import { NumberFixedLenPipe } from './numberedFixLen.pipe';
 
@@ -18,9 +18,9 @@ import { NumberFixedLenPipe } from './numberedFixLen.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
   // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
-    '[class.owl-dt-timer-box]': 'owlDTTimerBoxClass'
+    '[class.owl-dt-timer-box]': 'owlDTTimerBoxClass',
   },
-  providers: [NumberFixedLenPipe]
+  providers: [NumberFixedLenPipe],
 })
 export class OwlTimerBoxComponent implements OnInit, OnDestroy {
   @Input() showDivider = false;

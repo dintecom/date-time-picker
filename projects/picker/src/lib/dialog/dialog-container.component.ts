@@ -1,4 +1,21 @@
 import {
+  animate,
+  animateChild,
+  AnimationEvent,
+  keyframes,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { FocusTrap, FocusTrapFactory } from '@angular/cdk/a11y';
+import {
+  BasePortalOutlet,
+  CdkPortalOutlet,
+  ComponentPortal,
+  TemplatePortal,
+} from '@angular/cdk/portal';
+import { DOCUMENT } from '@angular/common';
+import {
   ChangeDetectorRef,
   Component,
   ComponentRef,
@@ -8,35 +25,18 @@ import {
   Inject,
   OnInit,
   Optional,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
-import {
-  animate,
-  animateChild,
-  AnimationEvent,
-  keyframes,
-  style,
-  transition,
-  trigger
-} from '@angular/animations';
-import { DOCUMENT } from '@angular/common';
-import { FocusTrap, FocusTrapFactory } from '@angular/cdk/a11y';
-import {
-  BasePortalOutlet,
-  CdkPortalOutlet,
-  ComponentPortal,
-  TemplatePortal
-} from '@angular/cdk/portal';
 import { OwlDialogConfig } from './dialog-config.class';
 
 const zoomFadeIn = {
   opacity: 0,
-  transform: 'translateX({{ x }}) translateY({{ y }}) scale({{scale}})'
+  transform: 'translateX({{ x }}) translateY({{ y }}) scale({{scale}})',
 };
 const zoomFadeInFrom = {
   opacity: 0,
   transform: 'translateX({{ x }}) translateY({{ y }}) scale({{scale}})',
-  transformOrigin: '{{ ox }} {{ oy }}'
+  transformOrigin: '{{ ox }} {{ oy }}',
 };
 
 @Component({
@@ -55,10 +55,10 @@ const zoomFadeInFrom = {
               style({ transform: 'scale(1)', offset: 0 }),
               style({ transform: 'scale(1.05)', offset: 0.3 }),
               style({ transform: 'scale(.95)', offset: 0.8 }),
-              style({ transform: 'scale(1)', offset: 1.0 })
-            ])
+              style({ transform: 'scale(1)', offset: 1.0 }),
+            ]),
           ),
-          animateChild()
+          animateChild(),
         ],
         {
           params: {
@@ -66,14 +66,14 @@ const zoomFadeInFrom = {
             y: '0px',
             ox: '50%',
             oy: '50%',
-            scale: 1
-          }
-        }
+            scale: 1,
+          },
+        },
       ),
       transition('enter => exit', [animateChild(), animate(200, style(zoomFadeIn))], {
-        params: { x: '0px', y: '0px', ox: '50%', oy: '50%' }
-      })
-    ])
+        params: { x: '0px', y: '0px', ox: '50%', oy: '50%' },
+      }),
+    ]),
   ],
   host: {
     '(@slideModal.start)': 'onAnimationStart($event)',
@@ -84,8 +84,8 @@ const zoomFadeInFrom = {
     '[attr.role]': 'owlDialogContainerRole',
     '[attr.aria-labelledby]': 'owlDialogContainerAriaLabelledby',
     '[attr.aria-describedby]': 'owlDialogContainerAriaDescribedby',
-    '[@slideModal]': 'owlDialogContainerAnimation'
-  }
+    '[@slideModal]': 'owlDialogContainerAnimation',
+  },
 })
 export class OwlDialogContainerComponent extends BasePortalOutlet implements OnInit {
   @ViewChild(CdkPortalOutlet, { static: true })
@@ -115,7 +115,7 @@ export class OwlDialogContainerComponent extends BasePortalOutlet implements OnI
     y: '0px',
     ox: '50%',
     oy: '50%',
-    scale: 0
+    scale: 0,
   };
 
   // A variable to hold the focused element before the dialog was open.
@@ -156,7 +156,7 @@ export class OwlDialogContainerComponent extends BasePortalOutlet implements OnI
     private focusTrapFactory: FocusTrapFactory,
     @Optional()
     @Inject(DOCUMENT)
-    private document: any
+    private document: any,
   ) {
     super();
   }

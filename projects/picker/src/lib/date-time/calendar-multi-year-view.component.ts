@@ -1,4 +1,15 @@
 import {
+  DOWN_ARROW,
+  END,
+  ENTER,
+  HOME,
+  LEFT_ARROW,
+  PAGE_DOWN,
+  PAGE_UP,
+  RIGHT_ARROW,
+  UP_ARROW,
+} from '@angular/cdk/keycodes';
+import {
   AfterContentInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -8,23 +19,12 @@ import {
   OnInit,
   Optional,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { DateTimeAdapter } from '../adapter/date-time-adapter.class';
 import { CalendarCell, OwlCalendarBodyComponent } from './calendar-body.component';
-import { SelectMode } from './date-time.class';
-import {
-  DOWN_ARROW,
-  END,
-  ENTER,
-  HOME,
-  LEFT_ARROW,
-  PAGE_DOWN,
-  PAGE_UP,
-  RIGHT_ARROW,
-  UP_ARROW
-} from '@angular/cdk/keycodes';
 import { OwlDateTimeIntl } from './date-time-picker-intl.service';
+import { SelectMode } from './date-time.class';
 
 export const YEARS_PER_ROW = 3;
 export const YEAR_ROWS = 7;
@@ -35,9 +35,9 @@ export const YEAR_ROWS = 7;
   // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
     '[class.owl-dt-calendar-view]': 'owlDTCalendarView',
-    '[class.owl-dt-calendar-multi-year-view]': 'owlDTCalendarMultiYearView'
+    '[class.owl-dt-calendar-multi-year-view]': 'owlDTCalendarMultiYearView',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OwlMultiYearViewComponent<T> implements OnInit, AfterContentInit {
   /**
@@ -233,7 +233,7 @@ export class OwlMultiYearViewComponent<T> implements OnInit, AfterContentInit {
   constructor(
     private cdRef: ChangeDetectorRef,
     private pickerIntl: OwlDateTimeIntl,
-    @Optional() private dateTimeAdapter: DateTimeAdapter<T>
+    @Optional() private dateTimeAdapter: DateTimeAdapter<T>,
   ) {}
 
   public ngOnInit() {}
@@ -256,7 +256,7 @@ export class OwlMultiYearViewComponent<T> implements OnInit, AfterContentInit {
     const firstDateOfMonth = this.dateTimeAdapter.createDate(
       year,
       this.dateTimeAdapter.getMonth(this.pickerMoment),
-      1
+      1,
     );
     const daysInMonth = this.dateTimeAdapter.getNumDaysInMonth(firstDateOfMonth);
     const selected = this.dateTimeAdapter.createDate(
@@ -265,7 +265,7 @@ export class OwlMultiYearViewComponent<T> implements OnInit, AfterContentInit {
       Math.min(daysInMonth, this.dateTimeAdapter.getDate(this.pickerMoment)),
       this.dateTimeAdapter.getHours(this.pickerMoment),
       this.dateTimeAdapter.getMinutes(this.pickerMoment),
-      this.dateTimeAdapter.getSeconds(this.pickerMoment)
+      this.dateTimeAdapter.getSeconds(this.pickerMoment),
     );
 
     this.change.emit(selected);
@@ -277,7 +277,7 @@ export class OwlMultiYearViewComponent<T> implements OnInit, AfterContentInit {
   public prevYearList(event: any): void {
     this._pickerMoment = this.dateTimeAdapter.addCalendarYears(
       this.pickerMoment,
-      -1 * YEAR_ROWS * YEARS_PER_ROW
+      -1 * YEAR_ROWS * YEARS_PER_ROW,
     );
     this.generateYearList();
     event.preventDefault();
@@ -289,7 +289,7 @@ export class OwlMultiYearViewComponent<T> implements OnInit, AfterContentInit {
   public nextYearList(event: any): void {
     this._pickerMoment = this.dateTimeAdapter.addCalendarYears(
       this.pickerMoment,
-      YEAR_ROWS * YEARS_PER_ROW
+      YEAR_ROWS * YEARS_PER_ROW,
     );
     this.generateYearList();
     event.preventDefault();
@@ -360,7 +360,7 @@ export class OwlMultiYearViewComponent<T> implements OnInit, AfterContentInit {
       case HOME:
         moment = this.dateTimeAdapter.addCalendarYears(
           this._pickerMoment,
-          -this.dateTimeAdapter.getYear(this._pickerMoment) % (YEARS_PER_ROW * YEAR_ROWS)
+          -this.dateTimeAdapter.getYear(this._pickerMoment) % (YEARS_PER_ROW * YEAR_ROWS),
         );
         this.pickerMomentChange.emit(moment);
         break;
@@ -371,7 +371,7 @@ export class OwlMultiYearViewComponent<T> implements OnInit, AfterContentInit {
           this._pickerMoment,
           YEARS_PER_ROW * YEAR_ROWS -
             (this.dateTimeAdapter.getYear(this._pickerMoment) % (YEARS_PER_ROW * YEAR_ROWS)) -
-            1
+            1,
         );
         this.pickerMomentChange.emit(moment);
         break;
@@ -380,7 +380,7 @@ export class OwlMultiYearViewComponent<T> implements OnInit, AfterContentInit {
       case PAGE_UP:
         moment = this.dateTimeAdapter.addCalendarYears(
           this.pickerMoment,
-          event.altKey ? -10 * (YEARS_PER_ROW * YEAR_ROWS) : -1 * (YEARS_PER_ROW * YEAR_ROWS)
+          event.altKey ? -10 * (YEARS_PER_ROW * YEAR_ROWS) : -1 * (YEARS_PER_ROW * YEAR_ROWS),
         );
         this.pickerMomentChange.emit(moment);
         break;
@@ -389,7 +389,7 @@ export class OwlMultiYearViewComponent<T> implements OnInit, AfterContentInit {
       case PAGE_DOWN:
         moment = this.dateTimeAdapter.addCalendarYears(
           this.pickerMoment,
-          event.altKey ? 10 * (YEARS_PER_ROW * YEAR_ROWS) : YEARS_PER_ROW * YEAR_ROWS
+          event.altKey ? 10 * (YEARS_PER_ROW * YEAR_ROWS) : YEARS_PER_ROW * YEAR_ROWS,
         );
         this.pickerMomentChange.emit(moment);
         break;
@@ -420,7 +420,7 @@ export class OwlMultiYearViewComponent<T> implements OnInit, AfterContentInit {
       ariaLabel,
       this.isYearEnabled(year),
       false,
-      cellClass
+      cellClass,
     );
   }
 

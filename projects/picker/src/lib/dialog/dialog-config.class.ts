@@ -1,5 +1,5 @@
-import { ViewContainerRef } from '@angular/core';
 import { NoopScrollStrategy, ScrollStrategy } from '@angular/cdk/overlay';
+import { ViewContainerRef } from '@angular/core';
 
 let uniqueId = 0;
 

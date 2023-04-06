@@ -6,10 +6,10 @@ import {
   Input,
   NgZone,
   OnInit,
-  Output
+  Output,
 } from '@angular/core';
-import { SelectMode } from './date-time.class';
 import { take } from 'rxjs/operators';
+import { SelectMode } from './date-time.class';
 
 export class CalendarCell {
   constructor(
@@ -18,7 +18,7 @@ export class CalendarCell {
     public ariaLabel: string,
     public enabled: boolean,
     public out: boolean = false,
-    public cellClass: string = ''
+    public cellClass: string = '',
   ) {}
 }
 
@@ -28,9 +28,9 @@ export class CalendarCell {
   templateUrl: './calendar-body.component.html',
   // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
-    '[class.owl-dt-calendar-body]': 'owlDTCalendarBodyClass'
+    '[class.owl-dt-calendar-body]': 'owlDTCalendarBodyClass',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OwlCalendarBodyComponent implements OnInit {
   /**

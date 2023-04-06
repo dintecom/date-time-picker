@@ -1,11 +1,11 @@
 import { Component, DebugElement, EventEmitter, NgZone } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
-import { OwlDateTimeIntl } from './date-time-picker-intl.service';
-import { OwlNativeDateTimeModule } from '../adapter/native';
-import { OwlDateTimeModule } from './date-time.module';
 import { By } from '@angular/platform-browser';
-import { OwlTimerComponent } from './timer.component';
+import { OwlNativeDateTimeModule } from '../adapter/native';
 import { FEB, JAN } from '../utils/month-constants';
+import { OwlDateTimeIntl } from './date-time-picker-intl.service';
+import { OwlDateTimeModule } from './date-time.module';
+import { OwlTimerComponent } from './timer.component';
 
 class MockNgZone extends NgZone {
   override onStable: EventEmitter<any> = new EventEmitter(false);
@@ -30,18 +30,16 @@ class MockNgZone extends NgZone {
 describe('OwlTimerComponent', () => {
   let zone: MockNgZone;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [OwlNativeDateTimeModule, OwlDateTimeModule],
-        declarations: [StandardTimerComponent],
-        providers: [
-          OwlDateTimeIntl,
-          { provide: NgZone, useFactory: () => (zone = new MockNgZone()) }
-        ]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [OwlNativeDateTimeModule, OwlDateTimeModule],
+      declarations: [StandardTimerComponent],
+      providers: [
+        OwlDateTimeIntl,
+        { provide: NgZone, useFactory: () => (zone = new MockNgZone()) },
+      ],
+    }).compileComponents();
+  }));
 
   describe('standard timer', () => {
     let fixture: ComponentFixture<StandardTimerComponent>;
@@ -98,7 +96,7 @@ describe('OwlTimerComponent', () => {
       fixture.detectChanges();
 
       const arrowBtns = timerElement.querySelectorAll<HTMLButtonElement>(
-        'button.owl-dt-control-arrow-button'
+        'button.owl-dt-control-arrow-button',
       );
       expect(arrowBtns.length).toBe(6);
 
@@ -119,7 +117,7 @@ describe('OwlTimerComponent', () => {
       fixture.detectChanges();
 
       const toggleBtn = timerElement.querySelector<HTMLButtonElement>(
-        'button.owl-dt-timer-hour12-box'
+        'button.owl-dt-timer-hour12-box',
       );
 
       toggleBtn.click();
@@ -133,7 +131,7 @@ describe('OwlTimerComponent', () => {
       expect(timerInstance.stepHour).toBe(1);
 
       const arrowBtns = timerElement.querySelectorAll<HTMLButtonElement>(
-        'button.owl-dt-control-arrow-button'
+        'button.owl-dt-control-arrow-button',
       );
       expect(arrowBtns.length).toBe(4);
 
@@ -166,7 +164,7 @@ describe('OwlTimerComponent', () => {
       expect(timerInstance.stepMinute).toBe(1);
 
       const arrowBtns = timerElement.querySelectorAll<HTMLButtonElement>(
-        'button.owl-dt-control-arrow-button'
+        'button.owl-dt-control-arrow-button',
       );
       expect(arrowBtns.length).toBe(4);
 
@@ -201,7 +199,7 @@ describe('OwlTimerComponent', () => {
       testComponent.showSecondsTimer = true;
       fixture.detectChanges();
       const arrowBtns = timerElement.querySelectorAll<HTMLButtonElement>(
-        'button.owl-dt-control-arrow-button'
+        'button.owl-dt-control-arrow-button',
       );
       expect(arrowBtns.length).toBe(6);
 
@@ -235,7 +233,7 @@ describe('OwlTimerComponent', () => {
       fixture.detectChanges();
 
       const toggleBtn = timerElement.querySelector<HTMLButtonElement>(
-        'button.owl-dt-timer-hour12-box'
+        'button.owl-dt-timer-hour12-box',
       );
       expect(toggleBtn.innerHTML).toContain('PM');
 
@@ -251,7 +249,7 @@ describe('OwlTimerComponent', () => {
       testComponent.showSecondsTimer = true;
       fixture.detectChanges();
       const arrowBtns = timerElement.querySelectorAll<HTMLButtonElement>(
-        'button.owl-dt-control-arrow-button'
+        'button.owl-dt-control-arrow-button',
       );
       expect(arrowBtns.length).toBe(6);
 
@@ -273,7 +271,7 @@ describe('OwlTimerComponent', () => {
       testComponent.showSecondsTimer = true;
       fixture.detectChanges();
       const arrowBtns = timerElement.querySelectorAll<HTMLButtonElement>(
-        'button.owl-dt-control-arrow-button'
+        'button.owl-dt-control-arrow-button',
       );
       expect(arrowBtns.length).toBe(6);
 
@@ -306,7 +304,7 @@ describe('OwlTimerComponent', () => {
       [maxDateTime]="maxDateTime"
       (selectedChange)="handleSelectedChange($event)"
     ></owl-date-time-timer>
-  `
+  `,
 })
 class StandardTimerComponent {
   stepHour = 1;

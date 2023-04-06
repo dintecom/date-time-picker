@@ -12,7 +12,7 @@ import {
   OnInit,
   Optional,
   Output,
-  Renderer2
+  Renderer2,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -22,24 +22,24 @@ import {
   ValidationErrors,
   Validator,
   ValidatorFn,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DateTimeAdapter } from '../adapter/date-time-adapter.class';
-import { OWL_DATE_TIME_FORMATS, OwlDateTimeFormats } from '../adapter/date-time-format.class';
+import { OwlDateTimeFormats, OWL_DATE_TIME_FORMATS } from '../adapter/date-time-format.class';
 import { OwlDateTimeComponent } from './date-time-picker.component';
 import { SelectMode } from './date-time.class';
 
 export const OWL_DATETIME_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => OwlDateTimeInputDirective),
-  multi: true
+  multi: true,
 };
 
 export const OWL_DATETIME_VALIDATORS: any = {
   provide: NG_VALIDATORS,
   useExisting: forwardRef(() => OwlDateTimeInputDirective),
-  multi: true
+  multi: true,
 };
 
 @Directive({
@@ -55,9 +55,9 @@ export const OWL_DATETIME_VALIDATORS: any = {
     '[attr.aria-owns]': 'owlDateTimeInputAriaOwns',
     '[attr.min]': 'minIso8601',
     '[attr.max]': 'maxIso8601',
-    '[disabled]': 'owlDateTimeInputDisabled'
+    '[disabled]': 'owlDateTimeInputDisabled',
   },
-  providers: [OWL_DATETIME_VALUE_ACCESSOR, OWL_DATETIME_VALIDATORS]
+  providers: [OWL_DATETIME_VALUE_ACCESSOR, OWL_DATETIME_VALIDATORS],
 })
 export class OwlDateTimeInputDirective<T>
   implements OnInit, AfterContentInit, OnDestroy, ControlValueAccessor, Validator
@@ -249,9 +249,7 @@ export class OwlDateTimeInputDirective<T>
     const value = this.elmRef.nativeElement.value;
     if (!value) return null;
 
-    return this.lastValueValid
-      ? null
-      : { owlDateTimeParse: { text: value } };
+    return this.lastValueValid ? null : { owlDateTimeParse: { text: value } };
   };
 
   /** The form control validator for the min date. */
@@ -265,7 +263,7 @@ export class OwlDateTimeInputDirective<T>
         : { owlDateTimeMin: { min: this.min, actual: controlValue } };
     } else if (this.isInRangeMode && control.value) {
       const controlValueFrom = this.getValidDate(
-        this.dateTimeAdapter.deserialize(control.value[0])
+        this.dateTimeAdapter.deserialize(control.value[0]),
       );
       const controlValueTo = this.getValidDate(this.dateTimeAdapter.deserialize(control.value[1]));
       return !this.min ||
@@ -276,8 +274,8 @@ export class OwlDateTimeInputDirective<T>
         : {
             owlDateTimeMin: {
               min: this.min,
-              actual: [controlValueFrom, controlValueTo]
-            }
+              actual: [controlValueFrom, controlValueTo],
+            },
           };
     }
     return null;
@@ -294,7 +292,7 @@ export class OwlDateTimeInputDirective<T>
         : { owlDateTimeMax: { max: this.max, actual: controlValue } };
     } else if (this.isInRangeMode && control.value) {
       const controlValueFrom = this.getValidDate(
-        this.dateTimeAdapter.deserialize(control.value[0])
+        this.dateTimeAdapter.deserialize(control.value[0]),
       );
       const controlValueTo = this.getValidDate(this.dateTimeAdapter.deserialize(control.value[1]));
       return !this.max ||
@@ -305,8 +303,8 @@ export class OwlDateTimeInputDirective<T>
         : {
             owlDateTimeMax: {
               max: this.max,
-              actual: [controlValueFrom, controlValueTo]
-            }
+              actual: [controlValueFrom, controlValueTo],
+            },
           };
     }
     return null;
@@ -345,7 +343,7 @@ export class OwlDateTimeInputDirective<T>
     this.minValidator,
     this.maxValidator,
     this.filterValidator,
-    this.rangeValidator
+    this.rangeValidator,
   ]);
 
   /** Emits when the value changes (either due to user input or programmatic change). */
@@ -380,13 +378,13 @@ export class OwlDateTimeInputDirective<T>
     @Optional() private dateTimeAdapter: DateTimeAdapter<T>,
     @Optional()
     @Inject(OWL_DATE_TIME_FORMATS)
-    private dateTimeFormats: OwlDateTimeFormats
+    private dateTimeFormats: OwlDateTimeFormats,
   ) {
     if (!this.dateTimeAdapter) {
       throw Error(
         `OwlDateTimePicker: No provider found for DateTimePicker. You must import one of the following ` +
           `modules at your application root: OwlNativeDateTimeModule or provide a ` +
-          `custom implementation.`
+          `custom implementation.`,
       );
     }
 
@@ -394,7 +392,7 @@ export class OwlDateTimeInputDirective<T>
       throw Error(
         `OwlDateTimePicker: No provider found for OWL_DATE_TIME_FORMATS. You must import one of the following ` +
           `modules at your application root: OwlNativeDateTimeModule or provide a ` +
-          `custom implementation.`
+          `custom implementation.`,
       );
     }
 
@@ -406,7 +404,7 @@ export class OwlDateTimeInputDirective<T>
   public ngOnInit(): void {
     if (!this.dtPicker) {
       throw Error(
-        `OwlDateTimePicker: the picker input doesn't have any associated owl-date-time component`
+        `OwlDateTimePicker: the picker input doesn't have any associated owl-date-time component`,
       );
     }
   }
@@ -424,12 +422,12 @@ export class OwlDateTimeInputDirective<T>
       this.dateTimeChange.emit({
         source: this,
         value: selecteds,
-        input: this.elmRef.nativeElement
+        input: this.elmRef.nativeElement,
       });
       this.dateTimeInput.emit({
         source: this,
         value: selecteds,
-        input: this.elmRef.nativeElement
+        input: this.elmRef.nativeElement,
       });
     });
   }
@@ -506,7 +504,7 @@ export class OwlDateTimeInputDirective<T>
     this.dateTimeChange.emit({
       source: this,
       value: v,
-      input: this.elmRef.nativeElement
+      input: this.elmRef.nativeElement,
     });
   }
 
@@ -518,7 +516,7 @@ export class OwlDateTimeInputDirective<T>
       this.renderer.setProperty(
         this.elmRef.nativeElement,
         'value',
-        this._value ? this.dateTimeAdapter.format(this._value, this.dtPicker.formatString) : ''
+        this._value ? this.dateTimeAdapter.format(this._value, this.dtPicker.formatString) : '',
       );
     } else if (this.isInRangeMode) {
       if (this._values && this.values.length > 0) {
@@ -537,7 +535,7 @@ export class OwlDateTimeInputDirective<T>
             this.renderer.setProperty(
               this.elmRef.nativeElement,
               'value',
-              `${fromFormatted} ${this.rangeSeparator} ${toFormatted}`
+              `${fromFormatted} ${this.rangeSeparator} ${toFormatted}`,
             );
           } else if (this._selectMode === 'rangeFrom') {
             this.renderer.setProperty(this.elmRef.nativeElement, 'value', fromFormatted);
@@ -593,7 +591,10 @@ export class OwlDateTimeInputDirective<T>
    */
   private changeInputInSingleMode(inputValue: string): void {
     inputValue = (inputValue || '').trim();
-    this.lastValueValid = this.dateTimeAdapter.isValidFormat(inputValue, this.dtPicker.formatString);
+    this.lastValueValid = this.dateTimeAdapter.isValidFormat(
+      inputValue,
+      this.dtPicker.formatString,
+    );
 
     let value = inputValue;
     if (this.dtPicker.pickerType === 'timer') {
@@ -612,7 +613,7 @@ export class OwlDateTimeInputDirective<T>
       this.dateTimeInput.emit({
         source: this,
         value: result,
-        input: this.elmRef.nativeElement
+        input: this.elmRef.nativeElement,
       });
     }
   }
@@ -622,7 +623,10 @@ export class OwlDateTimeInputDirective<T>
    */
   private changeInputInRangeFromToMode(inputValue: string): void {
     inputValue = (inputValue || '').trim();
-    this.lastValueValid = this.dateTimeAdapter.isValidFormat(inputValue, this.dtPicker.formatString);
+    this.lastValueValid = this.dateTimeAdapter.isValidFormat(
+      inputValue,
+      this.dtPicker.formatString,
+    );
 
     const originalValue = this._selectMode === 'rangeFrom' ? this._values[0] : this._values[1];
 
@@ -652,7 +656,7 @@ export class OwlDateTimeInputDirective<T>
     this.dateTimeInput.emit({
       source: this,
       value: this._values,
-      input: this.elmRef.nativeElement
+      input: this.elmRef.nativeElement,
     });
   }
 
@@ -691,7 +695,7 @@ export class OwlDateTimeInputDirective<T>
       this.dateTimeInput.emit({
         source: this,
         value: this._values,
-        input: this.elmRef.nativeElement
+        input: this.elmRef.nativeElement,
       });
     }
   }

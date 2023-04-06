@@ -1,3 +1,4 @@
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -9,19 +10,18 @@ import {
   OnInit,
   Optional,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { OwlDateTime, PickerMode, PickerType, SelectMode } from './date-time.class';
 import { DateTimeAdapter } from '../adapter/date-time-adapter.class';
-import { OWL_DATE_TIME_FORMATS, OwlDateTimeFormats } from '../adapter/date-time-format.class';
+import { OwlDateTimeFormats, OWL_DATE_TIME_FORMATS } from '../adapter/date-time-format.class';
 import { OwlDateTimeContainerComponent } from './date-time-picker-container.component';
+import { OwlDateTime, PickerMode, PickerType, SelectMode } from './date-time.class';
 
 export const OWL_DATETIME_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => OwlDateTimeInlineComponent),
-  multi: true
+  multi: true,
 };
 
 @Component({
@@ -29,10 +29,10 @@ export const OWL_DATETIME_VALUE_ACCESSOR: any = {
   templateUrl: './date-time-inline.component.html',
   // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
-    '[class.owl-dt-inline]': 'owlDTInlineClass'
+    '[class.owl-dt-inline]': 'owlDTInlineClass',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [OWL_DATETIME_VALUE_ACCESSOR]
+  providers: [OWL_DATETIME_VALUE_ACCESSOR],
 })
 export class OwlDateTimeInlineComponent<T>
   extends OwlDateTime<T>
@@ -242,7 +242,7 @@ export class OwlDateTimeInlineComponent<T>
     @Optional() protected override dateTimeAdapter: DateTimeAdapter<T>,
     @Optional()
     @Inject(OWL_DATE_TIME_FORMATS)
-    protected override dateTimeFormats: OwlDateTimeFormats
+    protected override dateTimeFormats: OwlDateTimeFormats,
   ) {
     super(dateTimeAdapter, dateTimeFormats);
   }

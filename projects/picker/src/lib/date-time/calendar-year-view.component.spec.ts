@@ -1,11 +1,3 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { OwlDateTimeIntl } from './date-time-picker-intl.service';
-import { OwlNativeDateTimeModule } from '../adapter/native';
-import { OwlDateTimeModule } from './date-time.module';
-import { Component, DebugElement } from '@angular/core';
-import { OwlYearViewComponent } from './calendar-year-view.component';
-import { By } from '@angular/platform-browser';
-import { dispatchMouseEvent, dispatchKeyboardEvent } from '../../test-helpers';
 import {
   DOWN_ARROW,
   END,
@@ -14,20 +6,26 @@ import {
   PAGE_DOWN,
   PAGE_UP,
   RIGHT_ARROW,
-  UP_ARROW
+  UP_ARROW,
 } from '@angular/cdk/keycodes';
+import { Component, DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { dispatchKeyboardEvent, dispatchMouseEvent } from '../../test-helpers';
+import { OwlNativeDateTimeModule } from '../adapter/native';
 import { APR, DEC, FEB, JAN, JUL, JUN, MAR, NOV, OCT, SEP } from '../utils/month-constants';
+import { OwlYearViewComponent } from './calendar-year-view.component';
+import { OwlDateTimeIntl } from './date-time-picker-intl.service';
+import { OwlDateTimeModule } from './date-time.module';
 
 describe('OwlYearViewComponent', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [OwlNativeDateTimeModule, OwlDateTimeModule],
-        declarations: [StandardYearViewComponent, YearViewWithDateFilterComponent],
-        providers: [OwlDateTimeIntl]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [OwlNativeDateTimeModule, OwlDateTimeModule],
+      declarations: [StandardYearViewComponent, YearViewWithDateFilterComponent],
+      providers: [OwlDateTimeIntl],
+    }).compileComponents();
+  }));
 
   describe('standard year view', () => {
     let fixture: ComponentFixture<StandardYearViewComponent>;
@@ -53,7 +51,7 @@ describe('OwlYearViewComponent', () => {
 
     it('should show selected month if in same year', () => {
       const selectedElContent = yearViewElement.querySelector(
-        '.owl-dt-calendar-cell-selected.owl-dt-calendar-cell-content'
+        '.owl-dt-calendar-cell-selected.owl-dt-calendar-cell-content',
       )!;
       expect(selectedElContent.innerHTML.trim()).toBe('Jan');
     });
@@ -63,7 +61,7 @@ describe('OwlYearViewComponent', () => {
       fixture.detectChanges();
 
       const selectedElContent = yearViewElement.querySelector(
-        '.owl-calendar-body-selected.owl-dt-calendar-cell-content'
+        '.owl-calendar-body-selected.owl-dt-calendar-cell-content',
       );
       expect(selectedElContent).toBeNull();
     });
@@ -74,7 +72,7 @@ describe('OwlYearViewComponent', () => {
       fixture.detectChanges();
 
       const selectedElContent = yearViewElement.querySelector(
-        '.owl-dt-calendar-cell-active .owl-dt-calendar-cell-content'
+        '.owl-dt-calendar-cell-active .owl-dt-calendar-cell-content',
       )!;
       expect(selectedElContent.innerHTML.trim()).toBe('Dec');
     });
@@ -263,7 +261,7 @@ describe('OwlYearViewComponent', () => {
       [(pickerMoment)]="pickerMoment"
       (change)="handleChange($event)"
     ></owl-date-time-year-view>
-  `
+  `,
 })
 class StandardYearViewComponent {
   selected = new Date(2018, JAN, 10);
@@ -280,7 +278,7 @@ class StandardYearViewComponent {
       [(pickerMoment)]="pickerMoment"
       [dateFilter]="dateFilter"
     ></owl-date-time-year-view>
-  `
+  `,
 })
 class YearViewWithDateFilterComponent {
   pickerMoment = new Date(2018, JAN, 1);

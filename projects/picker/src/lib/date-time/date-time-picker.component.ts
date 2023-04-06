@@ -1,3 +1,15 @@
+import { coerceArray, coerceBooleanProperty } from '@angular/cdk/coercion';
+import { ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
+import {
+  BlockScrollStrategy,
+  Overlay,
+  OverlayConfig,
+  OverlayRef,
+  PositionStrategy,
+  ScrollStrategy,
+} from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
+import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -9,41 +21,28 @@ import {
   Input,
   NgZone,
   OnDestroy,
-  OnInit,
   Optional,
   Output,
-  ViewContainerRef
+  ViewContainerRef,
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { ComponentPortal } from '@angular/cdk/portal';
-import {
-  BlockScrollStrategy,
-  Overlay,
-  OverlayConfig,
-  OverlayRef,
-  PositionStrategy,
-  ScrollStrategy
-} from '@angular/cdk/overlay';
-import { ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
-import { coerceArray, coerceBooleanProperty } from '@angular/cdk/coercion';
-import { OwlDateTimeContainerComponent } from './date-time-picker-container.component';
-import { OwlDateTimeInputDirective } from './date-time-picker-input.directive';
-import { DateTimeAdapter } from '../adapter/date-time-adapter.class';
-import { OWL_DATE_TIME_FORMATS, OwlDateTimeFormats } from '../adapter/date-time-format.class';
-import { OwlDateTime, PickerMode, PickerType, SelectMode } from './date-time.class';
-import { OwlDialogRef } from '../dialog/dialog-ref.class';
-import { OwlDialogService } from '../dialog/dialog.service';
 import { merge, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
+import { DateTimeAdapter } from '../adapter/date-time-adapter.class';
+import { OwlDateTimeFormats, OWL_DATE_TIME_FORMATS } from '../adapter/date-time-format.class';
+import { OwlDialogRef } from '../dialog/dialog-ref.class';
+import { OwlDialogService } from '../dialog/dialog.service';
+import { OwlDateTimeContainerComponent } from './date-time-picker-container.component';
+import { OwlDateTimeInputDirective } from './date-time-picker-input.directive';
+import { OwlDateTime, PickerMode, PickerType, SelectMode } from './date-time.class';
 
 /** Injection token that determines the scroll handling while the dtPicker is open. */
 export const OWL_DTPICKER_SCROLL_STRATEGY = new InjectionToken<() => ScrollStrategy>(
-  'owl-dtpicker-scroll-strategy'
+  'owl-dtpicker-scroll-strategy',
 );
 
 /** @docs-private */
 export function OWL_DTPICKER_SCROLL_STRATEGY_PROVIDER_FACTORY(
-  overlay: Overlay
+  overlay: Overlay,
 ): () => BlockScrollStrategy {
   return () => overlay.scrollStrategies.block();
 }
@@ -52,16 +51,16 @@ export function OWL_DTPICKER_SCROLL_STRATEGY_PROVIDER_FACTORY(
 export const OWL_DTPICKER_SCROLL_STRATEGY_PROVIDER = {
   provide: OWL_DTPICKER_SCROLL_STRATEGY,
   deps: [Overlay],
-  useFactory: OWL_DTPICKER_SCROLL_STRATEGY_PROVIDER_FACTORY
+  useFactory: OWL_DTPICKER_SCROLL_STRATEGY_PROVIDER_FACTORY,
 };
 
 @Component({
   selector: 'owl-date-time',
   exportAs: 'owlDateTime',
   templateUrl: './date-time-picker.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnInit, OnDestroy {
+export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnDestroy {
   /** Custom class for the picker backdrop. */
   @Input()
   public backdropClass: string | string[] = [];
@@ -297,13 +296,11 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnInit, O
     protected override dateTimeFormats: OwlDateTimeFormats,
     @Optional()
     @Inject(DOCUMENT)
-    private document: any
+    private document: any,
   ) {
     super(dateTimeAdapter, dateTimeFormats);
     this.defaultScrollStrategy = defaultScrollStrategy;
   }
-
-  public ngOnInit() {}
 
   public ngOnDestroy(): void {
     this.close();
@@ -360,7 +357,7 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnInit, O
         this.dateTimeAdapter.getHours(this._startAt),
         this.dateTimeAdapter.getMinutes(this._startAt),
         this.dateTimeAdapter.getSeconds(this._startAt),
-        this.dateTimeAdapter.getMilliseconds(this._startAt)
+        this.dateTimeAdapter.getMilliseconds(this._startAt),
       );
     }
 
@@ -378,7 +375,7 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnInit, O
     this.confirmSelectedStreamSub = this.pickerContainer.confirmSelectedStream.subscribe(
       (event: any) => {
         this.confirmSelect(event);
-      }
+      },
     );
   }
 
@@ -511,7 +508,7 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnInit, O
       backdropClass: ['cdk-overlay-dark-backdrop', ...coerceArray(this.backdropClass)],
       paneClass: ['owl-dt-dialog', ...coerceArray(this.panelClass)],
       viewContainerRef: this.viewContainerRef,
-      scrollStrategy: this.scrollStrategy || this.defaultScrollStrategy()
+      scrollStrategy: this.scrollStrategy || this.defaultScrollStrategy(),
     });
     this.pickerContainer = this.dialogRef.componentInstance;
 
@@ -529,7 +526,7 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnInit, O
     if (!this.pickerContainerPortal) {
       this.pickerContainerPortal = new ComponentPortal<OwlDateTimeContainerComponent<T>>(
         OwlDateTimeContainerComponent,
-        this.viewContainerRef
+        this.viewContainerRef,
       );
     }
 
@@ -539,7 +536,7 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnInit, O
 
     if (!this.popupRef.hasAttached()) {
       const componentRef: ComponentRef<OwlDateTimeContainerComponent<T>> = this.popupRef.attach(
-        this.pickerContainerPortal
+        this.pickerContainerPortal,
       );
       this.pickerContainer = componentRef.instance;
 
@@ -567,7 +564,7 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnInit, O
       hasBackdrop: true,
       backdropClass: ['cdk-overlay-transparent-backdrop', ...coerceArray(this.backdropClass)],
       scrollStrategy: this.scrollStrategy || this.defaultScrollStrategy(),
-      panelClass: ['owl-dt-popup', ...coerceArray(this.panelClass)]
+      panelClass: ['owl-dt-popup', ...coerceArray(this.panelClass)],
     });
 
     this.popupRef = this.overlay.create(overlayConfig);
@@ -581,9 +578,9 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnInit, O
           filter(
             event =>
               event.keyCode === ESCAPE ||
-              (this._dtInput && event.altKey && event.keyCode === UP_ARROW)
-          )
-        )
+              (this._dtInput && event.altKey && event.keyCode === UP_ARROW),
+          ),
+        ),
     ).subscribe(() => this.close());
   }
 
@@ -602,40 +599,40 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnInit, O
           originX: 'start',
           originY: 'bottom',
           overlayX: 'start',
-          overlayY: 'top'
+          overlayY: 'top',
         },
         {
           originX: 'start',
           originY: 'top',
           overlayX: 'start',
-          overlayY: 'bottom'
+          overlayY: 'bottom',
         },
         {
           originX: 'end',
           originY: 'bottom',
           overlayX: 'end',
-          overlayY: 'top'
+          overlayY: 'top',
         },
         {
           originX: 'end',
           originY: 'top',
           overlayX: 'end',
-          overlayY: 'bottom'
+          overlayY: 'bottom',
         },
         {
           originX: 'start',
           originY: 'top',
           overlayX: 'start',
           overlayY: 'top',
-          offsetY: -176
+          offsetY: -176,
         },
         {
           originX: 'start',
           originY: 'top',
           overlayX: 'start',
           overlayY: 'top',
-          offsetY: -352
-        }
+          offsetY: -352,
+        },
       ]);
   }
 }

@@ -20,7 +20,7 @@ export function dispatchKeyboardEvent(
   node: Node,
   type: string,
   keyCode: number,
-  target?: Element
+  target?: Element,
 ): KeyboardEvent {
   return dispatchEvent(node, createKeyboardEvent(type, keyCode, target)) as KeyboardEvent;
 }
@@ -41,7 +41,7 @@ export function createKeyboardEvent(type: string, keyCode: number, target?: Elem
   Object.defineProperties(event, {
     keyCode: { get: () => keyCode },
     key: { get: () => key },
-    target: { get: () => target }
+    target: { get: () => target },
   });
 
   // IE won't set `defaultPrevented` on synthetic events so we need to do it manually.
@@ -58,7 +58,7 @@ export function dispatchMouseEvent(
   type: string,
   x = 0,
   y = 0,
-  event = createMouseEvent(type, x, y)
+  event = createMouseEvent(type, x, y),
 ): MouseEvent {
   return dispatchEvent(node, event) as MouseEvent;
 }
@@ -82,7 +82,7 @@ export function createMouseEvent(type: string, x = 0, y = 0, button = 0) {
     false /* shiftKey */,
     false /* metaKey */,
     button /* button */,
-    null /* relatedTarget */
+    null /* relatedTarget */,
   );
 
   // `initMouseEvent` doesn't allow us to pass the `buttons` and

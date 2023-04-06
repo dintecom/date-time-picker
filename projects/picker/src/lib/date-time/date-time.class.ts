@@ -1,7 +1,7 @@
-import { EventEmitter, Inject, Input, Optional, Directive } from '@angular/core';
 import { coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
+import { Directive, EventEmitter, Inject, Input, Optional } from '@angular/core';
 import { DateTimeAdapter } from '../adapter/date-time-adapter.class';
-import { OWL_DATE_TIME_FORMATS, OwlDateTimeFormats } from '../adapter/date-time-format.class';
+import { OwlDateTimeFormats, OWL_DATE_TIME_FORMATS } from '../adapter/date-time-format.class';
 
 let nextUniqueId = 0;
 
@@ -182,13 +182,13 @@ export abstract class OwlDateTime<T> {
     @Optional() protected dateTimeAdapter: DateTimeAdapter<T>,
     @Optional()
     @Inject(OWL_DATE_TIME_FORMATS)
-    protected dateTimeFormats: OwlDateTimeFormats
+    protected dateTimeFormats: OwlDateTimeFormats,
   ) {
     if (!this.dateTimeAdapter) {
       throw Error(
         `OwlDateTimePicker: No provider found for DateTimeAdapter. You must import one of the following ` +
           `modules at your application root: OwlNativeDateTimeModule or provide a ` +
-          `custom implementation.`
+          `custom implementation.`,
       );
     }
 
@@ -196,7 +196,7 @@ export abstract class OwlDateTime<T> {
       throw Error(
         `OwlDateTimePicker: No provider found for OWL_DATE_TIME_FORMATS. You must import one of the following ` +
           `modules at your application root: OwlNativeDateTimeModule or provide a ` +
-          `custom implementation.`
+          `custom implementation.`,
       );
     }
 

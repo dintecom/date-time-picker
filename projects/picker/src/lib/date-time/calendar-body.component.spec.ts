@@ -1,21 +1,19 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CalendarCell, OwlCalendarBodyComponent } from './calendar-body.component';
 import { Component } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { CalendarCell, OwlCalendarBodyComponent } from './calendar-body.component';
 
 describe('OwlCalendarBodyComponent', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          OwlCalendarBodyComponent,
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        OwlCalendarBodyComponent,
 
-          // Test components
-          StandardCalendarBodyComponent
-        ]
-      }).compileComponents();
-    })
-  );
+        // Test components
+        StandardCalendarBodyComponent,
+      ],
+    }).compileComponents();
+  }));
 
   describe('standard CalendarBodyComponent', () => {
     let fixture: ComponentFixture<StandardCalendarBodyComponent>;
@@ -34,7 +32,7 @@ describe('OwlCalendarBodyComponent', () => {
       fixture.detectChanges();
 
       const calendarBodyDebugElement = fixture.debugElement.query(
-        By.directive(OwlCalendarBodyComponent)
+        By.directive(OwlCalendarBodyComponent),
       );
       calendarBodyNativeElement = calendarBodyDebugElement.nativeElement;
       testComponent = fixture.componentInstance;
@@ -55,7 +53,7 @@ describe('OwlCalendarBodyComponent', () => {
 
     it('should highlight selected', () => {
       const selectedCell = calendarBodyNativeElement.querySelector(
-        '.owl-dt-calendar-cell-selected'
+        '.owl-dt-calendar-cell-selected',
       )!;
       expect(selectedCell).not.toBeNull();
       expect(selectedCell.innerHTML.trim()).toBe('4');
@@ -65,7 +63,7 @@ describe('OwlCalendarBodyComponent', () => {
       spyOn(testComponent, 'handleSelect');
       expect(testComponent.handleSelect).not.toHaveBeenCalled();
       const todayElement = calendarBodyNativeElement.querySelector(
-        '.owl-dt-calendar-cell-today'
+        '.owl-dt-calendar-cell-today',
       ) as HTMLElement;
       todayElement.click();
       fixture.detectChanges();
@@ -91,12 +89,12 @@ describe('OwlCalendarBodyComponent', () => {
       [activeCell]="activeCell"
       (select)="handleSelect()"
     ></table>
-  `
+  `,
 })
 class StandardCalendarBodyComponent {
   rows = [
     [1, 2, 3, 4, 5, 6, 7],
-    [8, 9, 10, 11, 12, 13, 14]
+    [8, 9, 10, 11, 12, 13, 14],
   ].map(r => r.map(createCell));
   todayValue = 3;
   selectedValues = [4];

@@ -12,14 +12,14 @@ import {
   OnDestroy,
   OnInit,
   Optional,
-  Output
+  Output,
 } from '@angular/core';
-import { OwlDateTimeIntl } from './date-time-picker-intl.service';
-import { DateTimeAdapter } from '../adapter/date-time-adapter.class';
-import { OWL_DATE_TIME_FORMATS, OwlDateTimeFormats } from '../adapter/date-time-format.class';
-import { SelectMode } from './date-time.class';
-import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { DateTimeAdapter } from '../adapter/date-time-adapter.class';
+import { OwlDateTimeFormats, OWL_DATE_TIME_FORMATS } from '../adapter/date-time-format.class';
+import { OwlDateTimeIntl } from './date-time-picker-intl.service';
+import { SelectMode } from './date-time.class';
 
 @Component({
   selector: 'owl-date-time-calendar',
@@ -27,9 +27,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './calendar.component.html',
   // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
-    '[class.owl-dt-calendar]': 'owlDTCalendarClass'
+    '[class.owl-dt-calendar]': 'owlDTCalendarClass',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OwlCalendarComponent<T>
   implements OnInit, AfterContentInit, AfterViewChecked, OnDestroy
@@ -61,7 +61,7 @@ export class OwlCalendarComponent<T>
       ? this.dateTimeAdapter.createDate(
           this.dateTimeAdapter.getYear(value),
           this.dateTimeAdapter.getMonth(value),
-          this.dateTimeAdapter.getDate(value)
+          this.dateTimeAdapter.getDate(value),
         )
       : null;
   }
@@ -81,7 +81,7 @@ export class OwlCalendarComponent<T>
       ? this.dateTimeAdapter.createDate(
           this.dateTimeAdapter.getYear(value),
           this.dateTimeAdapter.getMonth(value),
-          this.dateTimeAdapter.getDate(value)
+          this.dateTimeAdapter.getDate(value),
         )
       : null;
   }
@@ -260,7 +260,7 @@ export class OwlCalendarComponent<T>
     @Optional() private dateTimeAdapter: DateTimeAdapter<T>,
     @Optional()
     @Inject(OWL_DATE_TIME_FORMATS)
-    private dateTimeFormats: OwlDateTimeFormats
+    private dateTimeFormats: OwlDateTimeFormats,
   ) {
     this.intlChangesSub = this.pickerIntl.changes.subscribe(() => {
       this.cdRef.markForCheck();

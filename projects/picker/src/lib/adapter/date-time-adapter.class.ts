@@ -1,10 +1,10 @@
-import { Observable, Subject } from 'rxjs';
 import { inject, InjectionToken, LOCALE_ID } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
 /** InjectionToken for date-time picker that can be used to override default locale code. */
 export const OWL_DATE_TIME_LOCALE = new InjectionToken<string>('OWL_DATE_TIME_LOCALE', {
   providedIn: 'root',
-  factory: OWL_DATE_TIME_LOCALE_FACTORY
+  factory: OWL_DATE_TIME_LOCALE_FACTORY,
 });
 
 /** @docs-private */
@@ -157,7 +157,7 @@ export abstract class DateTimeAdapter<T> {
     hours?: number,
     minutes?: number,
     seconds?: number,
-    ms?: number
+    ms?: number,
   ): T;
 
   /**

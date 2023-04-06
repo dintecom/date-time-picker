@@ -1,24 +1,24 @@
-import { OwlDateTimeComponent } from './date-time-picker.component';
-import { ComponentFixture, fakeAsync, flush, inject, TestBed } from '@angular/core/testing';
-import { Component, FactoryProvider, Type, ValueProvider, ViewChild } from '@angular/core';
-import { OwlDateTimeInputDirective } from './date-time-picker-input.directive';
-import { UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { OwlDateTimeModule } from './date-time.module';
+import { ENTER, ESCAPE, RIGHT_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { OwlNativeDateTimeModule } from '../adapter/native';
+import { Component, FactoryProvider, Type, ValueProvider, ViewChild } from '@angular/core';
+import { ComponentFixture, fakeAsync, flush, inject, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  dispatchKeyboardEvent,
-  dispatchMouseEvent,
   createKeyboardEvent,
   dispatchEvent,
-  dispatchFakeEvent
+  dispatchFakeEvent,
+  dispatchKeyboardEvent,
+  dispatchMouseEvent,
 } from '../../test-helpers';
-import { ENTER, ESCAPE, RIGHT_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
-import { By } from '@angular/platform-browser';
-import { OwlDateTimeContainerComponent } from './date-time-picker-container.component';
-import { OwlDateTimeTriggerDirective } from './date-time-picker-trigger.directive';
+import { OwlNativeDateTimeModule } from '../adapter/native';
 import { DEC, FEB, JAN, JUL, JUN } from '../utils/month-constants';
+import { OwlDateTimeContainerComponent } from './date-time-picker-container.component';
+import { OwlDateTimeInputDirective } from './date-time-picker-input.directive';
+import { OwlDateTimeTriggerDirective } from './date-time-picker-trigger.directive';
+import { OwlDateTimeComponent } from './date-time-picker.component';
+import { OwlDateTimeModule } from './date-time.module';
 
 describe('OwlDateTimeComponent', () => {
   const SUPPORTS_INTL = typeof Intl !== 'undefined';
@@ -27,7 +27,7 @@ describe('OwlDateTimeComponent', () => {
   function createComponent(
     component: Type<any>,
     imports: Type<any>[] = [],
-    providers: (FactoryProvider | ValueProvider)[] = []
+    providers: (FactoryProvider | ValueProvider)[] = [],
   ): ComponentFixture<any> {
     TestBed.configureTestingModule({
       imports: [
@@ -35,10 +35,10 @@ describe('OwlDateTimeComponent', () => {
         OwlDateTimeModule,
         NoopAnimationsModule,
         ReactiveFormsModule,
-        ...imports
+        ...imports,
       ],
       providers,
-      declarations: [component]
+      declarations: [component],
     });
 
     return TestBed.createComponent(component);
@@ -157,7 +157,7 @@ describe('OwlDateTimeComponent', () => {
 
         expect(testComponent.dateTimePicker.opened).toBe(
           true,
-          'Expected dateTimePicker to be open.'
+          'Expected dateTimePicker to be open.',
         );
 
         dispatchKeyboardEvent(document.body, 'keydown', ESCAPE);
@@ -166,7 +166,7 @@ describe('OwlDateTimeComponent', () => {
 
         expect(testComponent.dateTimePicker.opened).toBe(
           false,
-          'Expected dateTimePicker to be closed.'
+          'Expected dateTimePicker to be closed.',
         );
       }));
 
@@ -193,11 +193,11 @@ describe('OwlDateTimeComponent', () => {
         flush();
         expect(testComponent.dateTimePicker.opened).toBe(
           true,
-          'Expected dateTimePicker to be opened.'
+          'Expected dateTimePicker to be opened.',
         );
 
         const containerDebugElement = fixture.debugElement.query(
-          By.directive(OwlDateTimeContainerComponent)
+          By.directive(OwlDateTimeContainerComponent),
         );
         containerElement = containerDebugElement.nativeElement;
 
@@ -208,7 +208,7 @@ describe('OwlDateTimeComponent', () => {
 
         expect(testComponent.dateTimePicker.opened).toBe(
           false,
-          'Expected dateTimePicker to be closed.'
+          'Expected dateTimePicker to be closed.',
         );
       }));
 
@@ -218,11 +218,11 @@ describe('OwlDateTimeComponent', () => {
         flush();
         expect(testComponent.dateTimePicker.opened).toBe(
           true,
-          'Expected dateTimePicker to be opened.'
+          'Expected dateTimePicker to be opened.',
         );
 
         const containerDebugElement = fixture.debugElement.query(
-          By.directive(OwlDateTimeContainerComponent)
+          By.directive(OwlDateTimeContainerComponent),
         );
         containerElement = containerDebugElement.nativeElement;
 
@@ -237,7 +237,7 @@ describe('OwlDateTimeComponent', () => {
 
         expect(testComponent.dateTimePicker.opened).toBe(
           false,
-          'Expected dateTimePicker to be closed.'
+          'Expected dateTimePicker to be closed.',
         );
         expect(testComponent.dateTimePickerInput.value).toEqual(new Date(2020, JAN, 1)); // not update to clicked value
       }));
@@ -248,15 +248,15 @@ describe('OwlDateTimeComponent', () => {
         flush();
         expect(testComponent.dateTimePicker.opened).toBe(
           true,
-          'Expected dateTimePicker to be opened.'
+          'Expected dateTimePicker to be opened.',
         );
 
         const containerDebugElement = fixture.debugElement.query(
-          By.directive(OwlDateTimeContainerComponent)
+          By.directive(OwlDateTimeContainerComponent),
         );
         containerElement = containerDebugElement.nativeElement;
         expect(containerDebugElement.componentInstance.pickerMoment).toEqual(
-          new Date(2020, JAN, 1)
+          new Date(2020, JAN, 1),
         );
 
         const btns = containerElement.querySelectorAll('.owl-dt-container-control-button');
@@ -266,7 +266,7 @@ describe('OwlDateTimeComponent', () => {
 
         expect(testComponent.dateTimePicker.opened).toBe(
           false,
-          'Expected dateTimePicker to be closed.'
+          'Expected dateTimePicker to be closed.',
         );
         expect(testComponent.dateTimePickerInput.value).toEqual(new Date(2020, JAN, 1));
       }));
@@ -277,15 +277,15 @@ describe('OwlDateTimeComponent', () => {
         flush();
         expect(testComponent.dateTimePicker.opened).toBe(
           true,
-          'Expected dateTimePicker to be opened.'
+          'Expected dateTimePicker to be opened.',
         );
 
         const containerDebugElement = fixture.debugElement.query(
-          By.directive(OwlDateTimeContainerComponent)
+          By.directive(OwlDateTimeContainerComponent),
         );
         containerElement = containerDebugElement.nativeElement;
         expect(containerDebugElement.componentInstance.pickerMoment).toEqual(
-          new Date(2020, JAN, 1)
+          new Date(2020, JAN, 1),
         );
 
         const monthCell = containerElement.querySelector('[aria-label="January 2, 2020"]');
@@ -299,7 +299,7 @@ describe('OwlDateTimeComponent', () => {
 
         expect(testComponent.dateTimePicker.opened).toBe(
           false,
-          'Expected dateTimePicker to be closed.'
+          'Expected dateTimePicker to be closed.',
         );
         expect(testComponent.dateTimePickerInput.value).toEqual(new Date(2020, JAN, 2));
       }));
@@ -380,11 +380,11 @@ describe('OwlDateTimeComponent', () => {
           flush();
           expect(testComponent.dateTimePicker.opened).toBe(
             true,
-            'Expected dateTimePicker to be opened.'
+            'Expected dateTimePicker to be opened.',
           );
 
           const containerDebugElement = fixture.debugElement.query(
-            By.directive(OwlDateTimeContainerComponent)
+            By.directive(OwlDateTimeContainerComponent),
           );
           containerElement = containerDebugElement.nativeElement;
           const btns = containerElement.querySelectorAll('.owl-dt-container-control-button');
@@ -398,15 +398,15 @@ describe('OwlDateTimeComponent', () => {
           flush();
           expect(testComponent.dateTimePicker.opened).toBe(
             true,
-            'Expected dateTimePicker to be opened.'
+            'Expected dateTimePicker to be opened.',
           );
 
           const containerDebugElement = fixture.debugElement.query(
-            By.directive(OwlDateTimeContainerComponent)
+            By.directive(OwlDateTimeContainerComponent),
           );
           containerElement = containerDebugElement.nativeElement;
           expect(containerDebugElement.componentInstance.pickerMoment).toEqual(
-            new Date(2020, JAN, 1)
+            new Date(2020, JAN, 1),
           );
 
           const dateCell = containerElement.querySelector('[aria-label="January 2, 2020"]');
@@ -416,7 +416,7 @@ describe('OwlDateTimeComponent', () => {
 
           expect(testComponent.dateTimePicker.opened).toBe(
             false,
-            'Expected dateTimePicker to be closed.'
+            'Expected dateTimePicker to be closed.',
           );
           expect(testComponent.dateTimePickerInput.value).toEqual(new Date(2020, JAN, 2));
         }));
@@ -427,15 +427,15 @@ describe('OwlDateTimeComponent', () => {
           flush();
           expect(testComponent.dateTimePicker.opened).toBe(
             true,
-            'Expected dateTimePicker to be opened.'
+            'Expected dateTimePicker to be opened.',
           );
 
           const containerDebugElement = fixture.debugElement.query(
-            By.directive(OwlDateTimeContainerComponent)
+            By.directive(OwlDateTimeContainerComponent),
           );
           containerElement = containerDebugElement.nativeElement;
           expect(containerDebugElement.componentInstance.pickerMoment).toEqual(
-            new Date(2020, JAN, 1)
+            new Date(2020, JAN, 1),
           );
 
           const calendarBodyEl = containerElement.querySelector('.owl-dt-calendar-body');
@@ -449,7 +449,7 @@ describe('OwlDateTimeComponent', () => {
 
           expect(testComponent.dateTimePicker.opened).toBe(
             false,
-            'Expected dateTimePicker to be closed.'
+            'Expected dateTimePicker to be closed.',
           );
           expect(testComponent.dateTimePickerInput.value).toEqual(new Date(2020, JAN, 2));
         }));
@@ -460,15 +460,15 @@ describe('OwlDateTimeComponent', () => {
           flush();
           expect(testComponent.dateTimePicker.opened).toBe(
             true,
-            'Expected dateTimePicker to be opened.'
+            'Expected dateTimePicker to be opened.',
           );
 
           const containerDebugElement = fixture.debugElement.query(
-            By.directive(OwlDateTimeContainerComponent)
+            By.directive(OwlDateTimeContainerComponent),
           );
           containerElement = containerDebugElement.nativeElement;
           expect(containerDebugElement.componentInstance.pickerMoment).toEqual(
-            new Date(2020, JAN, 1)
+            new Date(2020, JAN, 1),
           );
           expect(testComponent.dateTimePicker.selected).toEqual(new Date(2020, JAN, 1));
 
@@ -479,7 +479,7 @@ describe('OwlDateTimeComponent', () => {
 
           expect(testComponent.dateTimePicker.opened).toBe(
             false,
-            'Expected dateTimePicker to be closed.'
+            'Expected dateTimePicker to be closed.',
           );
           expect(testComponent.dateTimePickerInput.value).toEqual(new Date(2020, JAN, 1));
         }));
@@ -503,11 +503,11 @@ describe('OwlDateTimeComponent', () => {
           flush();
           expect(testComponent.dateTimePicker.opened).toBe(
             true,
-            'Expected dateTimePicker to be opened.'
+            'Expected dateTimePicker to be opened.',
           );
 
           const containerDebugElement = fixture.debugElement.query(
-            By.directive(OwlDateTimeContainerComponent)
+            By.directive(OwlDateTimeContainerComponent),
           );
           containerElement = containerDebugElement.nativeElement;
           const btns = containerElement.querySelectorAll('.owl-dt-container-control-button');
@@ -537,7 +537,7 @@ describe('OwlDateTimeComponent', () => {
       it('should initialize with correct value shown in input', () => {
         if (SUPPORTS_INTL) {
           expect(fixture.nativeElement.querySelector('input').value).toBe(
-            '1/1/2020, 12:00 AM - 2/1/2020, 12:00 AM'
+            '1/1/2020, 12:00 AM - 2/1/2020, 12:00 AM',
           );
         }
       });
@@ -547,7 +547,7 @@ describe('OwlDateTimeComponent', () => {
         fixture.detectChanges();
 
         const containerDebugElement = fixture.debugElement.query(
-          By.directive(OwlDateTimeContainerComponent)
+          By.directive(OwlDateTimeContainerComponent),
         );
         expect(containerDebugElement.componentInstance.activeSelectedIndex).toBe(0);
       });
@@ -563,7 +563,7 @@ describe('OwlDateTimeComponent', () => {
         expect(testComponent.dateTimePicker.selecteds.length).toBe(0);
 
         const containerDebugElement = fixture.debugElement.query(
-          By.directive(OwlDateTimeContainerComponent)
+          By.directive(OwlDateTimeContainerComponent),
         );
         containerElement = containerDebugElement.nativeElement;
 
@@ -586,7 +586,7 @@ describe('OwlDateTimeComponent', () => {
         expect(testComponent.dateTimePicker.selecteds.length).toBe(2);
 
         const containerDebugElement = fixture.debugElement.query(
-          By.directive(OwlDateTimeContainerComponent)
+          By.directive(OwlDateTimeContainerComponent),
         );
         containerElement = containerDebugElement.nativeElement;
 
@@ -612,7 +612,7 @@ describe('OwlDateTimeComponent', () => {
         expect(testComponent.dateTimePicker.selecteds.length).toBe(2);
 
         const containerDebugElement = fixture.debugElement.query(
-          By.directive(OwlDateTimeContainerComponent)
+          By.directive(OwlDateTimeContainerComponent),
         );
         containerElement = containerDebugElement.nativeElement;
 
@@ -638,7 +638,7 @@ describe('OwlDateTimeComponent', () => {
         expect(testComponent.dateTimePicker.selecteds.length).toBe(2);
 
         const containerDebugElement = fixture.debugElement.query(
-          By.directive(OwlDateTimeContainerComponent)
+          By.directive(OwlDateTimeContainerComponent),
         );
         containerElement = containerDebugElement.nativeElement;
 
@@ -658,7 +658,7 @@ describe('OwlDateTimeComponent', () => {
         fixture.detectChanges();
 
         const containerDebugElement = fixture.debugElement.query(
-          By.directive(OwlDateTimeContainerComponent)
+          By.directive(OwlDateTimeContainerComponent),
         );
         containerElement = containerDebugElement.nativeElement;
 
@@ -672,7 +672,7 @@ describe('OwlDateTimeComponent', () => {
         fixture.detectChanges();
 
         const containerDebugElement = fixture.debugElement.query(
-          By.directive(OwlDateTimeContainerComponent)
+          By.directive(OwlDateTimeContainerComponent),
         );
         containerElement = containerDebugElement.nativeElement;
 
@@ -710,7 +710,7 @@ describe('OwlDateTimeComponent', () => {
           expect(testComponent.dateTimePicker.selecteds.length).toBe(0);
 
           const containerDebugElement = fixture.debugElement.query(
-            By.directive(OwlDateTimeContainerComponent)
+            By.directive(OwlDateTimeContainerComponent),
           );
           containerElement = containerDebugElement.nativeElement;
 
@@ -721,7 +721,7 @@ describe('OwlDateTimeComponent', () => {
 
           expect(testComponent.dateTimePicker.opened).toBe(
             true,
-            'Expected dateTimePicker to be opened.'
+            'Expected dateTimePicker to be opened.',
           );
         }));
 
@@ -736,7 +736,7 @@ describe('OwlDateTimeComponent', () => {
           expect(testComponent.dateTimePicker.selecteds.length).toBe(0);
 
           const containerDebugElement = fixture.debugElement.query(
-            By.directive(OwlDateTimeContainerComponent)
+            By.directive(OwlDateTimeContainerComponent),
           );
           containerElement = containerDebugElement.nativeElement;
 
@@ -753,7 +753,7 @@ describe('OwlDateTimeComponent', () => {
           expect(testComponent.dateTimePicker.selecteds.length).toBe(2);
           expect(testComponent.dateTimePicker.opened).toBe(
             false,
-            'Expected dateTimePicker to be closed.'
+            'Expected dateTimePicker to be closed.',
           );
         }));
       });
@@ -762,7 +762,7 @@ describe('OwlDateTimeComponent', () => {
     describe('DateTimePicker with too many inputs', () => {
       it('should throw when multiple inputs registered', fakeAsync(() => {
         const fixture = createComponent(MultiInputDateTimePickerComponent, [
-          OwlNativeDateTimeModule
+          OwlNativeDateTimeModule,
         ]);
         expect(() => fixture.detectChanges()).toThrow();
       }));
@@ -843,7 +843,7 @@ describe('OwlDateTimeComponent', () => {
           fixture.detectChanges();
 
           containerDebugElement = fixture.debugElement.query(
-            By.directive(OwlDateTimeContainerComponent)
+            By.directive(OwlDateTimeContainerComponent),
           );
           containerElement = containerDebugElement.nativeElement;
           const yearTable = containerElement.querySelector('table.owl-dt-calendar-year-table');
@@ -858,7 +858,7 @@ describe('OwlDateTimeComponent', () => {
           fixture.detectChanges();
 
           containerDebugElement = fixture.debugElement.query(
-            By.directive(OwlDateTimeContainerComponent)
+            By.directive(OwlDateTimeContainerComponent),
           );
           containerElement = containerDebugElement.nativeElement;
           const cells = containerElement.querySelectorAll('.owl-dt-calendar-cell');
@@ -882,11 +882,11 @@ describe('OwlDateTimeComponent', () => {
           fixture.detectChanges();
 
           containerDebugElement = fixture.debugElement.query(
-            By.directive(OwlDateTimeContainerComponent)
+            By.directive(OwlDateTimeContainerComponent),
           );
           containerElement = containerDebugElement.nativeElement;
           const multiYearTable = containerElement.querySelector(
-            'table.owl-dt-calendar-multi-year-table'
+            'table.owl-dt-calendar-multi-year-table',
           );
           expect(multiYearTable).toBeTruthy();
         });
@@ -899,7 +899,7 @@ describe('OwlDateTimeComponent', () => {
           fixture.detectChanges();
 
           containerDebugElement = fixture.debugElement.query(
-            By.directive(OwlDateTimeContainerComponent)
+            By.directive(OwlDateTimeContainerComponent),
           );
           containerElement = containerDebugElement.nativeElement;
           const cells = containerElement.querySelectorAll('.owl-dt-calendar-cell');
@@ -1135,7 +1135,7 @@ describe('OwlDateTimeComponent', () => {
 
           const newSelectedFrom = new Date(2017, JAN, 2);
           const containerDebugElement = fixture.debugElement.query(
-            By.directive(OwlDateTimeContainerComponent)
+            By.directive(OwlDateTimeContainerComponent),
           );
           containerDebugElement.componentInstance.dateSelected(newSelectedFrom);
           fixture.detectChanges();
@@ -1167,7 +1167,7 @@ describe('OwlDateTimeComponent', () => {
 
           const newSelectedFrom = new Date(2017, JAN, 4);
           const containerDebugElement = fixture.debugElement.query(
-            By.directive(OwlDateTimeContainerComponent)
+            By.directive(OwlDateTimeContainerComponent),
           );
           containerDebugElement.componentInstance.dateSelected(newSelectedFrom);
           fixture.detectChanges();
@@ -1223,7 +1223,7 @@ describe('OwlDateTimeComponent', () => {
 
           const newSelectedTo = new Date(2017, JAN, 4);
           const containerDebugElement = fixture.debugElement.query(
-            By.directive(OwlDateTimeContainerComponent)
+            By.directive(OwlDateTimeContainerComponent),
           );
           containerDebugElement.componentInstance.dateSelected(newSelectedTo);
           fixture.detectChanges();
@@ -1255,7 +1255,7 @@ describe('OwlDateTimeComponent', () => {
 
           const newSelectedTo = new Date(2017, JAN, 1);
           const containerDebugElement = fixture.debugElement.query(
-            By.directive(OwlDateTimeContainerComponent)
+            By.directive(OwlDateTimeContainerComponent),
           );
           containerDebugElement.componentInstance.dateSelected(newSelectedTo);
           fixture.detectChanges();
@@ -1281,7 +1281,7 @@ describe('OwlDateTimeComponent', () => {
 
       beforeEach(fakeAsync(() => {
         fixture = createComponent(DateTimePickerWithFormControlComponent, [
-          OwlNativeDateTimeModule
+          OwlNativeDateTimeModule,
         ]);
         fixture.detectChanges();
 
@@ -1409,7 +1409,7 @@ describe('OwlDateTimeComponent', () => {
 
       beforeEach(fakeAsync(() => {
         fixture = createComponent(DateTimePickerWithMinAndMaxValidationComponent, [
-          OwlNativeDateTimeModule
+          OwlNativeDateTimeModule,
         ]);
         fixture.detectChanges();
 
@@ -1440,7 +1440,7 @@ describe('OwlDateTimeComponent', () => {
         fixture.detectChanges();
 
         expect(fixture.debugElement.query(By.css('input')).nativeElement.classList).toContain(
-          'ng-invalid'
+          'ng-invalid',
         );
       }));
 
@@ -1452,7 +1452,7 @@ describe('OwlDateTimeComponent', () => {
         fixture.detectChanges();
 
         expect(fixture.debugElement.query(By.css('input')).nativeElement.classList).toContain(
-          'ng-invalid'
+          'ng-invalid',
         );
       }));
 
@@ -1463,7 +1463,7 @@ describe('OwlDateTimeComponent', () => {
         fixture.detectChanges();
 
         expect(fixture.debugElement.query(By.css('input')).nativeElement.classList).not.toContain(
-          'ng-invalid'
+          'ng-invalid',
         );
       }));
 
@@ -1474,7 +1474,7 @@ describe('OwlDateTimeComponent', () => {
         fixture.detectChanges();
 
         expect(fixture.debugElement.query(By.css('input')).nativeElement.classList).not.toContain(
-          'ng-invalid'
+          'ng-invalid',
         );
       }));
 
@@ -1485,7 +1485,7 @@ describe('OwlDateTimeComponent', () => {
         fixture.detectChanges();
 
         expect(fixture.debugElement.query(By.css('input')).nativeElement.classList).not.toContain(
-          'ng-invalid'
+          'ng-invalid',
         );
       }));
 
@@ -1500,7 +1500,7 @@ describe('OwlDateTimeComponent', () => {
         flush();
         fixture.detectChanges();
         const calendarDebugElement = fixture.debugElement.query(
-          By.directive(OwlDateTimeContainerComponent)
+          By.directive(OwlDateTimeContainerComponent),
         );
         const calendarElement = calendarDebugElement.nativeElement;
 
@@ -1523,7 +1523,7 @@ describe('OwlDateTimeComponent', () => {
         flush();
         fixture.detectChanges();
         const calendarDebugElement = fixture.debugElement.query(
-          By.directive(OwlDateTimeContainerComponent)
+          By.directive(OwlDateTimeContainerComponent),
         );
         const calendarElement = calendarDebugElement.nativeElement;
 
@@ -1542,7 +1542,7 @@ describe('OwlDateTimeComponent', () => {
 
       beforeEach(fakeAsync(() => {
         fixture = createComponent(DateTimePickerWithFilterValidationComponent, [
-          OwlNativeDateTimeModule
+          OwlNativeDateTimeModule,
         ]);
         fixture.detectChanges();
         testComponent = fixture.componentInstance;
@@ -1561,7 +1561,7 @@ describe('OwlDateTimeComponent', () => {
         fixture.detectChanges();
 
         expect(fixture.debugElement.query(By.css('input')).nativeElement.classList).toContain(
-          'ng-invalid'
+          'ng-invalid',
         );
 
         testComponent.date = new Date(2017, JAN, 2);
@@ -1570,7 +1570,7 @@ describe('OwlDateTimeComponent', () => {
         fixture.detectChanges();
 
         expect(fixture.debugElement.query(By.css('input')).nativeElement.classList).not.toContain(
-          'ng-invalid'
+          'ng-invalid',
         );
       }));
 
@@ -1602,7 +1602,7 @@ describe('OwlDateTimeComponent', () => {
 
       beforeEach(fakeAsync(() => {
         fixture = createComponent(DateTimePickerWithChangeAndInputEventsComponent, [
-          OwlNativeDateTimeModule
+          OwlNativeDateTimeModule,
         ]);
         fixture.detectChanges();
         testComponent = fixture.componentInstance;
@@ -1875,7 +1875,7 @@ describe('OwlDateTimeComponent', () => {
   describe('with missing DateTimeAdapter and OWL_DATE_TIME_FORMATS', () => {
     it('should throw when created', () => {
       expect(() => createComponent(StandardDateTimePickerComponent)).toThrowError(
-        /OwlDateTimePicker: No provider found for .*/
+        /OwlDateTimePicker: No provider found for .*/,
       );
     });
   });
@@ -1891,7 +1891,7 @@ describe('OwlDateTimeComponent', () => {
       [pickerMode]="pickerMode"
       #dt
     ></owl-date-time>
-  `
+  `,
 })
 class StandardDateTimePickerComponent {
   date: Date | null = new Date(2020, JAN, 1);
@@ -1909,7 +1909,7 @@ class StandardDateTimePickerComponent {
   template: `
     <input [owlDateTime]="dt" [selectMode]="selectMode" [values]="dates" />
     <owl-date-time [startAt]="startAt" [pickerType]="pickerType" #dt></owl-date-time>
-  `
+  `,
 })
 class RangeDateTimePickerComponent {
   dates: Date[] | null = [new Date(2020, JAN, 1), new Date(2020, FEB, 1)];
@@ -1927,12 +1927,12 @@ class RangeDateTimePickerComponent {
     <input [owlDateTime]="dt" />
     <input [owlDateTime]="dt" />
     <owl-date-time #dt></owl-date-time>
-  `
+  `,
 })
 class MultiInputDateTimePickerComponent {}
 
 @Component({
-  template: ` <owl-date-time #dt></owl-date-time> `
+  template: ` <owl-date-time #dt></owl-date-time> `,
 })
 class NoInputDateTimePickerComponent {
   @ViewChild('dt', { static: true })
@@ -1943,7 +1943,7 @@ class NoInputDateTimePickerComponent {
   template: `
     <input [owlDateTime]="dt" [value]="date" />
     <owl-date-time #dt [startAt]="startDate"></owl-date-time>
-  `
+  `,
 })
 class DateTimePickerWithStartAtComponent {
   date = new Date(2020, JAN, 1);
@@ -1961,7 +1961,7 @@ class DateTimePickerWithStartAtComponent {
       (monthSelected)="onMonthSelection()"
       (yearSelected)="onYearSelection()"
     ></owl-date-time>
-  `
+  `,
 })
 class DateTimePickerWithStartViewComponent {
   date = new Date(2020, JAN, 1);
@@ -1978,7 +1978,7 @@ class DateTimePickerWithStartViewComponent {
   template: `
     <input [(ngModel)]="moment" [selectMode]="selectMode" [owlDateTime]="dt" />
     <owl-date-time #dt></owl-date-time>
-  `
+  `,
 })
 class DateTimePickerWithNgModelComponent {
   moment: Date[] | Date | null = null;
@@ -1993,7 +1993,7 @@ class DateTimePickerWithNgModelComponent {
   template: `
     <input [formControl]="formControl" [owlDateTime]="dt" [owlDateTimeTrigger]="dt" />
     <owl-date-time #dt></owl-date-time>
-  `
+  `,
 })
 class DateTimePickerWithFormControlComponent {
   formControl = new UntypedFormControl();
@@ -2010,7 +2010,7 @@ class DateTimePickerWithFormControlComponent {
     <input [owlDateTime]="dt" />
     <button [owlDateTimeTrigger]="dt">Icon</button>
     <owl-date-time #dt></owl-date-time>
-  `
+  `,
 })
 class DateTimePickerWithTriggerComponent {
   @ViewChild('dt', { static: true })
@@ -2029,7 +2029,7 @@ class DateTimePickerWithTriggerComponent {
       [owlDateTimeTrigger]="dt"
     />
     <owl-date-time [showSecondsTimer]="true" #dt></owl-date-time>
-  `
+  `,
 })
 class DateTimePickerWithMinAndMaxValidationComponent {
   @ViewChild('dt', { static: true })
@@ -2053,7 +2053,7 @@ class DateTimePickerWithMinAndMaxValidationComponent {
       [owlDateTimeTrigger]="dt"
     />
     <owl-date-time [showSecondsTimer]="true" #dt></owl-date-time>
-  `
+  `,
 })
 class DateTimePickerWithFilterValidationComponent {
   @ViewChild('dt', { static: true })
@@ -2077,7 +2077,7 @@ class DateTimePickerWithFilterValidationComponent {
       (dateTimeInput)="handleDateTimeInput()"
     />
     <owl-date-time [showSecondsTimer]="true" #dt></owl-date-time>
-  `
+  `,
 })
 class DateTimePickerWithChangeAndInputEventsComponent {
   @ViewChild('dt', { static: true })
@@ -2100,7 +2100,7 @@ class DateTimePickerWithChangeAndInputEventsComponent {
   template: `
     <input [owlDateTime]="dt" [(ngModel)]="value" [min]="min" [max]="max" />
     <owl-date-time #dt [startAt]="startAt"></owl-date-time>
-  `
+  `,
 })
 class DateTimePickerWithISOStringsComponent {
   value = new Date(2017, JUN, 1).toISOString();
@@ -2121,7 +2121,7 @@ class DateTimePickerWithISOStringsComponent {
       (afterPickerClosed)="closedSpy()"
       #dt
     ></owl-date-time>
-  `
+  `,
 })
 class DateTimePickerWithEventsComponent {
   selected: Date | null = null;

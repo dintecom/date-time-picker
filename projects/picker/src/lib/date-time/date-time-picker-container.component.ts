@@ -1,3 +1,5 @@
+import { AnimationEvent } from '@angular/animations';
+import { DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, SPACE, UP_ARROW } from '@angular/cdk/keycodes';
 import {
   AfterContentInit,
   AfterViewInit,
@@ -7,17 +9,15 @@ import {
   ElementRef,
   OnInit,
   Optional,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
-import { AnimationEvent } from '@angular/animations';
-import { OwlDateTimeIntl } from './date-time-picker-intl.service';
-import { OwlCalendarComponent } from './calendar.component';
-import { OwlTimerComponent } from './timer.component';
-import { DateTimeAdapter } from '../adapter/date-time-adapter.class';
-import { OwlDateTime, PickerType } from './date-time.class';
 import { Observable, Subject } from 'rxjs';
+import { DateTimeAdapter } from '../adapter/date-time-adapter.class';
+import { OwlCalendarComponent } from './calendar.component';
+import { OwlDateTimeIntl } from './date-time-picker-intl.service';
 import { owlDateTimePickerAnimations } from './date-time-picker.animations';
-import { DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, SPACE, UP_ARROW } from '@angular/cdk/keycodes';
+import { OwlDateTime, PickerType } from './date-time.class';
+import { OwlTimerComponent } from './timer.component';
 
 @Component({
   exportAs: 'owlDateTimeContainer',
@@ -26,7 +26,7 @@ import { DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, SPACE, UP_ARROW } from '@angular/c
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     owlDateTimePickerAnimations.transformPicker,
-    owlDateTimePickerAnimations.fadeInPicker
+    owlDateTimePickerAnimations.fadeInPicker,
   ],
   host: {
     '(@transformPicker.done)': 'handleContainerAnimationDone($event)',
@@ -36,8 +36,8 @@ import { DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, SPACE, UP_ARROW } from '@angular/c
     '[class.owl-dt-inline-container]': 'owlDTInlineContainerClass',
     '[class.owl-dt-container-disabled]': 'owlDTContainerDisabledClass',
     '[attr.id]': 'owlDTContainerId',
-    '[@transformPicker]': 'owlDTContainerAnimation'
-  }
+    '[@transformPicker]': 'owlDTContainerAnimation',
+  },
 })
 export class OwlDateTimeContainerComponent<T> implements OnInit, AfterContentInit, AfterViewInit {
   @ViewChild(OwlCalendarComponent)
@@ -88,7 +88,7 @@ export class OwlDateTimeContainerComponent<T> implements OnInit, AfterContentIni
       this._clamPickerMoment = this.dateTimeAdapter.clampDate(
         value,
         this.picker.minDateTime,
-        this.picker.maxDateTime
+        this.picker.maxDateTime,
       );
     }
     this.cdRef.markForCheck();
@@ -184,7 +184,7 @@ export class OwlDateTimeContainerComponent<T> implements OnInit, AfterContentIni
     private cdRef: ChangeDetectorRef,
     private elmRef: ElementRef,
     private pickerIntl: OwlDateTimeIntl,
-    @Optional() private dateTimeAdapter: DateTimeAdapter<T>
+    @Optional() private dateTimeAdapter: DateTimeAdapter<T>,
   ) {}
 
   public ngOnInit() {}
@@ -429,12 +429,12 @@ export class OwlDateTimeContainerComponent<T> implements OnInit, AfterContentIni
         this.dateTimeAdapter.getDate(date),
         this.dateTimeAdapter.getHours(this.pickerMoment),
         this.dateTimeAdapter.getMinutes(this.pickerMoment),
-        this.dateTimeAdapter.getSeconds(this.pickerMoment)
+        this.dateTimeAdapter.getSeconds(this.pickerMoment),
       );
       result = this.dateTimeAdapter.clampDate(
         result,
         this.picker.minDateTime,
-        this.picker.maxDateTime
+        this.picker.maxDateTime,
       );
     } else {
       result = this.dateTimeAdapter.clone(date);
