@@ -44,13 +44,27 @@
 
 <div *ngIf="hour12Timer" class="owl-dt-timer-hour12">
   <button
+    #am
     class="owl-dt-control-button owl-dt-timer-hour12-box"
+    [class.owl-dt-timer-hour12-inactive]="isPM"
     type="button"
     tabindex="0"
     (click)="setMeridian($event)"
   >
     <span class="owl-dt-control-button-content" tabindex="-1">
-      {{ hour12ButtonLabel }}
+      {{ hour12AMLabel }}
+    </span>
+  </button>
+  <button
+    #pm
+    class="owl-dt-control-button owl-dt-timer-hour12-box"
+    [class.owl-dt-timer-hour12-inactive]="!isPM"
+    type="button"
+    tabindex="0"
+    (click)="setMeridian($event)"
+  >
+    <span class="owl-dt-control-button-content" tabindex="-1">
+      {{ hour12PMLabel }}
     </span>
   </button>
 </div>
