@@ -9,6 +9,7 @@ import {
   OnInit,
   Optional,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { DateTimeAdapter } from '../adapter/date-time-adapter.class';
@@ -62,7 +63,7 @@ export class OwlTimerComponent<T> implements OnInit {
     this._maxDateTime = this.getValidDate(value);
   }
 
-  private isPM = false; // a flag indicates the current timer moment is in PM or AM
+  isPM = false; // a flag indicates the current timer moment is in PM or AM
 
   /**
    * Whether to show the second's timer
@@ -157,8 +158,12 @@ export class OwlTimerComponent<T> implements OnInit {
     return this.pickerIntl.downSecondLabel;
   }
 
-  get hour12ButtonLabel(): string {
-    return this.isPM ? this.pickerIntl.hour12PMLabel : this.pickerIntl.hour12AMLabel;
+  get hour12AMLabel(): string {
+    return this.pickerIntl.hour12AMLabel;
+  }
+
+  get hour12PMLabel(): string {
+    return this.pickerIntl.hour12PMLabel;
   }
 
   @Output()
@@ -171,6 +176,11 @@ export class OwlTimerComponent<T> implements OnInit {
   get owlDTTimeTabIndex(): number {
     return -1;
   }
+
+  @ViewChild('am')
+  amButton: ElementRef<HTMLButtonElement>;
+  @ViewChild('pm')
+  pmButton: ElementRef<HTMLButtonElement>;
 
   constructor(
     private ngZone: NgZone,
@@ -251,6 +261,15 @@ export class OwlTimerComponent<T> implements OnInit {
 
   public setMeridian(event: any): void {
     this.isPM = !this.isPM;
+
+    this.ngZone.runOutsideAngular(() => {
+      this.ngZone.onStable
+        .asObservable()
+        .pipe(take(1))
+        .subscribe(() => {
+          (this.isPM ? this.pmButton : this.amButton).nativeElement.focus();
+        });
+    });
 
     let hours = this.hourValue;
     if (this.isPM) {
