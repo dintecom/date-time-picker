@@ -513,8 +513,8 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnDestroy
     this.pickerContainer = this.dialogRef.componentInstance;
 
     this.dialogRef.afterOpen().subscribe(() => {
-      this.afterPickerOpen.emit(null);
       this._opened = true;
+      this.afterPickerOpen.emit(null);
     });
     this.dialogRef.afterClosed().subscribe(() => this.close());
   }
@@ -552,8 +552,8 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnDestroy
       this.pickerOpenedStreamSub = this.pickerContainer.pickerOpenedStream
         .pipe(take(1))
         .subscribe(() => {
-          this.afterPickerOpen.emit(null);
           this._opened = true;
+          this.afterPickerOpen.emit(null);
         });
     }
   }
