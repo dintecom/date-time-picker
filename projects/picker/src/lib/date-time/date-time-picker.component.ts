@@ -161,6 +161,16 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnDestroy
     val ? this.open() : this.close();
   }
 
+  private _opening = false;
+  get opening(): boolean {
+    return this._opening;
+  }
+
+  private _closing = false;
+  get closing(): boolean {
+    return this._closing;
+  }
+
   /**
    * The scroll strategy when the picker is open
    * Learn more this from https://material.angular.io/cdk/overlay/overview#scroll-strategies
@@ -186,13 +196,19 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnDestroy
    * Callback when the picker is closed
    */
   @Output()
-  afterPickerClosed = new EventEmitter<any>();
+  afterPickerClosed = new EventEmitter<void>();
 
   /**
    * Callback when the picker is open
    */
   @Output()
-  afterPickerOpen = new EventEmitter<any>();
+  afterPickerOpen = new EventEmitter<void>();
+
+  @Output()
+  pickerOpening = new EventEmitter<void>();
+
+  @Output()
+  pickerClosing = new EventEmitter<void>();
 
   /**
    * Emits selected year in multi-year view
@@ -336,6 +352,9 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnDestroy
       throw Error('Attempted to open an DateTimePicker with no associated input.');
     }
 
+    this._opening = true;
+    this.pickerOpening.next();
+
     if (this.document) {
       this.focusedElementBeforeOpen = this.document.activeElement;
     }
@@ -432,6 +451,9 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnDestroy
       return;
     }
 
+    this._closing = true;
+    this.pickerClosing.emit();
+
     if (this.popupRef && this.popupRef.hasAttached()) {
       this.popupRef.detach();
     }
@@ -462,8 +484,9 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnDestroy
 
     const completeClose = () => {
       if (this._opened) {
+        this._closing = false;
         this._opened = false;
-        this.afterPickerClosed.emit(null);
+        this.afterPickerClosed.emit();
         this.focusedElementBeforeOpen = null;
       }
     };
@@ -513,8 +536,9 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnDestroy
     this.pickerContainer = this.dialogRef.componentInstance;
 
     this.dialogRef.afterOpen().subscribe(() => {
+      this._opening = false;
       this._opened = true;
-      this.afterPickerOpen.emit(null);
+      this.afterPickerOpen.emit();
     });
     this.dialogRef.afterClosed().subscribe(() => this.close());
   }
@@ -552,8 +576,9 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T> implements OnDestroy
       this.pickerOpenedStreamSub = this.pickerContainer.pickerOpenedStream
         .pipe(take(1))
         .subscribe(() => {
+          this._opening = false;
           this._opened = true;
-          this.afterPickerOpen.emit(null);
+          this.afterPickerOpen.emit();
         });
     }
   }
