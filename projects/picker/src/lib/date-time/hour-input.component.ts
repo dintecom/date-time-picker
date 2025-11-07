@@ -152,4 +152,8 @@ export class OwlHourInputComponent implements ControlValueAccessor {
     registerOnTouched(fn: any) {
         this.onTouch = fn;
     }
+
+    setDisabledState(isDisabled: boolean): void{
+      this.disabled = isDisabled;
+    }
 }
