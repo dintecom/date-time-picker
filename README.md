@@ -4,12 +4,13 @@
 [![npm](https://img.shields.io/npm/v/@metalshub/angular-datetime-picker.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/@metalshub/angular-datetime-picker)
 [![npm](https://img.shields.io/npm/dm/@metalshub/angular-datetime-picker.svg)](https://www.npmjs.com/package/@metalshub/angular-datetime-picker)
 
-**The current version of this package supports Angular 20**
+**The current version of this package supports Angular 21**
 
 If you need support for other Angular version, see *Breaking Changes* below.
 
 Breaking Changes
 -------
+ - Version 21.x.x >= no longer supports ng 20. If you need ng 20 support, stick with version 20.x.x.
  - Version 20.x.x >= no longer supports ng 19. If you need ng 19 support, stick with version 19.x.x.
  - Version 19.x.x >= no longer supports < ng 18. If you need ng 18 or less support, stick with [@danielmoncada/angular-datetime-picker](https://www.npmjs.com/package/@danielmoncada/angular-datetime-picker)
 

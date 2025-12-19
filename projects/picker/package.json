@@ -1,6 +1,6 @@
 {
   "name": "@metalshub/angular-datetime-picker",
-  "version": "20.0.1",
+  "version": "21.0.0",
   "description": "Angular Date Time Picker",
   "keywords": [
     "Angular",
@@ -24,12 +24,9 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@angular/common": "^20.0.0",
-    "@angular/core": "^20.0.0",
-    "@angular/cdk": "^20.0.0"
-  },
-  "dependencies": {
-    "tslib": "^2.6.2"
+    "@angular/common": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "@angular/cdk": "^21.0.0"
   },
   "exports": {
     "./assets/style/picker.min.css": {
