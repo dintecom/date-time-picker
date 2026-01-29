@@ -22,6 +22,7 @@ import { OwlCalendarComponent } from './calendar.component';
 import { OwlDateTimeInlineComponent } from './date-time-inline.component';
 import { OwlDialogModule } from '../dialog/dialog.module';
 import { optionsProviders } from './options-provider';
+import { OwlHourInputComponent } from './hour-input.component';
 
 @NgModule({
     imports: [CommonModule, OverlayModule, OwlDialogModule, A11yModule],
@@ -35,6 +36,8 @@ import { optionsProviders } from './options-provider';
         OwlMultiYearViewComponent,
         OwlYearViewComponent,
         OwlMonthViewComponent,
+        OwlTimerBoxComponent,
+        OwlHourInputComponent
     ],
     declarations: [
         OwlDateTimeTriggerDirective,
@@ -46,6 +49,7 @@ import { optionsProviders } from './options-provider';
         OwlMonthViewComponent,
         OwlTimerComponent,
         OwlTimerBoxComponent,
+        OwlHourInputComponent,
         OwlCalendarComponent,
         OwlCalendarBodyComponent,
         NumberFixedLenPipe,
