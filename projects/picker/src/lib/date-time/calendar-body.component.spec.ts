@@ -3,7 +3,7 @@
  */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CalendarCell, OwlCalendarBodyComponent } from './calendar-body.component';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 describe('OwlCalendarBodyComponent', () => {
@@ -59,7 +59,7 @@ describe('OwlCalendarBodyComponent', () => {
         });
 
         it('cell should be selected on click', () => {
-            spyOn(testComponent, 'handleSelect');
+            vi.spyOn(testComponent, 'handleSelect').mockImplementation(() => {});
             expect(testComponent.handleSelect).not.toHaveBeenCalled();
             const todayElement =
                 calendarBodyNativeElement.querySelector('.owl-dt-calendar-cell-today') as HTMLElement;
@@ -70,7 +70,7 @@ describe('OwlCalendarBodyComponent', () => {
         });
 
         it('should mark active date', () => {
-            expect((cellEls[10] as HTMLElement).innerText.trim()).toBe('11');
+            expect((cellEls[10] as HTMLElement).textContent.trim()).toBe('11');
             expect(cellEls[10].classList).toContain('owl-dt-calendar-cell-active');
         });
 
@@ -95,6 +95,7 @@ describe('OwlCalendarBodyComponent', () => {
 
 @Component({
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <table owl-date-time-calendar-body
                [rows]="rows"

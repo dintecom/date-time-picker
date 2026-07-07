@@ -3,16 +3,17 @@
  */
 
 import {
-    Component,
-    ComponentRef,
-    ElementRef,
-    EmbeddedViewRef,
-    EventEmitter,
-    Inject,
-    OnInit,
-    Optional,
-    signal,
-    ViewChild,
+  Component,
+  ComponentRef,
+  ElementRef,
+  EmbeddedViewRef,
+  EventEmitter,
+  Inject,
+  OnInit,
+  Optional,
+  signal,
+  ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { FocusTrap, FocusTrapFactory } from '@angular/cdk/a11y';
@@ -30,6 +31,7 @@ import { OwlDialogConfigInterface } from './dialog-config.class';
     selector: 'owl-dialog-container',
     templateUrl: './dialog-container.component.html',
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: {
         '[class.owl-dialog-container]': 'owlDialogContainerClass',
         '[attr.tabindex]': 'owlDialogContainerTabIndex',

@@ -15,7 +15,8 @@ export {
 
 } from './lib/date-time/adapter/date-time-adapter.class';
 
-export { OWL_DATE_TIME_FORMATS, OwlDateTimeFormats } from './lib/date-time/adapter/date-time-format.class';
+export { OWL_DATE_TIME_FORMATS } from './lib/date-time/adapter/date-time-format.class';
+export type { OwlDateTimeFormats } from './lib/date-time/adapter/date-time-format.class';
 
 export {
   UnixTimestampDateTimeAdapter
@@ -49,4 +50,5 @@ export { NativeDateTimeAdapter } from './lib/date-time/adapter/native-date-time-
 
 export * from './lib/date-time/options-provider';
 
-export { PickerType, PickerMode, SelectMode, DateView, DateViewType } from './lib/date-time/date-time.class'
+export { DateView } from './lib/date-time/date-time.class';
+export type { PickerType, PickerMode, SelectMode, DateViewType } from './lib/date-time/date-time.class';

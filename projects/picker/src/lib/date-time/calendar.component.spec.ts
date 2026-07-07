@@ -7,7 +7,7 @@ import {
     inject,
     TestBed
 } from '@angular/core/testing';
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, ChangeDetectionStrategy } from '@angular/core';
 import {
     MockNgZone,
     dispatchFakeEvent,
@@ -194,7 +194,7 @@ describe('OwlCalendarComponent', () => {
                         '.owl-dt-calendar-cell-active'
                     ) as HTMLElement;
 
-                    spyOn(activeCell, 'focus').and.callThrough();
+                    vi.spyOn(activeCell, 'focus');
                     fixture.detectChanges();
 
                     expect(activeCell.focus).not.toHaveBeenCalled();
@@ -205,7 +205,7 @@ describe('OwlCalendarComponent', () => {
                         '.owl-dt-calendar-cell-active'
                     ) as HTMLElement;
 
-                    spyOn(activeCell, 'focus').and.callThrough();
+                    vi.spyOn(activeCell, 'focus');
                     fixture.detectChanges();
 
                     expect(activeCell.focus).not.toHaveBeenCalled();
@@ -373,7 +373,7 @@ describe('OwlCalendarComponent', () => {
             const monthViewComp = monthViewDebugElm.componentInstance;
             expect(monthViewComp).toBeTruthy();
 
-            spyOn(monthViewComp, 'generateCalendar').and.callThrough();
+            vi.spyOn(monthViewComp, 'generateCalendar');
             testComponent.minDate = new Date(2017, NOV, 1);
             fixture.detectChanges();
 
@@ -387,7 +387,7 @@ describe('OwlCalendarComponent', () => {
             const monthViewComp = monthViewDebugElm.componentInstance;
             expect(monthViewComp).toBeTruthy();
 
-            spyOn(monthViewComp, 'generateCalendar').and.callThrough();
+            vi.spyOn(monthViewComp, 'generateCalendar');
             testComponent.maxDate = new Date(2017, NOV, 1);
             fixture.detectChanges();
 
@@ -413,7 +413,7 @@ describe('OwlCalendarComponent', () => {
             const yearViewComp = yearViewDebugElm.componentInstance;
             expect(yearViewComp).toBeTruthy();
 
-            spyOn(yearViewComp, 'generateMonthList').and.callThrough();
+            vi.spyOn(yearViewComp, 'generateMonthList');
             testComponent.minDate = new Date(2017, NOV, 1);
             fixture.detectChanges();
 
@@ -439,7 +439,7 @@ describe('OwlCalendarComponent', () => {
             const yearViewComp = yearViewDebugElm.componentInstance;
             expect(yearViewComp).toBeTruthy();
 
-            spyOn(yearViewComp, 'generateMonthList').and.callThrough();
+            vi.spyOn(yearViewComp, 'generateMonthList');
             testComponent.maxDate = new Date(2017, NOV, 1);
             fixture.detectChanges();
 
@@ -460,7 +460,7 @@ describe('OwlCalendarComponent', () => {
             const multiYearsViewComp = multiYearsViewDebugElm.componentInstance;
             expect(multiYearsViewComp).toBeTruthy();
 
-            spyOn(multiYearsViewComp, 'generateYearList').and.callThrough();
+            vi.spyOn(multiYearsViewComp, 'generateYearList');
             testComponent.minDate = new Date(2017, NOV, 1);
             fixture.detectChanges();
 
@@ -481,7 +481,7 @@ describe('OwlCalendarComponent', () => {
             const multiYearsViewComp = multiYearsViewDebugElm.componentInstance;
             expect(multiYearsViewComp).toBeTruthy();
 
-            spyOn(multiYearsViewComp, 'generateYearList').and.callThrough();
+            vi.spyOn(multiYearsViewComp, 'generateYearList');
             testComponent.maxDate = new Date(2017, NOV, 1);
             fixture.detectChanges();
 
@@ -523,6 +523,7 @@ describe('OwlCalendarComponent', () => {
 
 @Component({
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <owl-date-time-calendar
                 [(selected)]="selected"
@@ -542,6 +543,7 @@ class StandardCalendarComponent {
 
 @Component({
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <owl-date-time-calendar [selectMode]="selectMode"
                                 [pickerMoment]="pickerMoment"
@@ -559,6 +561,7 @@ class CalendarWithMinMaxComponent {
 
 @Component({
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <owl-date-time-calendar [selectMode]="selectMode"
                                 [pickerMoment]="pickerMoment"
@@ -574,6 +577,7 @@ class CalendarWithCalendarWeeks {
 
 @Component({
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <owl-date-time-calendar [(selected)]="selected"
                                 [selectMode]="selectMode"

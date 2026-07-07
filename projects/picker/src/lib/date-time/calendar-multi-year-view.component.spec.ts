@@ -6,7 +6,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OwlDateTimeIntl } from './date-time-picker-intl.service';
 import { OwlNativeDateTimeModule } from './adapter/native-date-time.module';
 import { OwlDateTimeModule } from './date-time.module';
-import { Component, DebugElement } from '@angular/core';
+import { Component, DebugElement, ChangeDetectionStrategy } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import {
     OwlMultiYearViewComponent,
@@ -119,7 +119,7 @@ describe('OwlMultiYearViewComponent', () => {
             const cell2017 = multiYearViewElement.querySelector(
                 '[aria-label="2018"]'
             );
-            expect((cell2017 as HTMLElement).innerText.trim()).toBe('2018');
+            expect((cell2017 as HTMLElement).textContent.trim()).toBe('2018');
             expect(cell2017.classList).toContain('owl-dt-calendar-cell-active');
         });
 
@@ -311,6 +311,7 @@ describe('OwlMultiYearViewComponent', () => {
 
 @Component({
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <owl-date-time-multi-year-view
                 [selected]="selected"
@@ -329,6 +330,7 @@ class StandardMultiYearViewComponent {
 
 @Component({
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <owl-date-time-multi-year-view
                 [(pickerMoment)]="pickerMoment"

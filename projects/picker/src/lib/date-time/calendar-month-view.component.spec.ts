@@ -9,7 +9,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OwlDateTimeIntl } from './date-time-picker-intl.service';
 import { OwlNativeDateTimeModule } from './adapter/native-date-time.module';
 import { OwlDateTimeModule } from './date-time.module';
-import { Component, DebugElement } from '@angular/core';
+import { Component, DebugElement, ChangeDetectionStrategy } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { dispatchKeyboardEvent } from '../../test-helpers';
 import {
@@ -366,6 +366,7 @@ describe('OwlMonthViewComponent', () => {
 
 @Component({
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <owl-date-time-month-view
                 [(selected)]="selected"
@@ -379,6 +380,7 @@ class StandardMonthViewComponent {
 
 @Component({
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <owl-date-time-month-view
                 [(pickerMoment)]="pickerMoment"
@@ -388,7 +390,6 @@ class StandardMonthViewComponent {
 class MonthViewWithDateFilterComponent {
     pickerMoment = new Date(2018, JAN, 1);
     dateFilter(date: Date) {
-      // tslint:disable-next-line:triple-equals
         return date.getDate() % 2 === 0;
     }
 }

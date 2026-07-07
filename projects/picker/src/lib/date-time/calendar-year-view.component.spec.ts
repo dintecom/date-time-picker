@@ -6,7 +6,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OwlDateTimeIntl } from './date-time-picker-intl.service';
 import { OwlNativeDateTimeModule } from './adapter/native-date-time.module';
 import { OwlDateTimeModule } from './date-time.module';
-import { Component, DebugElement } from '@angular/core';
+import { Component, DebugElement, ChangeDetectionStrategy } from '@angular/core';
 import { OwlYearViewComponent } from './calendar-year-view.component';
 import { By } from '@angular/platform-browser';
 import { dispatchMouseEvent, dispatchKeyboardEvent } from '../../test-helpers';
@@ -106,7 +106,7 @@ describe('OwlYearViewComponent', () => {
             const cellDecember = yearViewElement.querySelector(
                 '[aria-label="January 2018"]'
             );
-            expect((cellDecember as HTMLElement).innerText.trim()).toBe('Jan');
+            expect((cellDecember as HTMLElement).textContent.trim()).toBe('Jan');
             expect(cellDecember.classList).toContain(
                 'owl-dt-calendar-cell-active'
             );
@@ -349,6 +349,7 @@ describe('OwlYearViewComponent', () => {
 
 @Component({
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <owl-date-time-year-view
                 [selected]="selected"
@@ -367,6 +368,7 @@ class StandardYearViewComponent {
 
 @Component({
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <owl-date-time-year-view
                 [(pickerMoment)]="pickerMoment"

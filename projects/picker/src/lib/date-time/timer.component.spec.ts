@@ -2,7 +2,7 @@
  * timer.component.spec
  */
 
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import {
     ComponentFixture,
     fakeAsync,
@@ -119,7 +119,7 @@ describe('OwlTimerComponent', () => {
         });
 
         it('should dispatch an event when a timer arrow button clicked', fakeAsync(() => {
-            spyOn(testComponent, 'handleSelectedChange');
+            vi.spyOn(testComponent, 'handleSelectedChange').mockImplementation(() => {});
             expect(testComponent.handleSelectedChange).not.toHaveBeenCalled();
 
             testComponent.showSecondsTimer = true;
@@ -140,7 +140,7 @@ describe('OwlTimerComponent', () => {
         }));
 
         it('should dispatch an event when hour12 toggle button clicked', fakeAsync(() => {
-            spyOn(testComponent, 'handleSelectedChange');
+            vi.spyOn(testComponent, 'handleSelectedChange').mockImplementation(() => {});
             expect(testComponent.handleSelectedChange).not.toHaveBeenCalled();
 
             testComponent.hour12Timer = true;
@@ -370,6 +370,7 @@ describe('OwlTimerComponent', () => {
 
 @Component({
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <owl-date-time-timer
                 [hour12Timer]="hour12Timer"

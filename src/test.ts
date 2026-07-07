@@ -1,22 +1,17 @@
-// This file is required by karma.conf.js and loads recursively all the .spec and framework files
-import 'zone.js';
-import 'zone.js/testing';
+// Global setup file for the vitest unit-test builder.
+// The builder initializes the Angular TestBed (and loads zone.js via the build
+// target's polyfills) before this file is executed.
+
+// Patches vitest's describe/it/beforeEach to run inside zone.js ProxyZone,
+// which is required for fakeAsync()/tick()/flush() to work.
+import 'zone.js/plugins/vitest-patch';
 
 import { getTestBed } from '@angular/core/testing';
 import { provideZoneChangeDetection } from '@angular/core';
-import {
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting
-} from '@angular/platform-browser-dynamic/testing';
 
-// First, initialize the Angular testing environment.
 const testBed = getTestBed();
-testBed.initTestEnvironment(
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting()
-);
 
-// Workaround for Angular 21.0-21.1 where the karma builder doesn't provide zone change detection
+// Workaround for Angular 21+ where the test builder doesn't provide zone change detection
 // We patch TestBed.configureTestingModule to always include provideZoneChangeDetection()
 // unless it's already there or there's already a zone provider
 const originalConfigureTestingModule = testBed.configureTestingModule;
