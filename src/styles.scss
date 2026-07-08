@@ -1,4 +1,5 @@
-@use '../projects/picker/src/sass/picker.scss' as *;
+@use "@angular/cdk/overlay-prebuilt.css";
+@use '../projects/picker/src/sass/picker.scss';
 
 html,
 body {
