@@ -313,10 +313,13 @@ describe('OwlMonthViewComponent', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(StandardMonthViewComponent);
 
-            adapter = monthViewDebugElement.injector.get(DateTimeAdapter);
             monthViewDebugElement = fixture.debugElement.query(
                 By.directive(OwlMonthViewComponent)
             );
+            // The standalone host imports OwlNativeDateTimeModule, so the adapter
+            // is scoped to the component subtree - take it from the component's
+            // injector instead of the TestBed root injector.
+            adapter = monthViewDebugElement.injector.get(DateTimeAdapter);
             monthViewElement = monthViewDebugElement.nativeElement;
             monthViewInstance = monthViewDebugElement.componentInstance;
         });
