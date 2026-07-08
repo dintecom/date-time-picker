@@ -3,31 +3,20 @@ name: CI Test
 on:
   push:
     branches: [ master ]
-    paths-ignore:
-    - '*.md'
-    - '.github/**'
   pull_request:
     branches: [ master ]
-    paths-ignore:
-    - '*.md'
-    - '.github/**'
-
   workflow_dispatch:
-
 jobs:
   build:
+    name: Test picker
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
-            node-version: lts/*
-      - name: Install dependencies
-        run: npm ci --include=optional
-      - name: Install Playwright Chromium
-        run: npx playwright install --with-deps chromium
-      - name: Run tests
-        run: npm run test:ci
+          node-version: lts/*
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:ci
         env:
           CI: true
