@@ -667,12 +667,14 @@ export class MyComponent &#123;
     }
 
     /* Custom demo styles for this component */
-    :host ::ng-deep .custom-backdrop-demo {
+    ::ng-deep .custom-backdrop-demo {
       background-color: rgba(103, 58, 183, 0.85) !important;
       backdrop-filter: blur(4px);
+      opacity: 0.5 !important;
     }
 
-    :host ::ng-deep .custom-panel-demo {
+    ::ng-deep .custom-panel-demo {
+      overflow: hidden;
       border-radius: 12px !important;
       box-shadow: 0 8px 32px rgba(103, 58, 183, 0.3) !important;
       border: 2px solid #9575cd !important;

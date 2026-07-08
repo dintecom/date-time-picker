@@ -443,6 +443,20 @@ import {
       border-right-color: rgba(255,255,255,0.3);
     }
 
+    /* Custom demo styles for this component */
+    ::ng-deep .custom-backdrop {
+      background-color: rgba(103, 58, 183, 0.85) !important;
+      backdrop-filter: blur(4px);
+      opacity: 0.5 !important;
+    }
+
+    ::ng-deep .custom-panel {
+      overflow: hidden;
+      border-radius: 12px !important;
+      box-shadow: 0 8px 32px rgba(103, 58, 183, 0.3) !important;
+      border: 2px solid #9575cd !important;
+    }
+
     @media (max-width: 768px) {
       .comparison-header,
       .comparison-row {
