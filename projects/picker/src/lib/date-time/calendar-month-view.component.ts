@@ -334,9 +334,9 @@ export class OwlMonthViewComponent<T>
             daysDiff
         );
 
-        this.selectedChange.emit(selected);
         // TODO: The 'emit' function requires a mandatory void argument
         this.userSelection.emit();
+        this.selectedChange.emit(selected);
     }
 
     /**
@@ -434,6 +434,11 @@ export class OwlMonthViewComponent<T>
                     this.selectDate(
                         this.dateTimeAdapter.getDate(this.pickerMoment)
                     );
+                    // Selecting may auto-close (and destroy) the picker. Bail out
+                    // before focusActiveCell() so we don't schedule render work on
+                    // a destroyed view (NG0911). The active cell keeps its focus.
+                    event.preventDefault();
+                    return;
                 }
                 break;
             default:

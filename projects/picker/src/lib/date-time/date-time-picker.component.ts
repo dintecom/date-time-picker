@@ -270,6 +270,10 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
     private confirmSelectedStreamSub = Subscription.EMPTY;
     private pickerOpenedStreamSub = Subscription.EMPTY;
     private pickerBeforeOpenedStreamSub = Subscription.EMPTY;
+    private dialogEventsSub = Subscription.EMPTY;
+
+    /** Pending async close (focus-restore path); cleared on destroy. */
+    private closeTimer: ReturnType<typeof setTimeout>;
 
     /** The element that was focused before the date time picker was opened. */
     private focusedElementBeforeOpen: HTMLElement | null = null;
@@ -342,7 +346,12 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
     public ngOnInit() {}
 
     public ngOnDestroy(): void {
-        this.close();
+        // Tearing down is not the same as the user closing the picker: release
+        // the overlay/subscriptions but do NOT emit `afterPickerClosed`, and drop
+        // any pending async close so it can't emit into a destroyed component.
+        clearTimeout(this.closeTimer);
+        this.disposeOverlayResources();
+        this._opened = false;
         this.dtInputSub.unsubscribe();
         this.disabledChange.complete();
 
@@ -486,6 +495,38 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
             return;
         }
 
+        this.disposeOverlayResources();
+
+        const completeClose = () => {
+            if (this._opened) {
+                this._opened = false;
+                const selected = this.selected || this.selecteds;
+                this.afterPickerClosed.emit(selected);
+                this.focusedElementBeforeOpen = null;
+            }
+        };
+
+        if (
+            this.focusedElementBeforeOpen &&
+            typeof this.focusedElementBeforeOpen.focus === 'function'
+        ) {
+            // Because IE moves focus asynchronously, we can't count on it being restored before we've
+            // marked the datepicker as closed. If the event fires out of sequence and the element that
+            // we're refocusing opens the datepicker on focus, the user could be stuck with not being
+            // able to close the calendar at all. We work around it by making the logic, that marks
+            // the datepicker as closed, async as well.
+            this.focusedElementBeforeOpen.focus();
+            this.closeTimer = setTimeout(completeClose);
+        } else {
+            completeClose();
+        }
+    }
+
+    /**
+     * Release the overlay/dialog and the container stream subscriptions. Shared
+     * by close() and ngOnDestroy(); does not emit any lifecycle event itself.
+     */
+    private disposeOverlayResources(): void {
         if (this.popupRef && this.popupRef.hasAttached()) {
             this.popupRef.detach();
         }
@@ -517,33 +558,11 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
             this.pickerOpenedStreamSub = null;
         }
 
+        this.dialogEventsSub.unsubscribe();
+
         if (this.dialogRef) {
             this.dialogRef.close();
             this.dialogRef = null;
-        }
-
-        const completeClose = () => {
-            if (this._opened) {
-                this._opened = false;
-                const selected = this.selected || this.selecteds;
-                this.afterPickerClosed.emit(selected);
-                this.focusedElementBeforeOpen = null;
-            }
-        };
-
-        if (
-            this.focusedElementBeforeOpen &&
-            typeof this.focusedElementBeforeOpen.focus === 'function'
-        ) {
-            // Because IE moves focus asynchronously, we can't count on it being restored before we've
-            // marked the datepicker as closed. If the event fires out of sequence and the element that
-            // we're refocusing opens the datepicker on focus, the user could be stuck with not being
-            // able to close the calendar at all. We work around it by making the logic, that marks
-            // the datepicker as closed, async as well.
-            this.focusedElementBeforeOpen.focus();
-            setTimeout(completeClose);
-        } else {
-            completeClose();
         }
     }
 
@@ -583,14 +602,15 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
         );
         this.pickerContainer = untracked(this.dialogRef.componentInstance);
 
-        this.dialogRef.beforeOpen().subscribe(() => {
+        this.dialogEventsSub = new Subscription();
+        this.dialogEventsSub.add(this.dialogRef.beforeOpen().subscribe(() => {
             this.beforePickerOpen.emit(null);
-        });
-        this.dialogRef.afterOpen().subscribe(() => {
+        }));
+        this.dialogEventsSub.add(this.dialogRef.afterOpen().subscribe(() => {
             this.afterPickerOpen.emit(null);
             this._opened = true;
-        });
-        this.dialogRef.afterClosed().subscribe(() => this.close());
+        }));
+        this.dialogEventsSub.add(this.dialogRef.afterClosed().subscribe(() => this.close()));
     }
 
     /**

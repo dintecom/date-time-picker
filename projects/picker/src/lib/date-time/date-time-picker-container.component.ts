@@ -2,7 +2,7 @@
  * date-time-picker-container.component
  */
 
-import { AfterContentInit, AfterViewInit, AnimationCallbackEvent, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, OnInit, inject, viewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, AnimationCallbackEvent, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, OnDestroy, OnInit, inject, viewChild } from '@angular/core';
 import { OwlDateTimeIntl } from './date-time-picker-intl.service';
 import { OwlCalendarComponent } from './calendar.component';
 import { IDateTimePickerAnimationEvent } from './date-time-picker-animation-event';
@@ -45,7 +45,7 @@ import { NgClass } from '@angular/common';
     ],
 })
 export class OwlDateTimeContainerComponent<T>
-    implements OnInit, AfterContentInit, AfterViewInit
+    implements OnInit, AfterContentInit, AfterViewInit, OnDestroy
 {
     private cdRef = inject(ChangeDetectorRef);
     private elmRef = inject(ElementRef);
@@ -220,6 +220,19 @@ export class OwlDateTimeContainerComponent<T>
                 );
             }
         }
+    }
+
+    public ngOnDestroy(): void {
+        // The enter animation completes via an async promise. If this container is
+        // destroyed before it settles (e.g. opened then torn down), that late
+        // callback would push into these streams and re-emit lifecycle events on
+        // the already-destroyed picker. Completing them makes such a late `next()`
+        // a no-op. `animationStateChanged` is intentionally left open so the leave
+        // animation can still drive the dialog teardown.
+        this.beforePickerOpened$.complete();
+        this.pickerOpened$.complete();
+        this.hidePicker$.complete();
+        this.confirmSelected$.complete();
     }
 
     public ngAfterContentInit(): void {
