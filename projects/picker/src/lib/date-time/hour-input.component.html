@@ -1,29 +1,29 @@
 <owl-date-time-timer-box
-    [upBtnAriaLabel]="upBtnAriaLabel"
-    [downBtnAriaLabel]="downBtnAriaLabel"
-    [upBtnDisabled]="disabled"
-    [downBtnDisabled]="disabled"
-    [boxValue]="boxValue"
-    [value]="value"
+    [upBtnAriaLabel]="upBtnAriaLabel()"
+    [downBtnAriaLabel]="downBtnAriaLabel()"
+    [upBtnDisabled]="disabled()"
+    [downBtnDisabled]="disabled()"
+    [boxValue]="boxValue()"
+    [value]="value()"
     [min]="0"
     [max]="23"
-    [step]="step"
+    [step]="step()"
     [inputLabel]="'Hour'"
     (inputChange)="setValueViaInput($event)"
     (valueChange)="setValue($event)"
 ></owl-date-time-timer-box>
 
-@if (hour12Timer) {
+@if (hour12Timer()) {
     <div class="owl-dt-timer-hour12">
         <button
             class="owl-dt-control-button owl-dt-timer-hour12-box"
             type="button"
             tabindex="0"
             (click)="setMeridian()"
-            [disabled]="disabled"
+            [disabled]="disabled()"
         >
             <span class="owl-dt-control-button-content" tabindex="-1">
-                {{ hour12ButtonLabel }}
+                {{ hour12ButtonLabel() }}
             </span>
         </button>
     </div>
