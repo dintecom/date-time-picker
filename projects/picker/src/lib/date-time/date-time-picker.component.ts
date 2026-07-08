@@ -16,6 +16,7 @@ import {
     inject,
     input,
     output,
+    untracked,
     EventEmitter,
     Injector
 } from '@angular/core';
@@ -76,8 +77,6 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
     private dialogService = inject(OwlDialogService);
     private injector = inject(Injector);
     protected changeDetector = inject(ChangeDetectorRef);
-    protected dateTimeAdapter: DateTimeAdapter<T>;
-    protected dateTimeFormats: OwlDateTimeFormats;
     private document = inject(DOCUMENT, { optional: true })!;
 
     /** Custom class for the picker backdrop. */

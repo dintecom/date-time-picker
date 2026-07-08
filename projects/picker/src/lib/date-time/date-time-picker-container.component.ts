@@ -2,9 +2,7 @@
  * date-time-picker-container.component
  */
 
-import { AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, inject, viewChild } from '@angular/core';
-    AnimationCallbackEvent,
-    EventEmitter,
+import { AfterContentInit, AfterViewInit, AnimationCallbackEvent, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, OnInit, inject, viewChild } from '@angular/core';
 import { OwlDateTimeIntl } from './date-time-picker-intl.service';
 import { OwlCalendarComponent } from './calendar.component';
 import { IDateTimePickerAnimationEvent } from './date-time-picker-animation-event';
@@ -38,7 +36,7 @@ import { NgClass } from '@angular/common';
         '[class.owl-dt-inline-container]': 'owlDTInlineContainerClass',
         '[class.owl-dt-container-disabled]': 'owlDTContainerDisabledClass',
         '[attr.id]': 'owlDTContainerId',
-    }
+    },
     imports: [
         CdkTrapFocus,
         OwlCalendarComponent,

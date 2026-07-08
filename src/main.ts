@@ -1,11 +1,10 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { OWL_DATE_TIME_LOCALE, OptionsTokens } from '../projects/picker/src/public-api';
 import {
   provideOwlDateTime,
   provideOwlNativeDateTime,
   provideOwlDateTimeOptions,
   OWL_DATE_TIME_LOCALE
-} from '../projects/picker/src/public_api';
+} from '../projects/picker/src/public-api';
 import { AppComponent } from './app/app.component';
 import { provideZonelessChangeDetection } from '@angular/core';
 

@@ -2,18 +2,7 @@
  * dialog-container.component
  */
 
-import { ChangeDetectorRef, Component, ComponentRef, ElementRef, EmbeddedViewRef, EventEmitter, OnInit, ViewChild, inject } from '@angular/core';
-  Component,
-  ComponentRef,
-  ElementRef,
-  EmbeddedViewRef,
-  EventEmitter,
-  Inject,
-  OnInit,
-  Optional,
-  signal,
-  ViewChild,
-  ChangeDetectionStrategy
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, ElementRef, EmbeddedViewRef, EventEmitter, OnInit, signal, ViewChild, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { FocusTrap, FocusTrapFactory } from '@angular/cdk/a11y';
 import {
@@ -37,7 +26,7 @@ import { OwlDialogConfigInterface } from './dialog-config.class';
         '[attr.role]': 'owlDialogContainerRole',
         '[attr.aria-labelledby]': 'owlDialogContainerAriaLabelledby',
         '[attr.aria-describedby]': 'owlDialogContainerAriaDescribedby'
-    }
+    },
     imports: [CdkPortalOutlet],
 })
 export class OwlDialogContainerComponent extends BasePortalOutlet
@@ -102,8 +91,6 @@ export class OwlDialogContainerComponent extends BasePortalOutlet
 
     get owlDialogContainerAriaDescribedby(): string {
         return this._config.ariaDescribedBy || null;
-    }
-
     }
 
     public ngOnInit() {}

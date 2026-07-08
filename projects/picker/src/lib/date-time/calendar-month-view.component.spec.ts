@@ -313,7 +313,7 @@ describe('OwlMonthViewComponent', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(StandardMonthViewComponent);
 
-            adapter = TestBed.inject(DateTimeAdapter);
+            adapter = monthViewDebugElement.injector.get(DateTimeAdapter);
             monthViewDebugElement = fixture.debugElement.query(
                 By.directive(OwlMonthViewComponent)
             );

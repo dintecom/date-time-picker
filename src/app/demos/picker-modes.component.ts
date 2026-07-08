@@ -6,7 +6,7 @@ import {
   OwlDateTimeTriggerDirective,
   OwlDateTimeInputDirective,
   OwlDateTimeInlineComponent
-} from '../../../projects/picker/src/public_api';
+} from '../../../projects/picker/src/public-api';
 
 /**
  * Picker Modes Demo

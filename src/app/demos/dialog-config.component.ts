@@ -5,7 +5,7 @@ import {
   OwlDateTimeComponent,
   OwlDateTimeTriggerDirective,
   OwlDateTimeInputDirective
-} from '../../../projects/picker/src/public_api';
+} from '../../../projects/picker/src/public-api';
 
 /**
  * Dialog Configuration Demo

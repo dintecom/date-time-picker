@@ -6,7 +6,7 @@ import {
   OwlDateTimeTriggerDirective,
   OwlDateTimeInputDirective,
   DateView
-} from '../../../projects/picker/src/public_api';
+} from '../../../projects/picker/src/public-api';
 
 interface EventLog {
   timestamp: Date;

@@ -39,8 +39,6 @@ export const OWL_DATETIME_VALUE_ACCESSOR: any = {
 export class OwlDateTimeInlineComponent<T> extends OwlDateTime<T>
     implements OnInit, ControlValueAccessor {
     protected changeDetector = inject(ChangeDetectorRef);
-    protected dateTimeAdapter: DateTimeAdapter<T>;
-    protected dateTimeFormats: OwlDateTimeFormats;
 
     readonly container = viewChild(OwlDateTimeContainerComponent);
 

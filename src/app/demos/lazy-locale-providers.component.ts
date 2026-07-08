@@ -13,7 +13,7 @@ import {
   OWL_DATE_TIME_LOCALE,
   owlDateTimeProviders,
   owlNativeDateTimeProviders
-} from '../../../projects/picker/src/public_api';
+} from '../../../projects/picker/src/public-api';
 
 // Register locales
 registerLocaleData(localeAr, 'ar');

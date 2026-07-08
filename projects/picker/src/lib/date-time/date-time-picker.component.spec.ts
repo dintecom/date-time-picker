@@ -64,11 +64,11 @@ describe('OwlDateTimeComponent', () => {
         FormsModule,
         OwlDateTimeModule,
         ReactiveFormsModule,
-        ...imports,
-        component, ...entryComponents
+        ...imports
     ],
-    providers
-            animationsEnabled: true // required for picker container open/close animations
+    providers,
+    declarations: [component, ...entryComponents],
+    animationsEnabled: true // required for picker container open/close animations
 });
 
         TestBed.compileComponents();
@@ -186,13 +186,13 @@ describe('OwlDateTimeComponent', () => {
             });
 
             it('disabled dateTimePicker input should open the picker panel if dateTimePicker is enabled', () => {
-                dateTimePicker.disabled = false;
+                testComponent.dateTimePicker().disabled = false;
                 testComponent.dateTimePickerInput().disabled = true;
                 fixture.detectChanges();
 
                 expect(document.querySelector('.cdk-overlay-pane')).toBeNull();
 
-                dateTimePicker.open();
+                testComponent.dateTimePicker().open();
                 fixture.detectChanges();
 
                 expect(

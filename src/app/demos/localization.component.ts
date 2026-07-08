@@ -13,7 +13,7 @@ import {
   OwlDateTimeInlineComponent,
   OwlDateTimeIntl,
   DateTimeAdapter
-} from '../../../projects/picker/src/public_api';
+} from '../../../projects/picker/src/public-api';
 
 // Register locales
 registerLocaleData(localeAr, 'ar');

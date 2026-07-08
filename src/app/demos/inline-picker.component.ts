@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { OwlDateTimeInlineComponent } from '../../../projects/picker/src/public_api';
+import { OwlDateTimeInlineComponent } from '../../../projects/picker/src/public-api';
 
 /**
  * Inline Picker Demo
