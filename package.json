@@ -1,19 +1,6 @@
 {
-  "name": "@dintecom/ngx-datetime-picker",
-  "version": "22.0.0",
-  "description": "Angular Date Time Picker",
-  "keywords": [
-    "Angular",
-    "datepicker",
-    "date picker",
-    "timepicker",
-    "time picker",
-    "datetime picker",
-    "date time picker",
-    "material",
-    "ngx"
-  ],
-  "author": "Maintained and updated by Daniel Moncada, original implementatiom by Daniel Pan",
+  "name": "date-time-picker-app",
+  "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -26,10 +13,6 @@
     "lint": "ng lint",
     "npm_pack": "cd dist/picker && npm pack",
     "package": "npm run build:lib && npm run build:css && npm run npm_pack"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/dintecom/date-time-picker.git"
   },
   "dependencies": {
     "@angular/cdk": "^22.0.3",
