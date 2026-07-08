@@ -56,7 +56,8 @@ export default defineConfig(
     ],
     rules: {
       "@angular-eslint/template/no-autofocus": "warn",
-      "@angular-eslint/template/interactive-supports-focus": "warn"
+      "@angular-eslint/template/interactive-supports-focus": "warn",
+      "@angular-eslint/template/label-has-associated-control": "warn"
     },
   },
 );
