@@ -43,18 +43,15 @@ describe('OwlCalendarComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [OwlNativeDateTimeModule, OwlDateTimeModule],
-            declarations: [
-                StandardCalendarComponent,
-                CalendarWithCalendarWeeks,
-                CalendarWithMinMaxComponent,
-                CalendarWithDateFilterComponent
-            ],
-            providers: [
-                OwlDateTimeIntl,
-                { provide: NgZone, useFactory: () => (zone = new MockNgZone()) }
-            ]
-        }).compileComponents();
+    imports: [OwlNativeDateTimeModule, OwlDateTimeModule, StandardCalendarComponent,
+        CalendarWithCalendarWeeks,
+        CalendarWithMinMaxComponent,
+        CalendarWithDateFilterComponent],
+    providers: [
+        OwlDateTimeIntl,
+        { provide: NgZone, useFactory: () => (zone = new MockNgZone()) }
+    ]
+}).compileComponents();
     });
 
     describe('standard calendar', () => {
@@ -314,16 +311,16 @@ describe('OwlCalendarComponent', () => {
 
         it('should show calendar weeks when attribute showCalendarWeeks in true', () => {
              // Check the initial value is false
-            expect(calendarInstance.showCalendarWeeks).toBe(false);
+            expect(calendarInstance.showCalendarWeeks()).toBe(false);
             testComponent.showCalendarWeeks = true;
             fixture.detectChanges(); // Trigger change detection to apply the new value
             // Now check if the calendarInstance reflects this change
-            expect(calendarInstance.showCalendarWeeks).toBe(true);
+            expect(calendarInstance.showCalendarWeeks()).toBe(true);
         });
 
         it('should show calendar weeks classes only when attribute showCalendarWeeks in true', () => {
              // Check the initial value is false
-            expect(calendarInstance.showCalendarWeeks).toBe(false);
+            expect(calendarInstance.showCalendarWeeks()).toBe(false);
 
             // Verify classes are not present initially
             let weekNumberElement = fixture.debugElement.nativeElement.querySelector('.week-number');
@@ -336,7 +333,7 @@ describe('OwlCalendarComponent', () => {
             fixture.detectChanges(); // Trigger change detection to apply the new value
 
             // Now check if the calendarInstance reflects this change
-            expect(calendarInstance.showCalendarWeeks).toBe(true);
+            expect(calendarInstance.showCalendarWeeks()).toBe(true);
 
             // Verify classes are present after the change
             weekNumberElement = fixture.debugElement.nativeElement.querySelector('.week-number');
@@ -522,7 +519,6 @@ describe('OwlCalendarComponent', () => {
 });
 
 @Component({
-    standalone: false,
     changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <owl-date-time-calendar
@@ -531,7 +527,8 @@ describe('OwlCalendarComponent', () => {
                 [pickerMoment]="pickerMoment"
                 (monthSelected)="selectedMonth=$event"
                 (yearSelected)="selectedYear=$event"></owl-date-time-calendar>
-    `
+    `,
+    imports: [OwlNativeDateTimeModule, OwlDateTimeModule]
 })
 class StandardCalendarComponent {
     selectMode = 'single';
@@ -542,14 +539,14 @@ class StandardCalendarComponent {
 }
 
 @Component({
-    standalone: false,
     changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <owl-date-time-calendar [selectMode]="selectMode"
                                 [pickerMoment]="pickerMoment"
                                 [minDate]="minDate"
                                 [maxDate]="maxDate"></owl-date-time-calendar>
-    `
+    `,
+    imports: [OwlNativeDateTimeModule, OwlDateTimeModule]
 })
 class CalendarWithMinMaxComponent {
     selectMode = 'single';
@@ -560,13 +557,13 @@ class CalendarWithMinMaxComponent {
 }
 
 @Component({
-    standalone: false,
     changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <owl-date-time-calendar [selectMode]="selectMode"
                                 [pickerMoment]="pickerMoment"
                                 [showCalendarWeeks]="showCalendarWeeks"></owl-date-time-calendar>
-    `
+    `,
+    imports: [OwlNativeDateTimeModule, OwlDateTimeModule]
 })
 class CalendarWithCalendarWeeks {
     selectMode = 'single';
@@ -576,14 +573,14 @@ class CalendarWithCalendarWeeks {
 }
 
 @Component({
-    standalone: false,
     changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <owl-date-time-calendar [(selected)]="selected"
                                 [selectMode]="selectMode"
                                 [pickerMoment]="pickerMoment"
                                 [dateFilter]="dateFilter"></owl-date-time-calendar>
-    `
+    `,
+    imports: [OwlNativeDateTimeModule, OwlDateTimeModule]
 })
 class CalendarWithDateFilterComponent {
     selectMode = 'single';

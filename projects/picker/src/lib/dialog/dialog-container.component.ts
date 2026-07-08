@@ -2,7 +2,7 @@
  * dialog-container.component
  */
 
-import {
+import { ChangeDetectorRef, Component, ComponentRef, ElementRef, EmbeddedViewRef, EventEmitter, OnInit, ViewChild, inject } from '@angular/core';
   Component,
   ComponentRef,
   ElementRef,
@@ -14,7 +14,6 @@ import {
   signal,
   ViewChild,
   ChangeDetectionStrategy
-} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { FocusTrap, FocusTrapFactory } from '@angular/cdk/a11y';
 import {
@@ -30,7 +29,6 @@ import { OwlDialogConfigInterface } from './dialog-config.class';
 @Component({
     selector: 'owl-dialog-container',
     templateUrl: './dialog-container.component.html',
-    standalone: false,
     changeDetection: ChangeDetectionStrategy.Eager,
     host: {
         '[class.owl-dialog-container]': 'owlDialogContainerClass',
@@ -40,9 +38,15 @@ import { OwlDialogConfigInterface } from './dialog-config.class';
         '[attr.aria-labelledby]': 'owlDialogContainerAriaLabelledby',
         '[attr.aria-describedby]': 'owlDialogContainerAriaDescribedby'
     }
+    imports: [CdkPortalOutlet],
 })
 export class OwlDialogContainerComponent extends BasePortalOutlet
     implements OnInit {
+    private changeDetector = inject(ChangeDetectorRef);
+    private elementRef = inject(ElementRef);
+    private focusTrapFactory = inject(FocusTrapFactory);
+    private document = inject(DOCUMENT, { optional: true })!;
+
     @ViewChild(CdkPortalOutlet, { static: true })
     portalOutlet: CdkPortalOutlet | null = null;
 
@@ -100,14 +104,6 @@ export class OwlDialogContainerComponent extends BasePortalOutlet
         return this._config.ariaDescribedBy || null;
     }
 
-    constructor(
-        private elementRef: ElementRef,
-        private focusTrapFactory: FocusTrapFactory,
-        @Optional()
-        @Inject(DOCUMENT)
-        private document: any,
-    ) {
-        super();
     }
 
     public ngOnInit() {}

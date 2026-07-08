@@ -37,13 +37,10 @@ const JAN = 0,
 describe('OwlYearViewComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [OwlNativeDateTimeModule, OwlDateTimeModule],
-            declarations: [
-                StandardYearViewComponent,
-                YearViewWithDateFilterComponent
-            ],
-            providers: [OwlDateTimeIntl]
-        }).compileComponents();
+    imports: [OwlNativeDateTimeModule, OwlDateTimeModule, StandardYearViewComponent,
+        YearViewWithDateFilterComponent],
+    providers: [OwlDateTimeIntl]
+}).compileComponents();
     });
 
     describe('standard year view', () => {
@@ -348,14 +345,14 @@ describe('OwlYearViewComponent', () => {
 });
 
 @Component({
-    standalone: false,
     changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <owl-date-time-year-view
                 [selected]="selected"
                 [(pickerMoment)]="pickerMoment"
                 (change)="handleChange($event)"></owl-date-time-year-view>
-    `
+    `,
+    imports: [OwlNativeDateTimeModule, OwlDateTimeModule]
 })
 class StandardYearViewComponent {
     selected = new Date(2018, JAN, 10);
@@ -367,13 +364,13 @@ class StandardYearViewComponent {
 }
 
 @Component({
-    standalone: false,
     changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <owl-date-time-year-view
                 [(pickerMoment)]="pickerMoment"
                 [dateFilter]="dateFilter"></owl-date-time-year-view>
-    `
+    `,
+    imports: [OwlNativeDateTimeModule, OwlDateTimeModule]
 })
 class YearViewWithDateFilterComponent {
     pickerMoment = new Date(2018, JAN, 1);

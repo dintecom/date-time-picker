@@ -2,19 +2,9 @@
  * date-time-picker-container.component
  */
 
-import {
-    AfterContentInit,
-    AfterViewInit,
+import { AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, inject, viewChild } from '@angular/core';
     AnimationCallbackEvent,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
     EventEmitter,
-    OnInit,
-    Optional,
-    ViewChild,
-} from '@angular/core';
 import { OwlDateTimeIntl } from './date-time-picker-intl.service';
 import { OwlCalendarComponent } from './calendar.component';
 import { IDateTimePickerAnimationEvent } from './date-time-picker-animation-event';
@@ -29,6 +19,8 @@ import {
     SPACE,
     UP_ARROW,
 } from '@angular/cdk/keycodes';
+import { CdkTrapFocus } from '@angular/cdk/a11y';
+import { NgClass } from '@angular/common';
 
 @Component({
     exportAs: 'owlDateTimeContainer',
@@ -37,7 +29,6 @@ import {
     styleUrls: ['./date-time-picker-container.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     preserveWhitespaces: false,
-    standalone: false,
     host: {
         '(animate.enter)': 'onAnimateEnter($event)',
         '(animate.leave)': 'onAnimateLeave($event)',
@@ -48,14 +39,23 @@ import {
         '[class.owl-dt-container-disabled]': 'owlDTContainerDisabledClass',
         '[attr.id]': 'owlDTContainerId',
     }
+    imports: [
+        CdkTrapFocus,
+        OwlCalendarComponent,
+        OwlTimerComponent,
+        NgClass,
+    ],
 })
 export class OwlDateTimeContainerComponent<T>
     implements OnInit, AfterContentInit, AfterViewInit
 {
-    @ViewChild(OwlCalendarComponent)
-    calendar: OwlCalendarComponent<T>;
-    @ViewChild(OwlTimerComponent)
-    timer: OwlTimerComponent<T>;
+    private cdRef = inject(ChangeDetectorRef);
+    private elmRef = inject(ElementRef);
+    private pickerIntl = inject(OwlDateTimeIntl);
+    private dateTimeAdapter = inject<DateTimeAdapter<T>>(DateTimeAdapter, { optional: true })!;
+
+    readonly calendar = viewChild(OwlCalendarComponent);
+    readonly timer = viewChild(OwlTimerComponent);
 
     public picker: OwlDateTime<T>;
     public activeSelectedIndex = 0; // The current active SelectedIndex in range select mode (0: 'from', 1: 'to')
@@ -208,13 +208,6 @@ export class OwlDateTimeContainerComponent<T>
     get owlDTContainerAnimation(): any {
         return this.picker.pickerMode === 'inline' ? '' : 'enter';
     }
-
-    constructor(
-        private cdRef: ChangeDetectorRef,
-        private elmRef: ElementRef,
-        private pickerIntl: OwlDateTimeIntl,
-        @Optional() private dateTimeAdapter: DateTimeAdapter<T>,
-    ) {}
 
     public ngOnInit() {
         if (this.picker.selectMode === 'range') {
@@ -604,10 +597,12 @@ export class OwlDateTimeContainerComponent<T>
             return;
         }
 
-        if (this.calendar) {
-            this.calendar.focusActiveCell();
-        } else if (this.timer) {
-            this.timer.focus();
+        const calendar = this.calendar();
+        const timer = this.timer();
+        if (calendar) {
+            calendar.focusActiveCell();
+        } else if (timer) {
+            timer.focus();
         }
     }
 
