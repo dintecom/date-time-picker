@@ -22,6 +22,7 @@ import { OwlCalendarComponent } from './calendar.component';
 import { OwlDateTimeInlineComponent } from './date-time-inline.component';
 import { OwlDialogModule } from '../dialog/dialog.module';
 import { optionsProviders } from './options-provider';
+import { OwlHourInputComponent } from './hour-input.component';
 
 /**
  * @deprecated Use `provideOwlDateTime()` instead. This module will be removed in v21.0.0.
@@ -67,6 +68,7 @@ import { optionsProviders } from './options-provider';
         OwlMonthViewComponent,
         OwlTimerComponent,
         OwlTimerBoxComponent,
+        OwlHourInputComponent,
         OwlCalendarComponent,
         OwlCalendarBodyComponent,
         NumberFixedLenPipe,
@@ -74,6 +76,8 @@ import { optionsProviders } from './options-provider';
     exports: [
         OwlCalendarComponent,
         OwlTimerComponent,
+        OwlTimerBoxComponent,
+        OwlHourInputComponent,
         OwlDateTimeTriggerDirective,
         OwlDateTimeInputDirective,
         OwlDateTimeComponent,

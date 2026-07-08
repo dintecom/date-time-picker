@@ -87,6 +87,10 @@ export * from './lib/date-time/calendar-body.component';
 
 export * from './lib/date-time/timer.component';
 
+export * from './lib/date-time/timer-box.component';
+
+export * from './lib/date-time/hour-input.component';
+
 export * from './lib/date-time/date-time-picker-trigger.directive';
 
 export * from './lib/date-time/date-time-picker-input.directive';
