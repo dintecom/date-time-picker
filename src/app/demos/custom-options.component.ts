@@ -70,7 +70,7 @@ import {
         </div>
         <div class="code-example">
           <div class="code-title">💡 How to configure in main.ts:</div>
-          <pre><code>import &#123; provideOwlDateTimeOptions &#125; from '&#64;danielmoncada/angular-datetime-picker';
+          <pre><code>import &#123; provideOwlDateTimeOptions &#125; from '&#64;dintecom/ngx-datetime-picker';
 
 bootstrapApplication(AppComponent, &#123;
   providers: [

@@ -71,7 +71,7 @@ import {
         <p class="hint">Works with Unix timestamps (milliseconds since epoch) - useful for APIs</p>
         <div class="info-box">
           <strong>⚠️ Configuration Note:</strong> To use Unix Timestamp adapter, configure in <code>main.ts</code>:
-          <pre><code>import &#123; provideOwlUnixTimestampDateTime &#125; from '&#64;danielmoncada/angular-datetime-picker';
+          <pre><code>import &#123; provideOwlUnixTimestampDateTime &#125; from '&#64;dintecom/ngx-datetime-picker';
 
 bootstrapApplication(AppComponent, &#123;
   providers: [
@@ -120,7 +120,7 @@ bootstrapApplication(AppComponent, &#123;
           <pre><code>import &#123;
   provideOwlNativeDateTimeWithFormats,
   OwlDateTimeFormats
-&#125; from '&#64;danielmoncada/angular-datetime-picker';
+&#125; from '&#64;dintecom/ngx-datetime-picker';
 
 const customFormats: OwlDateTimeFormats = &#123;
   parseInput: 'DD/MM/YYYY HH:mm',

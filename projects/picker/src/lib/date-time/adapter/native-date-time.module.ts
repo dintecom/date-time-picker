@@ -28,11 +28,11 @@ export class NativeDateTimeModule {
  * Migration guide:
  * ```typescript
  * // Before:
- * import { OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+ * import { OwlNativeDateTimeModule } from '@dintecom/ngx-datetime-picker';
  * @NgModule({ imports: [OwlNativeDateTimeModule] })
  *
  * // After:
- * import { provideOwlNativeDateTime } from '@danielmoncada/angular-datetime-picker';
+ * import { provideOwlNativeDateTime } from '@dintecom/ngx-datetime-picker';
  * providers: [provideOwlNativeDateTime()]
  * ```
  */

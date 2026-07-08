@@ -338,7 +338,7 @@ interface LocaleOption {
         <div class="config-card">
           <h4>Step 1: Create Custom Label Class</h4>
           <pre><code>import &#123; Injectable &#125; from '&#64;angular/core';
-import &#123; OwlDateTimeIntl &#125; from '&#64;danielmoncada/angular-datetime-picker';
+import &#123; OwlDateTimeIntl &#125; from '&#64;dintecom/ngx-datetime-picker';
 
 &#64;Injectable()
 export class FrenchIntl extends OwlDateTimeIntl &#123;

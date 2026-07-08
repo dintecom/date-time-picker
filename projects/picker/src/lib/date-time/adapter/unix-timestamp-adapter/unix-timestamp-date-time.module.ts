@@ -28,11 +28,11 @@ export class UnixTimestampDateTimeModule {
  * Migration guide:
  * ```typescript
  * // Before:
- * import { OwlUnixTimestampDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+ * import { OwlUnixTimestampDateTimeModule } from '@dintecom/ngx-datetime-picker';
  * @NgModule({ imports: [OwlUnixTimestampDateTimeModule] })
  *
  * // After:
- * import { provideOwlUnixTimestampDateTime } from '@danielmoncada/angular-datetime-picker';
+ * import { provideOwlUnixTimestampDateTime } from '@dintecom/ngx-datetime-picker';
  * providers: [provideOwlUnixTimestampDateTime()]
  * ```
  */

@@ -30,7 +30,7 @@ import { OwlHourInputComponent } from './hour-input.component';
  * Migration guide:
  * ```typescript
  * // Before (NgModule approach):
- * import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+ * import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@dintecom/ngx-datetime-picker';
  *
  * @NgModule({
  *   imports: [OwlDateTimeModule, OwlNativeDateTimeModule]
@@ -38,7 +38,7 @@ import { OwlHourInputComponent } from './hour-input.component';
  * export class AppModule { }
  *
  * // After (Standalone/Provider approach):
- * import { provideOwlDateTime, provideOwlNativeDateTime } from '@danielmoncada/angular-datetime-picker';
+ * import { provideOwlDateTime, provideOwlNativeDateTime } from '@dintecom/ngx-datetime-picker';
  *
  * // For standalone app:
  * bootstrapApplication(AppComponent, {

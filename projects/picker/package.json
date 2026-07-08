@@ -1,6 +1,6 @@
 {
-    "name": "@danielmoncada/angular-datetime-picker",
-    "version": "21.0.0",
+    "name": "@dintecom/ngx-datetime-picker",
+    "version": "22.0.0",
     "description": "Angular Date Time Picker",
     "keywords": [
         "Angular",
@@ -17,9 +17,9 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/danielmoncada/date-time-picker.git"
+        "url": "https://github.com/dintecom/date-time-picker.git"
     },
-    "homepage": "https://github.com/danielmoncada/date-time-picker",
+    "homepage": "https://github.com/dintecom/date-time-picker",
     "publishConfig": {
         "access": "public"
     },

@@ -245,7 +245,7 @@ import {
   provideOwlDateTime,
   provideOwlNativeDateTime,
   provideOwlDateTimeOptions
-} from '@danielmoncada/angular-datetime-picker';
+} from '@dintecom/ngx-datetime-picker';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -285,7 +285,7 @@ Scroll strategies, backdrop styling, and panel customization:
 
 **Scroll Strategy Configuration:**
 ```typescript
-import { OWL_DIALOG_SCROLL_STRATEGY_PROVIDER } from '@danielmoncada/angular-datetime-picker';
+import { OWL_DIALOG_SCROLL_STRATEGY_PROVIDER } from '@dintecom/ngx-datetime-picker';
 import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
 
 // Custom scroll strategy factory
@@ -352,7 +352,7 @@ Multi-language support with translated UI labels and RTL languages:
 **Step 1: Create Custom Label Class (OwlDateTimeIntl)**
 ```typescript
 import { Injectable } from '@angular/core';
-import { OwlDateTimeIntl } from '@danielmoncada/angular-datetime-picker';
+import { OwlDateTimeIntl } from '@dintecom/ngx-datetime-picker';
 
 @Injectable()
 export class FrenchIntl extends OwlDateTimeIntl {
@@ -374,7 +374,7 @@ export class FrenchIntl extends OwlDateTimeIntl {
 **Step 2: Provide Globally or Per Component**
 ```typescript
 // Global configuration in main.ts
-import { OwlDateTimeIntl } from '@danielmoncada/angular-datetime-picker';
+import { OwlDateTimeIntl } from '@dintecom/ngx-datetime-picker';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -407,7 +407,7 @@ registerLocaleData(localeFr, 'fr');
 **Step 4: Runtime Locale Switching (IMPORTANT!)**
 ```typescript
 import { inject } from '@angular/core';
-import { DateTimeAdapter, OwlDateTimeIntl } from '@danielmoncada/angular-datetime-picker';
+import { DateTimeAdapter, OwlDateTimeIntl } from '@dintecom/ngx-datetime-picker';
 
 export class MyComponent {
   private dateAdapter = inject(DateTimeAdapter<Date>);
@@ -510,7 +510,7 @@ Different date implementations and custom formats:
 
 **Native Date Adapter (Default):**
 ```typescript
-import { provideOwlNativeDateTime } from '@danielmoncada/angular-datetime-picker';
+import { provideOwlNativeDateTime } from '@dintecom/ngx-datetime-picker';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -522,7 +522,7 @@ bootstrapApplication(AppComponent, {
 
 **Unix Timestamp Adapter:**
 ```typescript
-import { provideOwlUnixTimestampDateTime } from '@danielmoncada/angular-datetime-picker';
+import { provideOwlUnixTimestampDateTime } from '@dintecom/ngx-datetime-picker';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -537,7 +537,7 @@ bootstrapApplication(AppComponent, {
 import {
   provideOwlNativeDateTimeWithFormats,
   OwlDateTimeFormats
-} from '@danielmoncada/angular-datetime-picker';
+} from '@dintecom/ngx-datetime-picker';
 
 const customFormats: OwlDateTimeFormats = {
   parseInput: 'DD/MM/YYYY HH:mm',
@@ -721,10 +721,10 @@ weekdaysOnly = (d: Date) => d.getDay() >= 1 && d.getDay() <= 5;
 
 ## 📖 Additional Resources
 
-- **GitHub:** https://github.com/danielmoncada/date-time-picker
-- **NPM:** https://www.npmjs.com/package/@danielmoncada/angular-datetime-picker
+- **GitHub:** https://github.com/dintecom/date-time-picker
+- **NPM:** https://www.npmjs.com/package/@dintecom/ngx-datetime-picker
 - **Migration Guide:** See `MIGRATION_GUIDE.md`
-- **Issues:** https://github.com/danielmoncada/date-time-picker/issues
+- **Issues:** https://github.com/dintecom/date-time-picker/issues
 
 ---
 

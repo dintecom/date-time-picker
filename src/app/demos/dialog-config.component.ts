@@ -105,7 +105,7 @@ import {
           <pre><code>import &#123;
   provideOwlDateTime,
   OWL_DIALOG_SCROLL_STRATEGY_PROVIDER
-&#125; from '&#64;danielmoncada/angular-datetime-picker';
+&#125; from '&#64;dintecom/ngx-datetime-picker';
 import &#123; Overlay, ScrollStrategy &#125; from '&#64;angular/cdk/overlay';
 
 // Default configuration (already included in provideOwlDateTime)

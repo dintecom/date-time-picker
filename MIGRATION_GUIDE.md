@@ -20,7 +20,7 @@ Starting with version 20.0.0, the library supports modern Angular standalone com
 
 ```typescript
 import { NgModule } from '@angular/core';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@dintecom/ngx-datetime-picker';
 
 @NgModule({
   imports: [
@@ -37,7 +37,7 @@ export class AppModule { }
 
 ```typescript
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideOwlDateTime, provideOwlNativeDateTime } from '@danielmoncada/angular-datetime-picker';
+import { provideOwlDateTime, provideOwlNativeDateTime } from '@dintecom/ngx-datetime-picker';
 import { AppComponent } from './app/app.component';
 
 bootstrapApplication(AppComponent, {
@@ -52,7 +52,7 @@ bootstrapApplication(AppComponent, {
 
 ```typescript
 import { NgModule } from '@angular/core';
-import { provideOwlDateTime, provideOwlNativeDateTime } from '@danielmoncada/angular-datetime-picker';
+import { provideOwlDateTime, provideOwlNativeDateTime } from '@dintecom/ngx-datetime-picker';
 
 @NgModule({
   providers: [
@@ -104,7 +104,7 @@ providers: [
 Provides the native JavaScript `Date` adapter with custom formats.
 
 ```typescript
-import { OwlDateTimeFormats, provideOwlDateTime, provideOwlNativeDateTimeWithFormats } from '@danielmoncada/angular-datetime-picker';
+import { OwlDateTimeFormats, provideOwlDateTime, provideOwlNativeDateTimeWithFormats } from '@dintecom/ngx-datetime-picker';
 
 const customFormats: OwlDateTimeFormats = {
   parseInput: 'DD/MM/YYYY HH:mm',
@@ -138,7 +138,7 @@ providers: [
 Provides the Unix timestamp adapter with custom formats.
 
 ```typescript
-import { OwlDateTimeFormats, provideOwlDateTime, provideOwlUnixTimestampDateTimeWithFormats } from '@danielmoncada/angular-datetime-picker';
+import { OwlDateTimeFormats, provideOwlDateTime, provideOwlUnixTimestampDateTimeWithFormats } from '@dintecom/ngx-datetime-picker';
 
 const customFormats: OwlDateTimeFormats = {
   parseInput: 'X',
@@ -165,7 +165,7 @@ providers: [
 Provides custom options for the date-time picker, such as multi-year view configuration.
 
 ```typescript
-import { provideOwlDateTime, provideOwlNativeDateTime, provideOwlDateTimeOptions } from '@danielmoncada/angular-datetime-picker';
+import { provideOwlDateTime, provideOwlNativeDateTime, provideOwlDateTimeOptions } from '@dintecom/ngx-datetime-picker';
 
 providers: [
   provideOwlDateTime(),
@@ -195,7 +195,7 @@ providers: [
 
 **Before:**
 ```typescript
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@dintecom/ngx-datetime-picker';
 
 @NgModule({
   imports: [OwlDateTimeModule, OwlNativeDateTimeModule]
@@ -205,7 +205,7 @@ export class AppModule { }
 
 **After:**
 ```typescript
-import { provideOwlDateTime, provideOwlNativeDateTime } from '@danielmoncada/angular-datetime-picker';
+import { provideOwlDateTime, provideOwlNativeDateTime } from '@dintecom/ngx-datetime-picker';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -219,7 +219,7 @@ bootstrapApplication(AppComponent, {
 
 **Before:**
 ```typescript
-import { OwlDateTimeModule, OwlNativeDateTimeModule, OptionsTokens } from '@danielmoncada/angular-datetime-picker';
+import { OwlDateTimeModule, OwlNativeDateTimeModule, OptionsTokens } from '@dintecom/ngx-datetime-picker';
 
 @NgModule({
   imports: [OwlDateTimeModule, OwlNativeDateTimeModule],
@@ -237,7 +237,7 @@ export class AppModule { }
 
 **After:**
 ```typescript
-import { provideOwlDateTime, provideOwlNativeDateTime, provideOwlDateTimeOptions } from '@danielmoncada/angular-datetime-picker';
+import { provideOwlDateTime, provideOwlNativeDateTime, provideOwlDateTimeOptions } from '@dintecom/ngx-datetime-picker';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -254,8 +254,8 @@ bootstrapApplication(AppComponent, {
 
 **Before:**
 ```typescript
-import { OwlDateTimeModule } from '@danielmoncada/angular-datetime-picker';
-import { OwlUnixTimestampDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+import { OwlDateTimeModule } from '@dintecom/ngx-datetime-picker';
+import { OwlUnixTimestampDateTimeModule } from '@dintecom/ngx-datetime-picker';
 
 @NgModule({
   imports: [OwlDateTimeModule, OwlUnixTimestampDateTimeModule]
@@ -265,7 +265,7 @@ export class AppModule { }
 
 **After:**
 ```typescript
-import { provideOwlDateTime, provideOwlUnixTimestampDateTime } from '@danielmoncada/angular-datetime-picker';
+import { provideOwlDateTime, provideOwlUnixTimestampDateTime } from '@dintecom/ngx-datetime-picker';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -283,7 +283,7 @@ import {
   OwlDateTimeComponent,
   OwlDateTimeTriggerDirective,
   OwlDateTimeInputDirective
-} from '@danielmoncada/angular-datetime-picker';
+} from '@dintecom/ngx-datetime-picker';
 
 @Component({
   selector: 'app-date-picker',
@@ -304,7 +304,7 @@ export class DatePickerComponent { }
 **In main.ts or app.config.ts:**
 ```typescript
 import { ApplicationConfig } from '@angular/core';
-import { provideOwlDateTime, provideOwlNativeDateTime } from '@danielmoncada/angular-datetime-picker';
+import { provideOwlDateTime, provideOwlNativeDateTime } from '@dintecom/ngx-datetime-picker';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -320,7 +320,7 @@ For lazy-loaded routes, you can provide the date-time picker at the route level:
 
 ```typescript
 import { Route } from '@angular/router';
-import { provideOwlDateTime, provideOwlNativeDateTime } from '@danielmoncada/angular-datetime-picker';
+import { provideOwlDateTime, provideOwlNativeDateTime } from '@dintecom/ngx-datetime-picker';
 
 export const routes: Route[] = [
   {

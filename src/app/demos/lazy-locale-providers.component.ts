@@ -367,7 +367,7 @@ export class ArabicPickerComponent {
         <div class="config-card">
           <h4>Step 1: Create Intl Class</h4>
           <pre><code>import &#123; Injectable &#125; from '&#64;angular/core';
-import &#123; OwlDateTimeIntl &#125; from '&#64;danielmoncada/angular-datetime-picker';
+import &#123; OwlDateTimeIntl &#125; from '&#64;dintecom/ngx-datetime-picker';
 
 &#64;Injectable()
 export class FrenchIntl extends OwlDateTimeIntl &#123;
@@ -391,7 +391,7 @@ import &#123;
   OWL_DATE_TIME_LOCALE,
   owlDateTimeProviders,        // Component-level providers!
   owlNativeDateTimeProviders   // Component-level providers!
-&#125; from '&#64;danielmoncada/angular-datetime-picker';
+&#125; from '&#64;dintecom/ngx-datetime-picker';
 
 &#64;Component(&#123;
   selector: 'app-french-picker',

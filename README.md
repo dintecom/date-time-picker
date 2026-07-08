@@ -1,7 +1,7 @@
 # :date: :clock1: Angular Date/Time Picker
 
-[![npm](https://img.shields.io/npm/v/@danielmoncada/angular-datetime-picker.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/@danielmoncada/angular-datetime-picker)
-[![npm](https://img.shields.io/npm/dm/@danielmoncada/angular-datetime-picker.svg)](https://www.npmjs.com/package/@danielmoncada/angular-datetime-picker)
+[![npm](https://img.shields.io/npm/v/@dintecom/ngx-datetime-picker.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/@dintecom/ngx-datetime-picker)
+[![npm](https://img.shields.io/npm/dm/@dintecom/ngx-datetime-picker.svg)](https://www.npmjs.com/package/@dintecom/ngx-datetime-picker)
 
 **The current version of this package supports Angular 22**
 
@@ -16,7 +16,7 @@ If you need support for other Angular version, see _Breaking Changes_ below.
 -   Version 18.x.x >= no longer supports ng 17. If you need ng 17 support, stick with version 17.x.x.
 -   Version 17.x.x >= no longer supports ng 16 - 13. If you need ng 16-13 support, stick with version 16.x.x.
 -   Version 14.x.x >= no longer supports < ng 13. If you need View Engine support, stick with version 13.x.x.
--   Version 13.1.0+ no longer supports the `MomentJs` time adapter natively. If you want to use the MomentJs adapter, see [GitHub](https://github.com/danielmoncada/date-time-picker-moment-adapter) or [npm](https://www.npmjs.com/package/@danielmoncada/angular-datetime-picker-moment-adapter).
+-   Version 13.1.0+ no longer supports the `MomentJs` time adapter natively. If you want to use the MomentJs adapter, see [GitHub](https://github.com/dintecom/date-time-picker-moment-adapter) or [npm](https://www.npmjs.com/package/@dintecom/ngx-datetime-picker-moment-adapter).
 -   If you need ng 8 support, please stick with: https://github.com/DanielYKPan/date-time-picker
 
 ## Description
@@ -26,20 +26,20 @@ This picker is responsive design, so feel free to try it in your desktops, table
 
 ## How to Use
 
-1.  Install with [npm](https://www.npmjs.com): `npm install @danielmoncada/angular-datetime-picker --save`
+1.  Install with [npm](https://www.npmjs.com): `npm install @dintecom/ngx-datetime-picker --save`
 2.  Install [`@angular/cdk`](https://material.angular.io/cdk/categories), which is a peer dependency and provides the overlay used by the picker: `npm install @angular/cdk --save`.
     If your app already uses [Angular Material](https://material.angular.io), the CDK is installed for you and this step (and the overlay styles below) is already covered.
 3.  Add styles.
     The picker renders its popup/dialog inside a CDK overlay, so you need both the picker styles and the CDK's prebuilt overlay styles. If you are **not** using Angular Material, add them once — either in your `styles.scss`:
     ```scss
     @use '@angular/cdk/overlay-prebuilt.css';
-    @use '@danielmoncada/angular-datetime-picker/assets/style/picker.min.css';
+    @use '@dintecom/ngx-datetime-picker/assets/style/picker.min.css';
     ```
     or via the `styles` array in `angular.json`:
     ```json
     "styles": [
         "node_modules/@angular/cdk/overlay-prebuilt.css",
-        "node_modules/@danielmoncada/angular-datetime-picker/assets/style/picker.min.css",
+        "node_modules/@dintecom/ngx-datetime-picker/assets/style/picker.min.css",
         "src/styles.scss"
     ]
     ```
@@ -57,7 +57,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   provideOwlDateTime,
   provideOwlNativeDateTime
-} from '@danielmoncada/angular-datetime-picker';
+} from '@dintecom/ngx-datetime-picker';
 import { AppComponent } from './app/app.component';
 
 bootstrapApplication(AppComponent, {
@@ -79,7 +79,7 @@ import {
   OwlDateTimeComponent,
   OwlDateTimeTriggerDirective,
   OwlDateTimeInputDirective
-} from '@danielmoncada/angular-datetime-picker';
+} from '@dintecom/ngx-datetime-picker';
 
 @Component({
   selector: 'app-example',
@@ -116,7 +116,7 @@ import { MyTestApp } from './my-test-app';
 import {
   OwlDateTimeModule,
   OwlNativeDateTimeModule
-} from '@danielmoncada/angular-datetime-picker';
+} from '@dintecom/ngx-datetime-picker';
 
 @NgModule({
     imports: [
@@ -201,7 +201,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   provideOwlDateTime,
   provideOwlNativeDateTime
-} from '@danielmoncada/angular-datetime-picker';
+} from '@dintecom/ngx-datetime-picker';
 import { AppComponent } from './app/app.component';
 
 bootstrapApplication(AppComponent, {

@@ -128,13 +128,13 @@ interface Demo {
       <footer class="app-footer">
         <div class="footer-content">
           <div class="footer-links">
-            <a href="https://github.com/danielmoncada/date-time-picker" target="_blank">
+            <a href="https://github.com/dintecom/date-time-picker" target="_blank">
               📦 GitHub
             </a>
-            <a href="https://www.npmjs.com/package/@danielmoncada/angular-datetime-picker" target="_blank">
+            <a href="https://www.npmjs.com/package/@dintecom/ngx-datetime-picker" target="_blank">
               📚 NPM
             </a>
-            <a href="https://github.com/danielmoncada/date-time-picker/issues" target="_blank">
+            <a href="https://github.com/dintecom/date-time-picker/issues" target="_blank">
               🐛 Issues
             </a>
           </div>

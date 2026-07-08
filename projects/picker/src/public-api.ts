@@ -35,7 +35,7 @@ export { provideOwlDialog } from './lib/dialog/provide-dialog';
  * @example
  * Before:
  * ```typescript
- * import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+ * import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@dintecom/ngx-datetime-picker';
  *
  * @NgModule({
  *   imports: [OwlDateTimeModule, OwlNativeDateTimeModule]
@@ -43,7 +43,7 @@ export { provideOwlDialog } from './lib/dialog/provide-dialog';
  * ```
  * After:
  * ```typescript
- * import { provideOwlDateTime, provideOwlNativeDateTime } from '@danielmoncada/angular-datetime-picker';
+ * import { provideOwlDateTime, provideOwlNativeDateTime } from '@dintecom/ngx-datetime-picker';
  *
  * bootstrapApplication(AppComponent, {
  *   providers: [provideOwlDateTime(), provideOwlNativeDateTime()]

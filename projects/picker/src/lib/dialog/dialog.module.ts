@@ -17,15 +17,15 @@ import { OwlDialogContainerComponent } from './dialog-container.component';
  * Migration guide:
  * ```typescript
  * // Before:
- * import { OwlDialogModule } from '@danielmoncada/angular-datetime-picker';
+ * import { OwlDialogModule } from '@dintecom/ngx-datetime-picker';
  * @NgModule({ imports: [OwlDialogModule] })
  *
  * // After (if using separately):
- * import { provideOwlDialog } from '@danielmoncada/angular-datetime-picker';
+ * import { provideOwlDialog } from '@dintecom/ngx-datetime-picker';
  * providers: [provideOwlDialog()]
  *
  * // Or just use provideOwlDateTime() which includes it:
- * import { provideOwlDateTime } from '@danielmoncada/angular-datetime-picker';
+ * import { provideOwlDateTime } from '@dintecom/ngx-datetime-picker';
  * providers: [provideOwlDateTime()]
  * ```
  */
