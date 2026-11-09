@@ -60,6 +60,9 @@ export class OwlDateTimeContainerComponent<T>
     public picker: OwlDateTime<T>;
     public activeSelectedIndex = 0; // The current active SelectedIndex in range select mode (0: 'from', 1: 'to')
 
+    /** Whether an inverted range is corrected only on 'Set' or when the other end is activated (see OwlDateTimeComponent). */
+    public lazyValidation = false;
+
     /** Emits when an animation state changes. */
     public animationStateChanged = new EventEmitter<IDateTimePickerAnimationEvent>();
 
@@ -302,20 +305,7 @@ export class OwlDateTimeContainerComponent<T>
 
             // check if the 'from' is after 'to' or 'to'is before 'from'
             // In this case, we set both the 'from' and 'to' the same value
-            if (
-                (this.activeSelectedIndex === 0 &&
-                    selecteds[1] &&
-                    this.dateTimeAdapter.compare(
-                        this.pickerMoment,
-                        selecteds[1],
-                    ) === 1) ||
-                (this.activeSelectedIndex === 1 &&
-                    selecteds[0] &&
-                    this.dateTimeAdapter.compare(
-                        this.pickerMoment,
-                        selecteds[0],
-                    ) === -1)
-            ) {
+            if (!this.lazyValidation && this.isRangeInverted(selecteds)) {
                 selecteds[0] = this.pickerMoment;
                 selecteds[1] = this.pickerMoment;
             } else {
@@ -345,6 +335,8 @@ export class OwlDateTimeContainerComponent<T>
      * Handle click on set button
      */
     public onSetClicked(event: any): void {
+        this.checkInvertedRange();
+
         if (!this.picker.dateTimeChecker(this.pickerMoment)) {
             this.hidePicker$.next(null);
             event.preventDefault();
@@ -452,6 +444,8 @@ export class OwlDateTimeContainerComponent<T>
             if (this.picker.selecteds && selected) {
                 this.pickerMoment = this.dateTimeAdapter.clone(selected);
             }
+
+            this.checkInvertedRange();
         }
         return;
     }
@@ -594,6 +588,36 @@ export class OwlDateTimeContainerComponent<T>
 
         // check the updated dateTime
         return this.picker.dateTimeChecker(result) ? result : null;
+    }
+
+    /**
+     * Whether the picker moment of the active end is after 'to' (or before 'from').
+     */
+    private isRangeInverted(selecteds: T[]): boolean {
+        return (
+            (this.activeSelectedIndex === 0 &&
+                !!selecteds[1] &&
+                this.dateTimeAdapter.compare(this.pickerMoment, selecteds[1]) === 1) ||
+            (this.activeSelectedIndex === 1 &&
+                !!selecteds[0] &&
+                this.dateTimeAdapter.compare(this.pickerMoment, selecteds[0]) === -1)
+        );
+    }
+
+    /**
+     * With lazyValidation, sets both the 'from' and 'to' to the picker moment when the range is inverted.
+     */
+    private checkInvertedRange(): void {
+        if (!this.lazyValidation || !this.picker.isInRangeMode) {
+            return;
+        }
+
+        const selecteds = [...this.picker.selecteds];
+        if (this.isRangeInverted(selecteds)) {
+            selecteds[0] = this.pickerMoment;
+            selecteds[1] = this.pickerMoment;
+            this.picker.select(selecteds);
+        }
     }
 
     /**
