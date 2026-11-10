@@ -116,11 +116,11 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
     }
 
     public upBtnClicked(): void {
-        this.updateValue(this.value + this.step);
+        this.updateValue(this.stepBase + this.step);
     }
 
     public downBtnClicked(): void {
-        this.updateValue(this.value - this.step);
+        this.updateValue(this.stepBase - this.step);
     }
 
     public handleInputChange(val: string ): void {
@@ -141,9 +141,22 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
         }
     }
 
+    /** The value the arrows step from: the typed number while it is not applied yet */
+    private get stepBase(): number {
+        if (this.editing) {
+            const typed = coerceNumberProperty(this.valueInput.nativeElement.value, NaN);
+            if (typed >= this.min && typed <= this.max) {
+                return typed;
+            }
+        }
+        return this.value;
+    }
+
     /** Applies the arrow buttons, keys or wheel: the box shows the new value even while focused */
     private updateValue( value: number ): void {
         this.editing = false;
+        // Drop the typed text waiting for the debounce, the arrows already stepped from it
+        this.inputStream.next('');
         this.valueChange.emit(value);
         if (this.hasFocus) {
             // Keep the new value selected, so typing replaces it
