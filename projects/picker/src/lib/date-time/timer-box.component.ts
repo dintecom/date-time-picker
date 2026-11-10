@@ -109,12 +109,16 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
         this.inputStreamSub.unsubscribe();
     }
 
+    /** Past the max wraps to the min (59 → 0), the larger unit stays as is. */
     public upBtnClicked(): void {
-        this.updateValue(this.value + this.step);
+        const value = this.value + this.step;
+        this.updateValue(value > this.max ? this.min : value);
     }
 
+    /** Past the min wraps to the max (0 → 59), the larger unit stays as is. */
     public downBtnClicked(): void {
-        this.updateValue(this.value - this.step);
+        const value = this.value - this.step;
+        this.updateValue(value < this.min ? this.max : value);
     }
 
     public handleInputChange(val: string ): void {
