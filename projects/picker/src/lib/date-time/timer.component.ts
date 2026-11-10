@@ -101,6 +101,12 @@ export class OwlTimerComponent<T> implements OnInit {
     @Input()
     stepSecond = 1;
 
+    /**
+     * Whether the boxes go from the max to the min and back
+     */
+    @Input()
+    wrapTimer = false;
+
     get hourValue(): number {
         return this.dateTimeAdapter.getHours(this.pickerMoment);
     }
