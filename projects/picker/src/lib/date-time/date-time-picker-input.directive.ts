@@ -36,6 +36,8 @@ import {
 import { Subscription } from 'rxjs';
 import { SelectMode } from './date-time.class';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { inject } from '@angular/core';
+import { OptionsTokens } from './options-provider';
 
 export const OWL_DATETIME_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -139,11 +141,11 @@ export class OwlDateTimeInputDirective<T>
         }
     }
 
-    /** The minimum valid date. */
+    /** The minimum valid date. With strictFormat, it is year 1 by default. */
     private _min: T | null;
     @Input()
     get min(): T | null {
-        return this._min;
+        return this._min ?? (this.strictFormat ? this.strictMin : null);
     }
 
     set min(value: T | null) {
@@ -151,17 +153,37 @@ export class OwlDateTimeInputDirective<T>
         this.validatorOnChange();
     }
 
-    /** The maximum valid date. */
+    /** The maximum valid date. With strictFormat, it is year 9999 by default. */
     private _max: T | null;
     @Input()
     get max(): T | null {
-        return this._max;
+        return this._max ?? (this.strictFormat ? this.strictMax : null);
     }
 
     set max(value: T | null) {
         this._max = this.getValidDate(this.dateTimeAdapter.deserialize(value));
         this.validatorOnChange();
     }
+
+    /**
+     * Whether the typed text must match the display format of the picker (adapter isValidFormat),
+     * otherwise it gets the owlDateTimeParse error. Also limits min and max to 4-digit years.
+     * Defaults to the strictFormat global option (false).
+     */
+    private _strictFormat: boolean | undefined;
+    @Input()
+    get strictFormat(): boolean {
+        return this._strictFormat ?? this.options?.strictFormat ?? false;
+    }
+
+    set strictFormat(value: boolean) {
+        this._strictFormat = coerceBooleanProperty(value);
+        this.validatorOnChange();
+    }
+
+    private readonly options = inject(OptionsTokens.all, { optional: true });
+    private strictMin: T;
+    private strictMax: T;
 
     /**
      * The picker's select mode
@@ -481,9 +503,9 @@ export class OwlDateTimeInputDirective<T>
             );
         }
 
-        // The input text is limited to 4-digit years
-        this._min = this.dateTimeAdapter.createDate(1, 0, 1, 0, 0, 0);
-        this._max = this.dateTimeAdapter.createDate(3000, 11, 31, 23, 59, 59);
+        // The strict format allows 4-digit years only
+        this.strictMin = this.dateTimeAdapter.createDate(1, 0, 1, 0, 0, 0);
+        this.strictMax = this.dateTimeAdapter.createDate(9999, 11, 31, 23, 59, 59);
 
         this.localeSub = this.dateTimeAdapter.localeChanges.subscribe(() => {
             this.value = this.value;
@@ -697,12 +719,13 @@ export class OwlDateTimeInputDirective<T>
     }
 
     /**
-     * Whether the input text matches the display format of the picker.
+     * Whether the input text matches the display format of the picker, checked with strictFormat only.
      * An empty text is valid, it means no value.
      */
     private isValidText(text: string): boolean {
         return (
             !text ||
+            !this.strictFormat ||
             this.dateTimeAdapter.isValidFormat(text, this.dtPicker.formatString)
         );
     }

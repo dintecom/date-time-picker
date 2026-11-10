@@ -13,6 +13,8 @@ export interface Options {
         yearsPerRow: number,
         yearRows: number
     };
+    /** Default of the strictFormat input of input[owlDateTime] */
+    strictFormat: boolean;
 }
 export class DefaultOptions {
     public static create(): Options {
@@ -21,7 +23,8 @@ export class DefaultOptions {
             multiYear: {
                 yearRows: 7,
                 yearsPerRow: 3
-            }
+            },
+            strictFormat: false
         };
     }
 }

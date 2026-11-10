@@ -141,8 +141,11 @@ export abstract class DateTimeAdapter<T> {
 
     /**
      * Checks whether the text matches the parse format.
+     * Used by the strictFormat input, accepts any text unless an adapter overrides it.
      */
-    abstract isValidFormat(value: string, parseFormat: any): boolean;
+    isValidFormat(value: string, parseFormat: any): boolean {
+        return true;
+    }
 
     /**
      * Gets date instance that is not valid.
