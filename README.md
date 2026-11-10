@@ -264,6 +264,7 @@ There are two pre-made modules, users need to import one of them or build your o
 | `stepMinute`        | number                        | Optional | `1`                   | Minutes to change per step.                                                                                                                  |
 | `stepSecond`        | number                        | Optional | `1`                   | Seconds to change per step.                                                                                                                  |
 | `scrollStrategy`    | ScrollStrategy                | Optional | `BlockScrollStrategy` | Define the scroll strategy when the picker is open. Learn more this from https://material.angular.io/cdk/overlay/overview#scroll-strategies. |
+| `lazyValidation`    | boolean                       | Optional | `false`               | Range mode: correct an inverted range only on "Set" or when the other end is activated, not on every change. Global option.                  |
 | `disabled`          | boolean                       | Optional | `false`               | When specify to true, it would disable the picker.                                                                                           |
 | `backdropClass`     | string/string[]               | Optional | `null`                | Custom class for the picker backdrop.                                                                                                        |
 | `panelClass`        | string/string[]               | Optional | `null`                | Custom class for the picker overlay panel.                                                                                                   |
@@ -334,6 +335,19 @@ There are two pre-made modules, users need to import one of them or build your o
 | `min`               | `<T>`                                     | Optional | `null`   | The minimum valid date time.                                                                                                                                                                                                                                                                                                       |
 | `max`               | `<T>`                                     | Optional | `null`   | The maximum valid date time.                                                                                                                                                                                                                                                                                                       |
 | `selectMode`        | `single`, `range`, `rangeFrom`, `rangeTo` | Optional | `single` | Specify the picker's select mode. `single`: a single value allowed, `range`: allow users to select a range of date-time, `rangeFrom`: the input would only show the 'from' value and the picker could only selects 'from' value, `rangeTo`: the input would only show the 'to' value and the picker could only selects 'to' value. |
+
+## Global defaults
+
+The inputs marked "global option" take their default from `provideOwlDateTimeOptions`, so an app can change it once
+instead of on every picker. An input set on the element wins.
+
+```typescript
+providers: [
+    provideOwlDateTime(),
+    provideOwlNativeDateTime(),
+    provideOwlDateTimeOptions({ lazyValidation: true }),
+]
+```
 
 ## Localization and DateTime Format
 

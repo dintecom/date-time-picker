@@ -218,6 +218,22 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
     public readonly scrollStrategy = input<ScrollStrategy>(undefined);
 
     /**
+     * For the range mode: when false, an inverted range ('from' after 'to' or 'to' before 'from')
+     * is corrected on every change by setting both ends to the same value. When true, it is corrected only
+     * when 'Set' is clicked or the other end is activated, so the time can be edited step by step.
+     * Defaults to the lazyValidation global option (false).
+     * */
+    private _lazyValidation: boolean | undefined;
+    @Input()
+    get lazyValidation(): boolean {
+        return this._lazyValidation ?? this.options?.lazyValidation ?? false;
+    }
+
+    set lazyValidation(value: boolean) {
+        this._lazyValidation = coerceBooleanProperty(value);
+    }
+
+    /**
      * Callback when the picker is closed
      * */
     readonly afterPickerClosed = output<any>();
@@ -417,6 +433,7 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
         this.pickerMode === 'dialog' ? this.openAsDialog() : this.openAsPopup();
 
         this.pickerContainer.picker = this;
+        this.pickerContainer.lazyValidation = this.lazyValidation;
 
         // Listen to picker container's hidePickerStream
         this.hidePickerStreamSub = this.pickerContainer.hidePickerStream.subscribe(

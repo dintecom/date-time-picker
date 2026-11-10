@@ -6,7 +6,7 @@
 import { EnvironmentProviders, makeEnvironmentProviders, Provider } from '@angular/core';
 import { OwlDateTimeIntl } from './date-time-picker-intl.service';
 import { OWL_DTPICKER_SCROLL_STRATEGY_PROVIDER } from './date-time-picker.component';
-import { optionsProviders, Options, OptionsTokens } from './options-provider';
+import { DefaultOptions, optionsProviders, Options, OptionsTokens } from './options-provider';
 import { OWL_DIALOG_SCROLL_STRATEGY_PROVIDER, OwlDialogService } from '../dialog/dialog.service';
 
 /**
@@ -43,7 +43,8 @@ export function provideOwlDateTime(): EnvironmentProviders {
  * Provides custom options for OwlDateTime.
  * This is optional - default options will be used if not provided.
  *
- * @param options - Custom options for multi-year view configuration
+ * @param options - Custom options: multi-year view configuration and the global defaults of the inputs,
+ * the missing ones keep their default values
  *
  * @example
  * ```typescript
@@ -55,17 +56,19 @@ export function provideOwlDateTime(): EnvironmentProviders {
  *       multiYear: {
  *         yearsPerRow: 4,
  *         yearRows: 5
- *       }
+ *       },
+ *       lazyValidation: true
  *     })
  *   ]
  * });
  * ```
  */
 export function provideOwlDateTimeOptions(options: Partial<Options>): Provider[] {
+  const defaults = DefaultOptions.create();
   return [
     {
       provide: OptionsTokens.all,
-      useValue: options,
+      useValue: { ...defaults, ...options, multiYear: { ...defaults.multiYear, ...options.multiYear } },
     },
     {
       provide: OptionsTokens.multiYear,

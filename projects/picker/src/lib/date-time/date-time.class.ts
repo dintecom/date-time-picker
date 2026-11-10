@@ -11,6 +11,8 @@ import {
     OWL_DATE_TIME_FORMATS,
     OwlDateTimeFormats
 } from './adapter/date-time-format.class';
+import { inject } from '@angular/core';
+import { OptionsTokens } from './options-provider';
 
 let nextUniqueId = 0;
 
@@ -30,6 +32,9 @@ export type DateViewType = DateView.MONTH | DateView.YEAR | DateView.MULTI_YEARS
 
 @Directive()
 export abstract class OwlDateTime<T> {
+    /** Global defaults of the inputs, see provideOwlDateTimeOptions */
+    protected readonly options = inject(OptionsTokens.all, { optional: true });
+
     /**
      * Whether to show the second's timer
      */
