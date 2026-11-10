@@ -95,3 +95,50 @@ function createDateWithOverflow(
     }
     return result;
 }
+
+/**
+ * Checks whether the text matches the Intl format of the locale,
+ * e.g. `11/9/2026, 1:05 PM` for `en-US` and the full input format.
+ * Whitespace in the format literals matches any whitespace,
+ * since Intl puts non-breaking spaces where the user types plain ones.
+ */
+export function isValidIntlFormat(
+    value: string,
+    locale: string,
+    format: Intl.DateTimeFormatOptions
+): boolean {
+    const dtf = new Intl.DateTimeFormat(locale, { ...format, timeZone: 'utc' });
+    let pattern = '^';
+    for (const part of dtf.formatToParts()) {
+        switch (part.type) {
+            case 'day':
+                pattern += '(0?[1-9]|[12][0-9]|3[01])';
+                break;
+            case 'month':
+                pattern += '(0?[1-9]|1[0-2])';
+                break;
+            case 'year':
+                pattern += '([0-9]{1,4})';
+                break;
+            case 'hour':
+                pattern += dtf.resolvedOptions().hour12
+                    ? '(0?[1-9]|1[0-2])'
+                    : '([01]?[0-9]|2[0-3])';
+                break;
+            case 'minute':
+            case 'second':
+                pattern += '([0-5]?[0-9])';
+                break;
+            case 'dayPeriod':
+                pattern += '([ap]m?)';
+                break;
+            case 'literal':
+                pattern += part.value
+                    .replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')
+                    .replace(/\s+/g, '\\s+');
+                break;
+        }
+    }
+    pattern += '$';
+    return new RegExp(pattern, 'i').test(value);
+}

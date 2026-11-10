@@ -37,6 +37,7 @@ import {
 import { Subscription } from 'rxjs';
 import { SelectMode } from './date-time.class';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { OptionsTokens } from './options-provider';
 
 export const OWL_DATETIME_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -143,11 +144,11 @@ export class OwlDateTimeInputDirective<T>
         }
     }
 
-    /** The minimum valid date. */
+    /** The minimum valid date. With strictFormat, it is year 1 by default. */
     private _min: T | null;
     @Input()
     get min(): T | null {
-        return this._min;
+        return this._min ?? (this.strictFormat ? this.strictMin : null);
     }
 
     set min(value: T | null) {
@@ -155,17 +156,37 @@ export class OwlDateTimeInputDirective<T>
         this.validatorOnChange();
     }
 
-    /** The maximum valid date. */
+    /** The maximum valid date. With strictFormat, it is year 9999 by default. */
     private _max: T | null;
     @Input()
     get max(): T | null {
-        return this._max;
+        return this._max ?? (this.strictFormat ? this.strictMax : null);
     }
 
     set max(value: T | null) {
         this._max = this.getValidDate(this.dateTimeAdapter.deserialize(value));
         this.validatorOnChange();
     }
+
+    /**
+     * Whether the typed text must match the display format of the picker (adapter isValidFormat),
+     * otherwise it gets the owlDateTimeParse error. Also limits min and max to 4-digit years.
+     * Defaults to the strictFormat global option (false).
+     */
+    private _strictFormat: boolean | undefined;
+    @Input()
+    get strictFormat(): boolean {
+        return this._strictFormat ?? this.options?.strictFormat ?? false;
+    }
+
+    set strictFormat(value: boolean) {
+        this._strictFormat = coerceBooleanProperty(value);
+        this.validatorOnChange();
+    }
+
+    private readonly options = inject(OptionsTokens.all, { optional: true });
+    private strictMin: T;
+    private strictMax: T;
 
     /**
      * The picker's select mode
@@ -284,9 +305,12 @@ export class OwlDateTimeInputDirective<T>
 
     /** The form control validator for whether the input parses. */
     private parseValidator: ValidatorFn = (): ValidationErrors | null => {
-        return this.lastValueValid
-            ? null
-            : { owlDateTimeParse: { text: this.elmRef.nativeElement.value } };
+        const text = this.elmRef.nativeElement.value;
+        if (!text) {
+            return null;
+        }
+
+        return this.lastValueValid ? null : { owlDateTimeParse: { text } };
     }
 
     /** The form control validator for the min date. */
@@ -473,6 +497,10 @@ export class OwlDateTimeInputDirective<T>
             );
         }
 
+        // The strict format allows 4-digit years only
+        this.strictMin = this.dateTimeAdapter.createDate(1, 0, 1, 0, 0, 0);
+        this.strictMax = this.dateTimeAdapter.createDate(9999, 11, 31, 23, 59, 59);
+
         this.localeSub = this.dateTimeAdapter.localeChanges.subscribe(() => {
             this.value = this.value;
         });
@@ -569,6 +597,7 @@ export class OwlDateTimeInputDirective<T>
         } else {
             this.changeInputInRangeFromToMode(value);
         }
+        this.validatorOnChange();
     }
 
     public handleChangeOnHost(event: any ): void {
@@ -684,6 +713,18 @@ export class OwlDateTimeInputDirective<T>
     }
 
     /**
+     * Whether the input text matches the display format of the picker, checked with strictFormat only.
+     * An empty text is valid, it means no value.
+     */
+    private isValidText(text: string): boolean {
+        return (
+            !text ||
+            !this.strictFormat ||
+            this.dateTimeAdapter.isValidFormat(text, this.dtPicker.formatString)
+        );
+    }
+
+    /**
      * Convert a time string to a date-time string
      * When pickerType is 'timer', the value in the picker's input is a time string.
      * The dateTimeAdapter parse fn could not parse a time string to a Date Object.
@@ -709,6 +750,9 @@ export class OwlDateTimeInputDirective<T>
      * Handle input change in single mode
      */
     private changeInputInSingleMode(inputValue: string): void {
+        inputValue = (inputValue || '').trim();
+        const validText = this.isValidText(inputValue);
+
         let value = inputValue;
         if (this.dtPicker.pickerType === 'timer') {
             value = this.convertTimeStringToDateTimeString(value, this.value);
@@ -718,7 +762,8 @@ export class OwlDateTimeInputDirective<T>
             value,
             this.dateTimeFormats.parseInput
         );
-        this.lastValueValid = !result || this.dateTimeAdapter.isValid(result);
+        this.lastValueValid =
+            validText && (!result || this.dateTimeAdapter.isValid(result));
         result = this.getValidDate(result);
 
         // if the newValue is the same as the oldValue, we intend to not fire the valueChange event
@@ -739,6 +784,9 @@ export class OwlDateTimeInputDirective<T>
      * Handle input change in rangeFrom or rangeTo mode
      */
     private changeInputInRangeFromToMode(inputValue: string): void {
+        inputValue = (inputValue || '').trim();
+        const validText = this.isValidText(inputValue);
+
         const originalValue =
             this._selectMode === 'rangeFrom'
                 ? this._values[0]
@@ -755,7 +803,8 @@ export class OwlDateTimeInputDirective<T>
             inputValue,
             this.dateTimeFormats.parseInput
         );
-        this.lastValueValid = !result || this.dateTimeAdapter.isValid(result);
+        this.lastValueValid =
+            validText && (!result || this.dateTimeAdapter.isValid(result));
         result = this.getValidDate(result);
 
         // if the newValue is the same as the oldValue, we intend to not fire the valueChange event
@@ -787,9 +836,11 @@ export class OwlDateTimeInputDirective<T>
      * Handle input change in range mode
      */
     private changeInputInRangeMode(inputValue: string): void {
-        const selecteds = inputValue.split(this.rangeSeparator());
-        let fromString = selecteds[0];
-        let toString = selecteds[1];
+        const selecteds = (inputValue || '').trim().split(this.rangeSeparator());
+        let fromString = (selecteds[0] || '').trim();
+        let toString = (selecteds[1] || '').trim();
+        const validText =
+            this.isValidText(fromString) && this.isValidText(toString);
 
         if (this.dtPicker.pickerType === 'timer') {
             fromString = this.convertTimeStringToDateTimeString(
@@ -811,6 +862,7 @@ export class OwlDateTimeInputDirective<T>
             this.dateTimeFormats.parseInput
         );
         this.lastValueValid =
+            validText &&
             (!from || this.dateTimeAdapter.isValid(from)) &&
             (!to || this.dateTimeAdapter.isValid(to));
         from = this.getValidDate(from);
