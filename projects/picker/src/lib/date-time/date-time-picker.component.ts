@@ -214,12 +214,20 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
     public scrollStrategy: ScrollStrategy;
 
     /**
-     * For the range mode: when false (default), an inverted range ('from' after 'to' or 'to' before 'from')
+     * For the range mode: when false, an inverted range ('from' after 'to' or 'to' before 'from')
      * is corrected on every change by setting both ends to the same value. When true, it is corrected only
      * when 'Set' is clicked or the other end is activated, so the time can be edited step by step.
+     * Defaults to the lazyValidation global option (false).
      * */
+    private _lazyValidation: boolean | undefined;
     @Input()
-    public lazyValidation = false;
+    get lazyValidation(): boolean {
+        return this._lazyValidation ?? this.options?.lazyValidation ?? false;
+    }
+
+    set lazyValidation(value: boolean) {
+        this._lazyValidation = coerceBooleanProperty(value);
+    }
 
     /**
      * Callback when the picker is closed
