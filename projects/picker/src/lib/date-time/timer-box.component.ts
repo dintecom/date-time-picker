@@ -6,8 +6,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  Injector,
   OnDestroy,
   OnInit,
+  afterNextRender,
+  inject,
   input,
   output,
   viewChild
@@ -72,8 +75,13 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
 
     private hasFocus = false;
 
+    /** Whether the user typed into the box: the typed text is shown as is until the focus leaves */
+    private editing = false;
+
+    private readonly injector = inject(Injector);
+
     get displayValue(): string {
-        if (this.hasFocus) {
+        if (this.hasFocus && this.editing) {
             // Don't try to reformat the value that user is currently editing
             return this.valueInput().nativeElement.value;
         }
@@ -116,17 +124,18 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
 
     /** With wrap, past the max goes to the min (59 → 0), otherwise carries over to the larger unit. */
     public upBtnClicked(): void {
-        const value = this.value() + this.step();
+        const value = this.stepBase + this.step();
         this.updateValue(this.wrap() && value > this.max() ? this.min() : value);
     }
 
     /** With wrap, past the min goes to the max (0 → 59), otherwise carries over to the larger unit. */
     public downBtnClicked(): void {
-        const value = this.value() - this.step();
+        const value = this.stepBase - this.step();
         this.updateValue(this.wrap() && value < this.min() ? this.max() : value);
     }
 
     public handleInputChange(val: string ): void {
+        this.editing = true;
         this.inputStream.next(val);
     }
 
@@ -136,14 +145,34 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
 
     public focusOut(value: string): void {
         this.hasFocus = false;
+        this.editing = false;
         if (value) {
             const inputValue = coerceNumberProperty(value, 0);
             this.updateValueViaInput(inputValue);
         }
     }
 
+    /** The value the arrows step from: the typed number while it is not applied yet */
+    private get stepBase(): number {
+        if (this.editing) {
+            const typed = coerceNumberProperty(this.valueInput().nativeElement.value, NaN);
+            if (typed >= this.min() && typed <= this.max()) {
+                return typed;
+            }
+        }
+        return this.value();
+    }
+
+    /** Applies the arrow buttons, keys or wheel: the box shows the new value even while focused */
     private updateValue( value: number ): void {
+        this.editing = false;
+        // Drop the typed text waiting for the debounce, the arrows already stepped from it
+        this.inputStream.next('');
         this.valueChange.emit(value);
+        if (this.hasFocus) {
+            // Keep the new value selected, so typing replaces it
+            afterNextRender(() => this.valueInput().nativeElement.select(), { injector: this.injector });
+        }
     }
 
     private updateValueViaInput( value: number ): void {
