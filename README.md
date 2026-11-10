@@ -109,8 +109,10 @@ There are two pre-made modules, users need to import one of them or build your o
 
 | Events              | Parameter | Description                                                                                     |
 | :------------------ | :-------- | :---------------------------------------------------------------------------------------------- |
+| `pickerOpening`     | null      | Callback to invoke at the start of opening, `opening` is `true` until `afterPickerOpen`.        |
 | `beforePickerOpen`  | null      | Callback to invoke before the picker is opened                                                  |
 | `afterPickerOpen`   | null      | Callback to invoke when the picker is opened                                                    |
+| `pickerClosing`     | null      | Callback to invoke at the start of closing, `closing` is `true` until `afterPickerClosed`.      |
 | `afterPickerClosed` | null      | Callback to invoke when the picker is closed.                                                   |
 | `yearSelected`      | T         | Callback to invoke when the year is selected.This doesn't imply a change on the selected date.  |
 | `monthSelected`     | T         | Callback to invoke when the month is selected.This doesn't imply a change on the selected date. |
