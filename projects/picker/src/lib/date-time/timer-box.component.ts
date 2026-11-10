@@ -13,6 +13,7 @@ import {
     OnInit,
     Output
 } from '@angular/core';
+import { afterNextRender, inject, Injector } from '@angular/core';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -68,8 +69,13 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
 
     private hasFocus = false;
 
+    /** Whether the user typed into the box: the typed text is shown as is until the focus leaves */
+    private editing = false;
+
+    private readonly injector = inject(Injector);
+
     get displayValue(): string {
-        if (this.hasFocus) {
+        if (this.hasFocus && this.editing) {
             // Don't try to reformat the value that user is currently editing
             return this.valueInput.nativeElement.value;
         }
@@ -118,6 +124,7 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
     }
 
     public handleInputChange(val: string ): void {
+        this.editing = true;
         this.inputStream.next(val);
     }
 
@@ -127,14 +134,21 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
 
     public focusOut(value: string): void {
         this.hasFocus = false;
+        this.editing = false;
         if (value) {
             const inputValue = coerceNumberProperty(value, 0);
             this.updateValueViaInput(inputValue);
         }
     }
 
+    /** Applies the arrow buttons, keys or wheel: the box shows the new value even while focused */
     private updateValue( value: number ): void {
+        this.editing = false;
         this.valueChange.emit(value);
+        if (this.hasFocus) {
+            // Keep the new value selected, so typing replaces it
+            afterNextRender(() => this.valueInput.nativeElement.select(), { injector: this.injector });
+        }
     }
 
     private updateValueViaInput( value: number ): void {
