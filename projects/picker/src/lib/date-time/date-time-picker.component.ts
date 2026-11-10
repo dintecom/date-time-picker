@@ -624,8 +624,8 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
             this.beforePickerOpen.emit(null);
         }));
         this.dialogEventsSub.add(this.dialogRef.afterOpen().subscribe(() => {
-            this.afterPickerOpen.emit(null);
             this._opened = true;
+            this.afterPickerOpen.emit(null);
         }));
         this.dialogEventsSub.add(this.dialogRef.afterClosed().subscribe(() => this.close()));
     }
@@ -665,8 +665,8 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
             this.pickerOpenedStreamSub = this.pickerContainer.pickerOpenedStream
                 .pipe(take(1))
                 .subscribe(() => {
-                    this.afterPickerOpen.emit(null);
                     this._opened = true;
+                    this.afterPickerOpen.emit(null);
                 });
         }
     }
