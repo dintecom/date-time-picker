@@ -121,6 +121,21 @@ export abstract class OwlDateTime<T> {
     }
 
     /**
+     * Whether the hour, minute and second boxes go from the max to the min and back (59 → 0)
+     * instead of carrying over to the next hour or day.
+     * Defaults to the wrapTimer global option (false).
+     */
+    private _wrapTimer: boolean | undefined;
+    @Input()
+    get wrapTimer(): boolean {
+        return this._wrapTimer ?? this.options?.wrapTimer ?? false;
+    }
+
+    set wrapTimer(val: boolean) {
+        this._wrapTimer = coerceBooleanProperty(val);
+    }
+
+    /**
      * Set the first day of week
      */
     private _firstDayOfWeek: number;

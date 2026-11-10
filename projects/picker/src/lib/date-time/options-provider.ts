@@ -17,6 +17,8 @@ export interface Options {
     lazyValidation: boolean;
     /** Default of the strictFormat input of input[owlDateTime] */
     strictFormat: boolean;
+    /** Default of the wrapTimer input of owl-date-time and owl-date-time-inline */
+    wrapTimer: boolean;
 }
 export class DefaultOptions {
     public static create(): Options {
@@ -27,7 +29,8 @@ export class DefaultOptions {
                 yearsPerRow: 3
             },
             lazyValidation: false,
-            strictFormat: false
+            strictFormat: false,
+            wrapTimer: false
         };
     }
 }

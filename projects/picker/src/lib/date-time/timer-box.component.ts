@@ -54,6 +54,9 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
 
     readonly step = input(1);
 
+    /** Whether the value goes from the max to the min and back */
+    readonly wrap = input(false);
+
     readonly inputLabel = input<string>(undefined);
 
     readonly valueChange = output<number>();
@@ -106,12 +109,16 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
         this.inputStreamSub.unsubscribe();
     }
 
+    /** With wrap, past the max goes to the min (59 → 0), otherwise carries over to the larger unit. */
     public upBtnClicked(): void {
-        this.updateValue(this.value() + this.step());
+        const value = this.value() + this.step();
+        this.updateValue(this.wrap() && value > this.max() ? this.min() : value);
     }
 
+    /** With wrap, past the min goes to the max (0 → 59), otherwise carries over to the larger unit. */
     public downBtnClicked(): void {
-        this.updateValue(this.value() - this.step());
+        const value = this.value() - this.step();
+        this.updateValue(this.wrap() && value < this.min() ? this.max() : value);
     }
 
     public handleInputChange(val: string ): void {
