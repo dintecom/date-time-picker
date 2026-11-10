@@ -136,6 +136,20 @@ export abstract class OwlDateTime<T> {
     }
 
     /**
+     * Milliseconds the hour, minute and second boxes wait after typing before applying the value,
+     * 0 applies it at once. Defaults to the timerInputDebounce global option (750).
+     */
+    private _timerInputDebounce: number | null = null;
+    @Input()
+    get timerInputDebounce(): number {
+        return this._timerInputDebounce ?? this.options?.timerInputDebounce ?? 750;
+    }
+
+    set timerInputDebounce(val: number) {
+        this._timerInputDebounce = coerceNumberProperty(val, null);
+    }
+
+    /**
      * Set the first day of week
      */
     private _firstDayOfWeek: number;

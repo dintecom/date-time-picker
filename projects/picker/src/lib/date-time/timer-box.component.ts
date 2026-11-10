@@ -13,8 +13,8 @@ import {
   viewChild
 } from '@angular/core';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
-import { Subject, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { of, Subject, Subscription, timer } from 'rxjs';
+import { debounce } from 'rxjs/operators';
 
 @Component({
     exportAs: 'owlDateTimeTimerBox',
@@ -57,6 +57,9 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
     /** Whether the value goes from the max to the min and back */
     readonly wrap = input(false);
 
+    /** Milliseconds to wait after typing before applying the value, 0 applies it at once */
+    readonly inputDebounce = input(750);
+
     readonly inputLabel = input<string>(undefined);
 
     readonly valueChange = output<number>();
@@ -95,7 +98,9 @@ export class OwlTimerBoxComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
-        this.inputStreamSub = this.inputStream.pipe(debounceTime(750)).subscribe(( val: string ) => {
+        this.inputStreamSub = this.inputStream.pipe(
+            debounce(() => (this.inputDebounce() > 0 ? timer(this.inputDebounce()) : of(0)))
+        ).subscribe(( val: string ) => {
             if (val) {
                 const inputValue = coerceNumberProperty(val, 0);
                 this.updateValueViaInput(inputValue);

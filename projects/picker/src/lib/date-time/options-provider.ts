@@ -19,6 +19,8 @@ export interface Options {
     strictFormat: boolean;
     /** Default of the wrapTimer input of owl-date-time and owl-date-time-inline */
     wrapTimer: boolean;
+    /** Default of the timerInputDebounce input of owl-date-time and owl-date-time-inline */
+    timerInputDebounce: number;
 }
 export class DefaultOptions {
     public static create(): Options {
@@ -30,7 +32,8 @@ export class DefaultOptions {
             },
             lazyValidation: false,
             strictFormat: false,
-            wrapTimer: false
+            wrapTimer: false,
+            timerInputDebounce: 750
         };
     }
 }
