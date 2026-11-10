@@ -6,7 +6,7 @@ import {Inject, Injectable, Optional} from '@angular/core';
 import {DateTimeAdapter, OWL_DATE_TIME_LOCALE} from '../date-time-adapter.class';
 import {Platform} from '@angular/cdk/platform';
 import {range} from '../../../utils/array.utils';
-import {createDate, getNumDaysInMonth} from '../../../utils/date.utils';
+import {createDate, getNumDaysInMonth, isValidIntlFormat} from '../../../utils/date.utils';
 import {DEFAULT_DATE_NAMES, DEFAULT_DAY_OF_WEEK_NAMES, DEFAULT_MONTH_NAMES, SUPPORTS_INTL_API} from '../../../utils/constants';
 
 @Injectable()
@@ -288,6 +288,13 @@ export class UnixTimestampDateTimeAdapter extends DateTimeAdapter<number> {
 
     isValid(date: number): boolean {
         return (date || date === 0) && !isNaN(date);
+    }
+
+    isValidFormat(value: string, parseFormat: any): boolean {
+        if (SUPPORTS_INTL_API) {
+            return isValidIntlFormat(value, this.getLocale(), parseFormat);
+        }
+        return this.isValid(new Date(value).getTime());
     }
 
     now(): number {

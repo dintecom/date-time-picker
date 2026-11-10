@@ -9,7 +9,11 @@ import {
     OWL_DATE_TIME_LOCALE
 } from './date-time-adapter.class';
 import { range } from '../../utils/array.utils';
-import { createDate, getNumDaysInMonth } from '../../utils/date.utils';
+import {
+    createDate,
+    getNumDaysInMonth,
+    isValidIntlFormat
+} from '../../utils/date.utils';
 import {
     DEFAULT_DATE_NAMES,
     DEFAULT_DAY_OF_WEEK_NAMES,
@@ -204,6 +208,13 @@ export class NativeDateTimeAdapter extends DateTimeAdapter<Date> {
 
     public isValid(date: Date): boolean {
         return date && !isNaN(date.getTime());
+    }
+
+    public isValidFormat(value: string, parseFormat: any): boolean {
+        if (SUPPORTS_INTL_API) {
+            return isValidIntlFormat(value, this.getLocale(), parseFormat);
+        }
+        return this.isValid(new Date(value));
     }
 
     public invalid(): Date {
