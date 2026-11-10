@@ -211,6 +211,18 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
         val ? this.open() : this.close();
     }
 
+    /** Whether the picker is being opened: from open() until afterPickerOpen. */
+    private _opening = false;
+    get opening(): boolean {
+        return this._opening;
+    }
+
+    /** Whether the picker is being closed: from close() until afterPickerClosed. */
+    private _closing = false;
+    get closing(): boolean {
+        return this._closing;
+    }
+
     /**
      * The scroll strategy when the picker is open
      * Learn more this from https://material.angular.io/cdk/overlay/overview#scroll-strategies
@@ -247,6 +259,16 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
      * Callback when the picker is open
      * */
     readonly afterPickerOpen = output<any>();
+
+    /**
+     * Emits at the start of open(), before the picker is created
+     * */
+    readonly pickerOpening = output<void>();
+
+    /**
+     * Emits at the start of close(), before the picker is destroyed
+     * */
+    readonly pickerClosing = output<void>();
 
     /**
      * Emits selected year in multi-year view
@@ -406,6 +428,9 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
             );
         }
 
+        this._opening = true;
+        this.pickerOpening.emit();
+
         if (this.document) {
             this.focusedElementBeforeOpen = this.document.activeElement as HTMLElement;
         }
@@ -508,14 +533,19 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
      * Hide the picker
      */
     public close(): void {
-        if (!this._opened) {
+        // Detaching the popup calls close() again, emit pickerClosing once
+        if (!this._opened || this._closing) {
             return;
         }
+
+        this._closing = true;
+        this.pickerClosing.emit();
 
         this.disposeOverlayResources();
 
         const completeClose = () => {
             if (this._opened) {
+                this._closing = false;
                 this._opened = false;
                 const selected = this.selected || this.selecteds;
                 this.afterPickerClosed.emit(selected);
@@ -624,6 +654,7 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
             this.beforePickerOpen.emit(null);
         }));
         this.dialogEventsSub.add(this.dialogRef.afterOpen().subscribe(() => {
+            this._opening = false;
             this._opened = true;
             this.afterPickerOpen.emit(null);
         }));
@@ -665,6 +696,7 @@ export class OwlDateTimeComponent<T> extends OwlDateTime<T>
             this.pickerOpenedStreamSub = this.pickerContainer.pickerOpenedStream
                 .pipe(take(1))
                 .subscribe(() => {
+                    this._opening = false;
                     this._opened = true;
                     this.afterPickerOpen.emit(null);
                 });
