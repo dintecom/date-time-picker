@@ -101,6 +101,12 @@ export class OwlTimerComponent<T> implements OnInit {
     @Input()
     stepSecond = 1;
 
+    /**
+     * Milliseconds the boxes wait after typing before applying the value
+     */
+    @Input()
+    timerInputDebounce = 750;
+
     get hourValue(): number {
         return this.dateTimeAdapter.getHours(this.pickerMoment);
     }

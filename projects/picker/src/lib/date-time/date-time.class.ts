@@ -11,6 +11,8 @@ import {
     OWL_DATE_TIME_FORMATS,
     OwlDateTimeFormats
 } from './adapter/date-time-format.class';
+import { inject } from '@angular/core';
+import { OptionsTokens } from './options-provider';
 
 let nextUniqueId = 0;
 
@@ -30,6 +32,9 @@ export type DateViewType = DateView.MONTH | DateView.YEAR | DateView.MULTI_YEARS
 
 @Directive()
 export abstract class OwlDateTime<T> {
+    /** Global defaults of the inputs, see provideOwlDateTimeOptions */
+    protected readonly options = inject(OptionsTokens.all, { optional: true });
+
     /**
      * Whether to show the second's timer
      */
@@ -117,6 +122,20 @@ export abstract class OwlDateTime<T> {
 
     set stepSecond(val: number) {
         this._stepSecond = coerceNumberProperty(val, 1);
+    }
+
+    /**
+     * Milliseconds the hour, minute and second boxes wait after typing before applying the value,
+     * 0 applies it at once. Defaults to the timerInputDebounce global option (750).
+     */
+    private _timerInputDebounce: number | null = null;
+    @Input()
+    get timerInputDebounce(): number {
+        return this._timerInputDebounce ?? this.options?.timerInputDebounce ?? 750;
+    }
+
+    set timerInputDebounce(val: number) {
+        this._timerInputDebounce = coerceNumberProperty(val, null);
     }
 
     /**

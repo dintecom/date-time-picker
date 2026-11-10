@@ -13,6 +13,8 @@ export interface Options {
         yearsPerRow: number,
         yearRows: number
     };
+    /** Default of the timerInputDebounce input of owl-date-time and owl-date-time-inline */
+    timerInputDebounce: number;
 }
 export class DefaultOptions {
     public static create(): Options {
@@ -21,7 +23,8 @@ export class DefaultOptions {
             multiYear: {
                 yearRows: 7,
                 yearsPerRow: 3
-            }
+            },
+            timerInputDebounce: 750
         };
     }
 }
